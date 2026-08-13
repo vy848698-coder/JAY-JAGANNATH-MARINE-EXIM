@@ -1,6 +1,6 @@
-# Jay Jagannath Marine Exim
+# Jay Jagannath Marine Eximm
 
-Marketing site for **Jay Jagannath Marine Exim** — a merchant exporter of classified fly ash
+Marketing site for **Jay Jagannath Marine Eximm** — a merchant exporter of classified fly ash
 and zinc ash based in Cuttack, Odisha, India.
 
 Static site. No build step, no dependencies, no framework.

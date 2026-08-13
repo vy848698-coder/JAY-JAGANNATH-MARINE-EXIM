@@ -98,8 +98,8 @@ section[id],div[id]{scroll-margin-top:84px}
 .hdr.sm .brand img{width:44px;height:44px}
 .brand{display:flex;align-items:center;gap:14px;margin-right:auto}
 .brand img{width:56px;height:56px;flex:none}
-.brand-tx{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase}
-.brand-tx small{display:block;font-family:var(--body);font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px}
+.brand-tx{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
+.brand-tx small{display:block;font-family:var(--body);font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px;white-space:nowrap}
 .mainnav{display:flex;gap:26px}
 .mainnav a{font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#D3DEE8;padding-block:6px;border-bottom:2px solid transparent;transition:color .25s,border-color .25s}
 .mainnav a:hover{color:var(--gold);border-bottom-color:var(--gold)}
@@ -359,6 +359,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:1080px){
+  /* brand text is nowrap — tighten it and the nav so the header bar still fits */
+  .brand-tx{font-size:13.5px;letter-spacing:.04em}
+  .brand-tx small{font-size:9px;letter-spacing:.18em}
+  .mainnav{gap:18px}
   .cat,.steps,.packs{grid-template-columns:repeat(2,1fr)}
   .certs{grid-template-columns:repeat(3,1fr)}
   .enq-grid{grid-template-columns:repeat(2,1fr)}
