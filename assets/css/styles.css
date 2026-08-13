@@ -220,19 +220,21 @@ section[id],div[id]{scroll-margin-top:84px}
 /* ═══ PRODUCT DRAWER ═══ */
 #scrim{position:fixed;inset:0;background:rgba(8,20,34,.66);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;z-index:130}
 #scrim.on{opacity:1;visibility:visible}
-/* centred modal, never touching the viewport edges. The panel itself never
-   scrolls - the photo is pinned and only .dw-bd scrolls, so the close button
-   stays reachable however long the copy is. */
-#draw{position:fixed;z-index:140;left:50%;top:50%;
+/* right-hand panel, vertically centred and inset so it never touches the
+   viewport edges. The panel itself never scrolls - the photo is pinned and
+   only .dw-bd scrolls, so the close button stays reachable however long the
+   copy is. */
+#draw{position:fixed;z-index:140;top:50%;
+  right:clamp(12px,2.2vw,28px);
   width:min(520px,calc(100vw - 40px));
   max-height:calc(100vh - 56px);
   max-height:calc(100dvh - 56px);
   background:var(--white);box-shadow:0 30px 80px rgba(8,20,34,.45);
   display:flex;flex-direction:column;overflow:hidden;
   opacity:0;visibility:hidden;
-  transform:translate(-50%,-50%) scale(.96);
-  transition:opacity .4s var(--ease),transform .45s var(--ease),visibility .45s}
-#draw.on{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+  transform:translate(34px,-50%);
+  transition:opacity .4s var(--ease),transform .5s var(--ease),visibility .5s}
+#draw.on{opacity:1;visibility:visible;transform:translate(0,-50%)}
 .dw-ph{height:clamp(160px,24vh,230px);position:relative;flex:none;background:var(--navy)}
 .dw-ph img{width:100%;height:100%;object-fit:cover}
 .dw-x{position:absolute;top:16px;right:16px;width:42px;height:42px;border:0;background:var(--navy);color:var(--gold);cursor:pointer;display:grid;place-items:center;transition:background .3s}
@@ -425,8 +427,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .hf:nth-child(n+3){border-top:1px solid var(--navy-3)}
 }
 @media(max-width:640px){
-  /* give the modal a little more of the screen on phones, but keep a margin */
-  #draw{width:calc(100vw - 24px);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
+  /* give the panel a little more of the screen on phones, but keep a margin.
+     At this width right:12px leaves it visually centred anyway. */
+  #draw{width:calc(100vw - 24px);right:12px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
   .dw-bd{padding:24px 20px 28px}
   #lb button{top:14px;right:14px;width:42px;height:42px}
   /* tuck both floating buttons closer to the corners on phones */
