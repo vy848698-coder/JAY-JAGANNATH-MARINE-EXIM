@@ -1,0 +1,29 @@
+# ── Vercel ──
+.vercel
+
+# ── Node ──
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── Environment ──
+.env
+.env.local
+.env.*.local
+
+# ── Editors ──
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Build output ──
+dist/
+build/
+.cache/
