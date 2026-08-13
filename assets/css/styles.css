@@ -347,6 +347,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px}
 .ft-brand{display:flex;flex-direction:column;gap:16px}
 .ft-brand img{width:86px;height:86px}
+.ft-lockup{display:flex;align-items:center;gap:16px}
+.ft-lockup .brand-tx{font-size:17px}
+.ft-lockup .brand-tx small{font-size:11px;margin-top:5px}
 .ft h4{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 16px}
 .ft ul{list-style:none;margin:0;padding:0;display:grid;gap:11px;font-size:14px}
 .ft a:hover{color:var(--gold)}
@@ -380,6 +383,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .hf:nth-child(n+3){border-top:1px solid var(--navy-3)}
 }
 @media(max-width:640px){
+  /* footer lockup is nowrap too - shrink it so it clears narrow phones */
+  .ft-brand img{width:68px;height:68px}
+  .ft-lockup{gap:13px}
+  .ft-lockup .brand-tx{font-size:15px}
   .cat,.steps,.packs,.mv,.std-row,.enq-grid,.ft-grid{grid-template-columns:1fr}
   .certs{grid-template-columns:repeat(2,1fr)}
   .tbl thead th:first-child,.tbl tbody th{width:120px}
