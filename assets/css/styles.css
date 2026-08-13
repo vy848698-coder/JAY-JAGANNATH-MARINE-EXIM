@@ -125,6 +125,9 @@ section[id],div[id]{scroll-margin-top:84px}
 #burger{display:none;background:none;border:1px solid var(--navy-3);color:var(--white);padding:10px 14px;font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 #drawer{display:none;background:var(--navy-2);border-top:1px solid var(--navy-3)}
 #drawer.open{display:block}
+/* the burger is hidden above 900px, so a menu left open before a resize
+   or rotate would otherwise stay stuck under the header */
+@media(min-width:901px){#drawer,#drawer.open{display:none}}
 #drawer a{display:block;padding:15px var(--gut);color:#D3DEE8;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--navy-3)}
 
 /* ═══ HERO ═══ */
@@ -217,13 +220,25 @@ section[id],div[id]{scroll-margin-top:84px}
 /* ═══ PRODUCT DRAWER ═══ */
 #scrim{position:fixed;inset:0;background:rgba(8,20,34,.66);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;z-index:130}
 #scrim.on{opacity:1;visibility:visible}
-#draw{position:fixed;top:0;right:0;bottom:0;width:min(520px,92vw);background:var(--white);z-index:140;transform:translateX(102%);transition:transform .55s var(--ease);display:flex;flex-direction:column;overflow-y:auto}
-#draw.on{transform:none}
-.dw-ph{height:230px;position:relative;flex:none;background:var(--navy)}
+/* centred modal, never touching the viewport edges. The panel itself never
+   scrolls - the photo is pinned and only .dw-bd scrolls, so the close button
+   stays reachable however long the copy is. */
+#draw{position:fixed;z-index:140;left:50%;top:50%;
+  width:min(520px,calc(100vw - 40px));
+  max-height:calc(100vh - 56px);
+  max-height:calc(100dvh - 56px);
+  background:var(--white);box-shadow:0 30px 80px rgba(8,20,34,.45);
+  display:flex;flex-direction:column;overflow:hidden;
+  opacity:0;visibility:hidden;
+  transform:translate(-50%,-50%) scale(.96);
+  transition:opacity .4s var(--ease),transform .45s var(--ease),visibility .45s}
+#draw.on{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.dw-ph{height:clamp(160px,24vh,230px);position:relative;flex:none;background:var(--navy)}
 .dw-ph img{width:100%;height:100%;object-fit:cover}
 .dw-x{position:absolute;top:16px;right:16px;width:42px;height:42px;border:0;background:var(--navy);color:var(--gold);cursor:pointer;display:grid;place-items:center;transition:background .3s}
 .dw-x:hover{background:var(--gold);color:var(--navy)}
-.dw-bd{padding:30px 28px 34px;display:flex;flex-direction:column;gap:16px}
+.dw-bd{padding:30px 28px 34px;display:flex;flex-direction:column;gap:16px;
+  flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .dw-bd .tagline{color:var(--teal)}
 .dw-bd h3{font-size:26px}
 .dw-bd p{font-size:15px;color:var(--charcoal-2)}
@@ -239,9 +254,14 @@ section[id],div[id]{scroll-margin-top:84px}
 .card:hover .card-more i{width:30px}
 
 /* ═══ LIGHTBOX ═══ */
-#lb{position:fixed;inset:0;background:rgba(8,20,34,.9);display:none;place-items:center;z-index:150;padding:28px}
-#lb.on{display:grid}
-#lb img{max-width:min(560px,92vw);max-height:80vh;background:#fff;padding:26px}
+/* fades rather than snapping, and matches the drawer's inset so a tall
+   certificate never bleeds off the top and bottom of the screen */
+#lb{position:fixed;inset:0;background:rgba(8,20,34,.9);display:grid;place-items:center;z-index:150;
+  padding:clamp(16px,4vw,28px);overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s}
+#lb.on{opacity:1;visibility:visible}
+#lb img{max-width:min(560px,calc(100vw - 40px));max-height:calc(100vh - 120px);max-height:calc(100dvh - 120px);
+  width:auto;height:auto;object-fit:contain;background:#fff;padding:clamp(14px,3vw,26px)}
 #lb button{position:absolute;top:22px;right:22px;width:46px;height:46px;border:0;background:var(--gold);color:var(--navy);cursor:pointer;font-size:20px}
 .cert{cursor:zoom-in}
 
@@ -405,6 +425,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .hf:nth-child(n+3){border-top:1px solid var(--navy-3)}
 }
 @media(max-width:640px){
+  /* give the modal a little more of the screen on phones, but keep a margin */
+  #draw{width:calc(100vw - 24px);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px)}
+  .dw-bd{padding:24px 20px 28px}
+  #lb button{top:14px;right:14px;width:42px;height:42px}
   /* tuck both floating buttons closer to the corners on phones */
   .wa{width:46px;height:46px;left:calc(14px + env(safe-area-inset-left));bottom:calc(14px + env(safe-area-inset-bottom))}
   .wa svg{width:24px;height:24px}

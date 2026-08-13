@@ -96,6 +96,24 @@ const USES={0:['Structural concrete','Coastal works','Cement blending'],1:['Road
  5:['Minerals','Ore','Marine','Fresh produce']};
 const scrim=document.getElementById('scrim'),drawEl=document.getElementById('draw');
 let lastFocus=null;
+
+/* shared scroll lock — reference counted so closing one overlay cannot
+   unlock the page while another is still open. Pads out the scrollbar
+   width so locking does not shift the layout sideways. */
+let locks=0;
+function lockScroll(){
+  if(locks++) return;
+  const sb=innerWidth-document.documentElement.clientWidth;
+  document.body.style.overflow='hidden';
+  if(sb>0) document.body.style.paddingRight=sb+'px';
+}
+function unlockScroll(){
+  if(locks>0) locks--;
+  if(locks) return;
+  document.body.style.overflow='';
+  document.body.style.paddingRight='';
+}
+
 function openDraw(i){
   const c=CAT[i]; lastFocus=document.activeElement;
   document.getElementById('dwImg').src=c.img;
@@ -106,11 +124,13 @@ function openDraw(i){
   document.getElementById('dwUses').innerHTML=(USES[i]||[]).map(u=>`<span>${u}</span>`).join('');
   document.getElementById('dwSpec').innerHTML=Object.entries(c.s).map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
   drawEl.dataset.i=i; scrim.classList.add('on'); drawEl.classList.add('on');
-  document.body.style.overflow='hidden'; drawEl.focus();
+  drawEl.querySelector('.dw-bd').scrollTop=0;
+  lockScroll(); drawEl.focus();
 }
 function closeDraw(){
+  if(!drawEl.classList.contains('on')) return;
   scrim.classList.remove('on'); drawEl.classList.remove('on');
-  document.body.style.overflow=''; if(lastFocus) lastFocus.focus();
+  unlockScroll(); if(lastFocus) lastFocus.focus();
 }
 document.getElementById('cat').addEventListener('click',e=>{
   const c=e.target.closest('.card'); if(c) openDraw(+c.dataset.i);
@@ -121,7 +141,7 @@ document.getElementById('cat').addEventListener('keydown',e=>{
 });
 document.getElementById('dwX').addEventListener('click',closeDraw);
 scrim.addEventListener('click',closeDraw);
-addEventListener('keydown',e=>{if(e.key==='Escape'){closeDraw();document.getElementById('lb').classList.remove('on');}});
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb();closeDraw();}});
 document.getElementById('dwCta').addEventListener('click',()=>{
   const map=['Fly Ash — Class F','Fly Ash — Class C','Zinc Ash','Bottom Ash','Pond Ash','Other'];
   const sel=document.getElementById('e');
@@ -132,12 +152,29 @@ document.getElementById('dwCta').addEventListener('click',()=>{
 
 /* ══ CERTIFICATE LIGHTBOX ══ */
 const lb=document.getElementById('lb');
-document.querySelector('.certs').addEventListener('click',e=>{
-  const c=e.target.closest('.cert'); if(!c) return;
-  lb.querySelector('img').src=c.querySelector('img').src;
-  lb.classList.add('on');
+let lbLastFocus=null;
+function closeLb(){
+  if(!lb.classList.contains('on')) return;
+  lb.classList.remove('on'); unlockScroll();
+  if(lbLastFocus) lbLastFocus.focus();
+}
+document.querySelector('.certs').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ') return;
+  const c=e.target.closest('.cert'); if(c){e.preventDefault();openLb(c);}
 });
-lb.addEventListener('click',()=>lb.classList.remove('on'));
+document.querySelector('.certs').addEventListener('click',e=>{
+  const c=e.target.closest('.cert'); if(c) openLb(c);
+});
+function openLb(c){
+  const img=lb.querySelector('img'),src=c.querySelector('img');
+  img.src=src.src; img.alt=src.alt||'Certificate';
+  lbLastFocus=document.activeElement;
+  lb.classList.add('on'); lockScroll();
+  lb.querySelector('button').focus();
+}
+/* only the backdrop and the close button dismiss it — clicking the
+   certificate itself used to close the lightbox you just opened */
+lb.addEventListener('click',e=>{if(e.target===lb||e.target.closest('button')) closeLb();});
 
 
 /* ══ SHIPMENT CALCULATOR ══ */
