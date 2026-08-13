@@ -1,6 +1,6 @@
-# Jay Jagannath Marine Eximm
+# Jay Jagannath Marine Eximss
 
-Marketing site for **Jay Jagannath Marine Eximm** — a merchant exporter of classified fly ash
+Marketing site for **Jay Jagannath Marine Eximss** — a merchant exporter of classified fly ash
 and zinc ash based in Cuttack, Odisha, India.
 
 Static site. No build step, no dependencies, no framework.
@@ -95,5 +95,5 @@ Connected to Vercel via GitHub. Every push to `main` triggers a deploy.
 
 ## Contact
 
-Ganesh Kutir, Balabhadrapur, Chatrabazar, Cuttack, Odisha 753003, India
+Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India
 jayjagannathmarineexim@gmail.com · +91 94383 37777 · +91 70086 13477

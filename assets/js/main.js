@@ -60,7 +60,7 @@ if(kin&&!RM){
 const CAT=[
  {n:'Fly Ash — Class F',t:'Export · HSN 26219000',img:'assets/img/fly-ash.jpg',
   d:'A fine, grey amorphous powder rich in silica and alumina, spherical in shape. Pozzolanic and effective in sulphate-rich or coastal structural concrete.',
-  s:{'Standard':'ASTM C 618 / EN 450 S','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
+  s:{'Standard':'ASTM C618 / EN 450 S','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
  {n:'Fly Ash — Class C',t:'Export · HSN 26219000',img:'assets/img/fly-ash.jpg',
   d:'Higher calcium ash from lignite or sub-bituminous coal, both pozzolanic and self-cementing. Suited to rapid construction and road base stabilisation.',
   s:{'Standard':'On request','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
@@ -117,7 +117,7 @@ function unlockScroll(){
 function openDraw(i){
   const c=CAT[i]; lastFocus=document.activeElement;
   document.getElementById('dwImg').src=c.img;
-  document.getElementById('dwImg').alt=c.n;
+  document.getElementById('dwImg').alt=c.n.replace(/&amp;/g,'&');
   document.getElementById('dwTag').textContent=c.t.replace(/&amp;/g,'&');
   document.getElementById('dwName').innerHTML=c.n;
   document.getElementById('dwDesc').textContent=c.d;
@@ -214,7 +214,7 @@ document.getElementById('calcCta').addEventListener('click',()=>{
 const STEPS=[
  ['Sourcing','Material is sourced against your written specification from thermal power stations in Odisha.'],
  ['Classification','Processing separates the fine fraction so an optimum proportion of the product is fine particles.'],
- ['Testing','Samples are drawn and a test certificate issued against ASTM C 618, EN 450 S or IS 3812.'],
+ ['Testing','Samples are drawn and a test certificate issued against ASTM C618, EN 450 S or IS 3812.'],
  ['Packing','Filled into 50 kg machine-stitched bags, 1000 or 1500 kg jumbo bags, or loaded loose for bulkers.'],
  ['Loading','Bags craned into the vessel hold or bulk loaded direct, with loading photographs shared the same day.'],
  ['Documentation','Export documents released against your bank\u2019s terms, with shipment tracked to your discharge port.']
@@ -224,8 +224,8 @@ document.getElementById('steps').innerHTML=STEPS.map(([t,d],i)=>`
 observeAll();
 
 /* applications */
-const A=['Cement manufacturing','Brick plant manufacturers','Ready-mix concrete (RMC) plants','Builders — slabs and concreting'];
-const B=['Portland cement and grout','Raw feed for cement clinkers','Structural fill and flowable fill','Road subbase and aggregate','Stabilisation of soft soils','Mine reclamation','Waste stabilisation'];
+const A=['Cement manufacturing','Brick plants','Ready-mix concrete (RMC) plants','Builders — slabs and concreting'];
+const B=['Portland cement and grout','Raw feed for cement clinker','Structural fill and flowable fill','Road sub-base and aggregate','Stabilisation of soft soils','Mine reclamation','Waste stabilisation'];
 document.getElementById('appA').innerHTML=A.map((t,i)=>`<li class="rv" style="transition-delay:${i*0.07}s">${t}</li>`).join('');
 document.getElementById('appB').innerHTML=B.map((t,i)=>`<li class="rv" style="transition-delay:${i*0.07}s">${t}</li>`).join('');
 observeAll();
@@ -252,7 +252,7 @@ function read(){
   const v=+sl.value;
   document.getElementById('rVal').textContent=v;
   document.getElementById('rPass').textContent=100-v;
-  document.getElementById('rGrade').textContent=v<=10?'BS EN 450 S · ASTM C 618 · IS 3812':v<=34?'ASTM C 618 · IS 3812':'Above the 34% threshold';
+  document.getElementById('rGrade').textContent=v<=10?'BS EN 450 S · ASTM C618 · IS 3812':v<=34?'ASTM C618 · IS 3812':'Above the 34% threshold';
 }
 sl.addEventListener('input',()=>{read();if(RM)draw(0);});
 let on=false;
