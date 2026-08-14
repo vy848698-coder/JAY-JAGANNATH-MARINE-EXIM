@@ -252,7 +252,8 @@ function read(){
   const v=+sl.value;
   document.getElementById('rVal').textContent=v;
   document.getElementById('rPass').textContent=100-v;
-  document.getElementById('rGrade').textContent=v<=10?'BS EN 450 S · ASTM C618 · IS 3812':v<=34?'ASTM C618 · IS 3812':'Above the 34% threshold';
+  /* EN 450-1 fineness category S is 12% max; ASTM C618 and IS 3812 both 34% */
+  document.getElementById('rGrade').textContent=v<=12?'BS EN 450 S · ASTM C618 · IS 3812':v<=34?'ASTM C618 · IS 3812':'Above the 34% threshold';
 }
 sl.addEventListener('input',()=>{read();if(RM)draw(0);});
 let on=false;
@@ -309,20 +310,4 @@ document.querySelectorAll('[data-count]').forEach(el=>{
   }),{threshold:.6}).observe(el);
 });
 
-/* enquiry — demo only, no backend */
-const form=document.getElementById('form'),rc=document.getElementById('rcpt');
-form.addEventListener('submit',e=>{
-  e.preventDefault();
-  const co=document.getElementById('a').value.trim(),em=document.getElementById('c').value.trim();
-  if(!co||!em){
-    document.getElementById('rR').textContent='Incomplete';
-    document.getElementById('rT').textContent='Action Required';
-    document.getElementById('rL').textContent='Please add your company and email so the quotation can be issued.';
-    rc.classList.add('on');return;
-  }
-  document.getElementById('rR').textContent='JJME/ENQ/2026/'+(Math.floor(Math.random()*9000)+1000);
-  document.getElementById('rT').textContent=new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})+' IST';
-  document.getElementById('rL').textContent=`${document.getElementById('e').value} · ${document.getElementById('f2').value} · ${document.getElementById('g').value||'—'} MT · ${document.getElementById('h').value||'port to advise'} · ${document.getElementById('i').value}`;
-  rc.classList.add('on');form.reset();
-  rc.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});
-});
+/* the enquiry form is wired to the dashboard in assets/js/enquiry.js */

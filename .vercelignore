@@ -1,0 +1,6 @@
+# Watermarked master photos. Kept in git as the source of truth, but the
+# site serves the resized copies in assets/img - no need to ship these.
+images/
+
+# Local development only — Vercel runs api/enquiry.js itself.
+dev-server.mjs

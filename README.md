@@ -11,18 +11,29 @@ Static site. No build step, no dependencies, no framework.
 
 ```
 jai/
-├── index.html               # the single page — markup only
+├── index.html               # home
+├── product.html             # product catalog — grades, other ash, packing
+├── classification.html      # fineness, process, standards comparison
+├── logistics.html           # packing, ports, Incoterms, documents
+├── calculator.html          # shipment calculator + enquiry form
+├── network.html             # animated trade-lane map, export vs domestic scope
+├── quality.html             # analysis parameters, certification flow, registrations
 ├── assets/
 │   ├── css/
 │   │   └── styles.css       # all styles; brand tokens at the top
 │   ├── js/
-│   │   └── main.js          # all behaviour; CAT[] product data at the top
+│   │   ├── main.js          # home only; CAT[] product data at the top
+│   │   ├── product.js       # shared engine for the three inner pages
+│   │   ├── classification.js# + count-up and the process rail
+│   │   ├── logistics.js     # + Incoterm tabs and the route track
+│   │   ├── calculator.js    # + payload maths and the enquiry form
+│   │   ├── network.js       # + builds the trade-lane map from lon/lat data
+│   │   └── quality.js       # + certificate lightbox
 │   └── img/
 │       ├── logo.png                    # brand mark (header + footer)
 │       ├── favicon-32.png              # generated from logo.png
 │       ├── apple-touch-icon.png        #   "
 │       ├── icon-192.png                #   "
-│       ├── icon-512.png                #   "
 │       ├── og-image.jpg                # 1200×630 social preview
 │       ├── hero-bulk-loading.jpg       # hero, frame 1
 │       ├── jumbo-bag-loading.jpg       # hero frame 2 + Zinc Ash card
@@ -32,6 +43,7 @@ jai/
 │       ├── bottom-pond-ash.jpg         # Bottom Ash + Pond Ash cards
 │       ├── marine-mineral-agri.jpg     # Marine/Mineral/Agri card
 │       └── cert-*.png                  # IEC, FIEO, WTC Mumbai, MSME, GST
+├── images/                  # watermarked master photos (not deployed)
 ├── vercel.json              # clean URLs, cache + security headers
 ├── site.webmanifest         # PWA/installable metadata
 ├── robots.txt
@@ -69,10 +81,11 @@ Connected to Vercel via GitHub. Every push to `main` triggers a deploy.
 | --------------------------------- | ----------------------------------------------------------- |
 | Change brand colours or fonts     | `:root` block at the top of [assets/css/styles.css](assets/css/styles.css) |
 | Add/edit a product card           | the `CAT` array in [assets/js/main.js](assets/js/main.js)    |
-| Change the freight calculator     | the calculator block in [assets/js/main.js](assets/js/main.js) |
-| Edit copy, contacts, address      | [index.html](index.html)                                     |
-| Swap a photo                      | replace the file in `assets/img/` keeping the same filename  |
-| Add a second page                 | `about.html` at the root; `vercel.json` `cleanUrls` serves it at `/about` |
+| Change container specs or stowage | `BOX` and `STOW` at the top of [assets/js/calculator.js](assets/js/calculator.js) |
+| Add an export market to the map   | one entry in `MARKETS` in [assets/js/network.js](assets/js/network.js) |
+| Edit copy, contacts, address      | the relevant `.html` — nav and footer are duplicated per page |
+| Swap a photo                      | drop the master in `images/`, then resize it into `assets/img/` under the existing filename |
+| Add another page                  | copy `product.html`, load `product.js` plus a page script; `vercel.json` `cleanUrls` drops the `.html` |
 
 ### Brand tokens
 
