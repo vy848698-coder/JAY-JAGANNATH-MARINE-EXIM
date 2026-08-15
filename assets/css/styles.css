@@ -353,7 +353,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ═══ CERTIFICATIONS ═══ */
 .certs{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
-.cert{background:var(--white);border:1px solid var(--line);height:112px;display:grid;place-items:center;padding:18px;transition:border-color .35s,box-shadow .35s,transform .35s}
+/* flex rather than grid for the same reason as .qcert-ph — see that rule */
+.cert{background:var(--white);border:1px solid var(--line);height:112px;display:flex;align-items:center;justify-content:center;padding:18px;transition:border-color .35s,box-shadow .35s,transform .35s}
 .cert:hover{border-color:var(--gold);box-shadow:0 10px 26px rgba(17,42,70,.1);transform:translateY(-4px)}
 .cert img{max-width:100%;max-height:100%;object-fit:contain;filter:grayscale(1);opacity:.72;transition:filter .35s,opacity .35s}
 .cert:hover img{filter:none;opacity:1}
@@ -732,8 +733,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
 .qcert:hover,.qcert:focus-visible{transform:translateY(-6px);border-color:var(--gold);
   box-shadow:0 18px 42px rgba(17,42,70,.12)}
-.qcert-ph{height:130px;display:grid;place-items:center;padding:22px;background:var(--mist);
-  border-bottom:1px solid var(--line)}
+/* flex, not grid: a percentage max-height on a *grid* item does not resolve
+   against the track here, so tall logos rendered at natural size and spilled
+   over the text below. In a fixed-height flex line it resolves correctly. */
+.qcert-ph{height:130px;display:flex;align-items:center;justify-content:center;padding:22px;
+  background:var(--mist);border-bottom:1px solid var(--line)}
 .qcert-ph img{max-width:100%;max-height:100%;object-fit:contain;
   filter:grayscale(1);opacity:.7;transition:filter .4s,opacity .4s,transform .5s var(--ease)}
 .qcert:hover .qcert-ph img,.qcert:focus-visible .qcert-ph img{filter:none;opacity:1;transform:scale(1.05)}
