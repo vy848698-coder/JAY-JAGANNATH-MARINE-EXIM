@@ -80,7 +80,7 @@
 
       if (!res.ok || !data.ok) {
         receipt('Not Sent', '', 'Please Try Again',
-          data.error || 'The enquiry could not be sent. Please email jayjagannathmarineexim@gmail.com.');
+          data.error || 'The enquiry could not be sent. Please email info@jjmeexporthouse.com.');
         return;
       }
 
@@ -90,7 +90,7 @@
     } catch {
       // offline, DNS, blocked request — the address is the reliable fallback
       receipt('Not Sent', '', 'Connection Failed',
-        'We could not reach the enquiry desk. Please check your connection, or email jayjagannathmarineexim@gmail.com.');
+        'We could not reach the enquiry desk. Please check your connection, or email info@jjmeexporthouse.com.');
     } finally {
       setBusy(false);
     }

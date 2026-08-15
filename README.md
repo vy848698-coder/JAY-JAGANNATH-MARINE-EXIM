@@ -109,4 +109,4 @@ Connected to Vercel via GitHub. Every push to `main` triggers a deploy.
 ## Contact
 
 Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India
-jayjagannathmarineexim@gmail.com · +91 94383 37777 · +91 70086 13477
+info@jjmeexporthouse.com · +91 94383 37777 · +91 70086 13477
