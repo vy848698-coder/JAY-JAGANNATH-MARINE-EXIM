@@ -12,6 +12,11 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# ── Mail credentials and received enquiries ──
+# api/mail-config.php holds the Gmail app password; the example stays tracked.
+api/mail-config.php
+api/storage/
+
 # ── Editors ──
 .vscode/*
 !.vscode/extensions.json

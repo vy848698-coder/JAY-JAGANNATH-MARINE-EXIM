@@ -1,0 +1,41 @@
+# Only the endpoint is meant to be requested. Everything else in here is either
+# an include, a credential file or a development tool.
+#
+# The PHP files are already harmless if fetched — they define functions and
+# print nothing, and mail-config.php returns an array — but enquiry.js is the
+# Vercel function, which Apache would happily serve as plain text. None of it
+# needs to be readable, so none of it is.
+#
+# Apache only. A host running nginx ignores this file, which is why the
+# credentials live in a .php that outputs nothing and the stored enquiries
+# carry their own exit guard.
+
+<FilesMatch "\.(js|json|md|log|example\.php)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<Files "mail-config.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Deny from all
+  </IfModule>
+</Files>
+
+<Files "preview-email.php">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Deny from all
+  </IfModule>
+</Files>
+
+# No directory listing if the server is configured to produce one.
+Options -Indexes

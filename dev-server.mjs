@@ -76,6 +76,14 @@ createServer(async (req, res) => {
   if (!extname(path)) path += '.html';
   if (path.includes('..')) { res.writeHead(403); return res.end('forbidden'); }
 
+  /* This server cannot execute PHP, and serving api/enquiry.php as a static
+     file would hand the reader mail-config.php's app password. Apache runs
+     that path; here it simply does not exist. */
+  if (path.endsWith('.php')) {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    return res.end('Not found');
+  }
+
   try {
     const data = await readFile(join(ROOT, path));
     res.writeHead(200, { 'Content-Type': TYPES[extname(path)] || 'application/octet-stream' });

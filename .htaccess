@@ -1,0 +1,59 @@
+# Apache configuration for the site root.
+#
+# Vercel never serves dotfiles and never deploys .git, so none of this was
+# needed there. Apache has no such instinct: pointed at this folder it will
+# happily hand out .env, and it will serve .git/ object by object, which is
+# enough for anyone to reconstruct the entire repository. Everything below
+# closes that.
+
+# ── Never serve dotfiles ────────────────────────────────────────────────────
+# .env carries the dashboard intake key; .git carries the whole history.
+# .well-known is the exception — certificate issuance and renewal need it.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
+</IfModule>
+
+# Belt and braces for hosts without mod_rewrite.
+<FilesMatch "^\.">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_alias.c>
+  RedirectMatch 404 "(^|/)\.git(/|$)"
+</IfModule>
+
+# ── Development and deployment files, not part of the published site ────────
+<FilesMatch "\.(mjs|json|md|lock|example|log)$|^(dev-server\.mjs|package(-lock)?\.json|vercel\.json|README\.md)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# site.webmanifest is JSON by nature and the browser must be able to read it.
+<Files "site.webmanifest">
+  <IfModule mod_authz_core.c>
+    Require all granted
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Allow from all
+  </IfModule>
+</Files>
+
+Options -Indexes
+
+# ── The headers vercel.json sets, so PHP hosting matches production ─────────
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
