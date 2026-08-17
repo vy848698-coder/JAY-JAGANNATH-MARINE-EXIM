@@ -61,8 +61,16 @@
     btn.textContent = state ? 'Sending…' : btnLabel;
   }
 
-  /* A 404 means that back end is not installed on this host, not that the
-     enquiry was refused — move on and try the other one. */
+  /* Statuses that mean "this back end is not installed here" rather than
+     "your enquiry was refused" — try the next one instead of reporting them.
+
+     404 is the obvious one, but Vercel answers 403 for any /api/* path with no
+     function behind it, and a host with the PHP path blocked or PHP disabled
+     can produce 403 or 405 too. Anything else — including a 500 or the 502
+     the PHP endpoint returns when Gmail is unreachable — is a real answer from
+     a back end that does exist, and must reach the visitor. */
+  const NOT_INSTALLED = [403, 404, 405, 501];
+
   async function post(payload) {
     let lastError;
     for (const url of ENDPOINTS) {
@@ -77,7 +85,7 @@
         lastError = err;
         continue;
       }
-      if (res.status === 404 || res.status === 501) continue;
+      if (NOT_INSTALLED.includes(res.status)) continue;
       return res;
     }
     throw lastError || new Error('No enquiry endpoint responded.');
