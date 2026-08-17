@@ -169,6 +169,12 @@ Connected to Vercel via GitHub. Every push to `main` triggers a deploy.
 Vercel does not run PHP — there, the form falls through to `api/enquiry.js`. Use PHP
 hosting (XAMPP locally, cPanel live) for the mail path.
 
+The PHP files are excluded from Vercel by [.vercelignore](.vercelignore). They have to
+be: Vercel builds every file under `api/` as a serverless function, finds no runtime
+for `.php`, and fails the deployment. Keep any new `api/*.php` file covered by that
+ignore, and leave `api/enquiry.php` absent from Vercel deliberately — the browser
+tries it first and falls back to `api/enquiry.js` on the 404.
+
 - Framework preset: **Other**
 - Build command: *(none)*
 - Output directory: *(none — repo root is served as-is)*

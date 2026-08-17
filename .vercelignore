@@ -4,3 +4,17 @@ images/
 
 # Local development only — Vercel runs api/enquiry.js itself.
 dev-server.mjs
+
+# Vercel turns every file under api/ into a serverless function, and there is
+# no PHP runtime — so shipping the PHP enquiry path fails the whole build.
+#
+# That path exists for Apache and shared hosting. On Vercel the form falls
+# back to api/enquiry.js, which relays to the dashboard, so api/enquiry.php
+# must be absent here: enquiry.js in the browser tries the .php endpoint
+# first and moves on when it 404s.
+api/*.php
+api/.htaccess
+api/storage/
+
+# Apache directives, meaningless on Vercel — vercel.json sets the headers there.
+.htaccess
