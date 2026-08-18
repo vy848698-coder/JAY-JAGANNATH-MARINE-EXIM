@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shipment Calculator — Bags, Containers &amp; Payload | Jay Jagannath Marine Eximss</title>
-<meta name="description" content="Work out bag counts, container requirement and payload per container for a fly ash shipment, including whether your load is weight limited or volume limited.">
+<title>Contact Us — Enquiries, Office &amp; Map | Jay Jagannath Marine Eximss</title>
+<meta name="description" content="Contact Jay Jagannath Marine Eximss in Cuttack, Odisha — email, telephone, WhatsApp, our registered office on the map, and a quotation request form for fly ash and zinc ash.">
 <meta name="theme-color" content="#112A46">
-<link rel="canonical" href="https://www.jayjagannathmarineexim.com/calculator">
+<link rel="canonical" href="https://www.jayjagannathmarineexim.com/contact">
 
 <!-- ═══ ICONS ═══ -->
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
@@ -16,9 +16,9 @@
 <!-- ═══ SOCIAL ═══ -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Jay Jagannath Marine Eximss">
-<meta property="og:title" content="Shipment Calculator — Bags, Containers &amp; Payload">
-<meta property="og:description" content="Bag counts, container requirement and payload per container for a fly ash shipment.">
-<meta property="og:url" content="https://www.jayjagannathmarineexim.com/calculator">
+<meta property="og:title" content="Contact Us — Jay Jagannath Marine Eximss">
+<meta property="og:description" content="Email, telephone, WhatsApp, our office in Cuttack on the map, and a quotation request form.">
+<meta property="og:url" content="https://www.jayjagannathmarineexim.com/contact">
 <meta property="og:image" content="https://www.jayjagannathmarineexim.com/assets/img/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -64,8 +64,8 @@
           <a href="quality.html"><em>03</em><b>Quality &amp; Standards</b><span>ASTM C618, BS EN 450 S and IS 3812 compliance</span></a>
         </div>
       </div>
-      <a href="calculator.html" aria-current="page">Calculator</a>
-      <a href="contact.html">Contact Us</a>
+      <a href="calculator.html">Calculator</a>
+      <a href="contact.html" aria-current="page">Contact Us</a>
     </nav>
     <a class="btn btn-gold" href="#enquiry">Request a Quote</a>
     <button id="burger" aria-expanded="false" aria-controls="drawer">Menu</button>
@@ -86,106 +86,119 @@
 <!-- ═══ PAGE BANNER ═══ -->
 <section class="phero on-navy" id="top">
   <div class="phero-ph">
-    <img src="assets/img/jumbo-bag-loading.jpg" alt="" width="1000" height="752" decoding="async">
+    <img src="assets/img/port-multimodal.jpg" alt="" width="612" height="399" decoding="async">
   </div>
   <div class="wrap">
-    <p class="eyebrow up" style="animation-delay:.05s"><i></i>Plan Before You Enquire</p>
-    <h1 class="up" style="animation-delay:.14s">Shipment Calculator</h1>
-    <p class="lead up" style="animation-delay:.26s">Fly ash is light for its weight, so a container usually fills up before it weighs out. Set your tonnage and density below to see what you actually need to book.</p>
+    <p class="eyebrow up" style="animation-delay:.05s"><i></i>Get in Touch</p>
+    <h1 class="up" style="animation-delay:.14s">Contact Us</h1>
+    <p class="lead up" style="animation-delay:.26s">Tell us the product, the tonnage and the discharge port. We come back with a firm price, the packing that suits your facility and the shipment window we can hold.</p>
     <div class="pchips up" style="animation-delay:.38s">
-      <span>Bag counts</span>
-      <span>Container requirement</span>
-      <span>Weight vs volume limit</span>
+      <span>Cuttack, Odisha</span>
+      <span>Est. 2017</span>
+      <span>India Standard Time</span>
     </div>
   </div>
 </section>
 
-<!-- ═══ CALCULATOR ═══ -->
-<section class="sec" id="calc">
+<!-- ═══ CHANNELS ═══ -->
+<!-- Three ways in, given equal weight and put above the form on purpose: a
+     buyer with one quick question should not have to fill in a quotation
+     request to ask it. -->
+<section class="sec" id="channels">
   <div class="wrap">
-    <div class="calc rv">
-      <div class="calc-in">
-        <p class="calc-step"><i>1</i>Packing Format</p>
-        <div class="opts" id="opts">
-          <button type="button" class="opt on" data-kg="50">50 kg Bag</button>
-          <button type="button" class="opt" data-kg="1000">1000 kg Jumbo</button>
-          <button type="button" class="opt" data-kg="1500">1500 kg Jumbo</button>
-          <button type="button" class="opt" data-kg="0">Bulker</button>
-        </div>
-
-        <p class="calc-step"><i>2</i>Quantity <b><span id="qLab">1,000</span> MT</b></p>
-        <input id="qty" type="range" min="100" max="15000" step="100" value="1000" aria-label="Quantity in metric tonnes">
-        <div class="ticks"><span>100 MT</span><span>15,000 MT</span></div>
-
-        <div id="ctrGroup">
-          <p class="calc-step"><i>3</i>Container</p>
-          <div class="seg" id="ctr">
-            <button type="button" class="opt on" data-c="20">20′ Dry</button>
-            <button type="button" class="opt" data-c="40">40′ Dry</button>
-          </div>
-
-          <p class="calc-step"><i>4</i>Bulk Density <b><span id="dLab">700</span> kg/m³</b></p>
-          <input id="dens" type="range" min="550" max="850" step="10" value="700" aria-label="Bulk density in kilograms per cubic metre">
-          <div class="ticks"><span>550 loose</span><span>850 packed</span></div>
-        </div>
-      </div>
-
-      <div class="calc-out">
-        <p class="calc-lbl" style="color:var(--gold)">Indicative Requirement</p>
-        <div class="calc-rows" id="calcRows"></div>
-
-        <div class="cap" id="cap">
-          <div class="cap-h">
-            <span>Payload per container</span>
-            <span class="cap-tag" id="capTag">—</span>
-          </div>
-          <div class="cap-bar"><span id="capBar"></span></div>
-          <div class="cap-lb"><span id="capA">—</span><span id="capB">—</span></div>
-          <p id="capNote"></p>
-        </div>
-
-        <button class="btn btn-gold" id="calcCta" style="width:100%;margin-top:22px">Send These Figures</button>
-        <p class="calc-note">Indicative only. A 20′ dry container is taken as 33 m³ and 28.2 MT payload, a 40′ as 67 m³ and 26.7 MT, with a stowage allowance for voids between bags. Final stowage is confirmed at the time of booking.</p>
-      </div>
+    <div class="sec-head">
+      <p class="kicker rv">Direct Lines</p>
+      <h2 class="rv">Reach the Export Desk</h2>
+      <div class="rule"></div>
+      <p class="lead rv d1" style="margin-top:18px">Every channel below reaches the same desk in Cuttack. Use whichever suits — the quotation form further down is only for a priced enquiry.</p>
     </div>
+    <div class="ccards" data-stagger>
 
-    <div class="assum" data-stagger>
-      <div class="rv"><b>33 m³</b><span>20′ capacity</span></div>
-      <div class="rv"><b>28.2 MT</b><span>20′ max payload</span></div>
-      <div class="rv"><b>67 m³</b><span>40′ capacity</span></div>
-      <div class="rv"><b>26.7 MT</b><span>40′ max payload</span></div>
+      <div class="mv-card rv">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#D4AF37" stroke-width="1.6" aria-hidden="true">
+          <path d="M4 8h26v18H4z"/><path d="M4 9l13 10L30 9"/>
+        </svg>
+        <h3>Email</h3>
+        <a class="ccard-v" href="mailto:info@jjmeexporthouse.com">info@jjmeexporthouse.com</a>
+        <p>Specifications, sample requests and test certificates. Attach your spec sheet and we quote against it.</p>
+      </div>
+
+      <div class="mv-card rv">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#D4AF37" stroke-width="1.6" aria-hidden="true">
+          <path d="M11 4H6a2 2 0 00-2 2v3c0 11.6 9.4 21 21 21h3a2 2 0 002-2v-5l-6-3-3.5 3.5A24 24 0 0110.5 13.5L14 10z" stroke-linejoin="round"/>
+        </svg>
+        <h3>Telephone</h3>
+        <a class="ccard-v" href="tel:+919439155050">+91 94391 55050</a>
+        <p>The founder&rsquo;s line. Best for a shipment already in motion, or a question that is faster spoken than written.</p>
+      </div>
+
+      <div class="mv-card rv">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#D4AF37" stroke-width="1.6" aria-hidden="true">
+          <path d="M17 4a13 13 0 00-11.1 19.8L4 30l6.4-1.8A13 13 0 1017 4z" stroke-linejoin="round"/>
+          <path d="M13 12.5c0 5 3.5 8.5 8.5 8.5" stroke-linecap="round"/>
+        </svg>
+        <h3>WhatsApp</h3>
+        <a class="ccard-v" href="https://wa.me/919439155050?text=Hello%20Jay%20Jagannath%20Marine%20Eximss%2C%20I%20would%20like%20to%20enquire%20about%20fly%20ash." target="_blank" rel="noopener noreferrer">Message +91 94391 55050</a>
+        <p>Loading photographs, stock position and quick confirmations, wherever you are in the world.</p>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ═══ WHY IT MATTERS ═══ -->
-<section class="sec tint" id="why">
+<!-- ═══ FIND US ═══ -->
+<section class="sec tint" id="visit">
   <div class="wrap">
-    <div class="why">
-      <div class="rv">
-        <p class="kicker">Reading the Result</p>
-        <h2>Weight Limited or Volume Limited?</h2>
-        <p class="lead" style="margin-top:16px">Loose fly ash runs roughly 550 to 850 kg per cubic metre. That is light — so in a 20′ container the cargo generally runs out of space long before it reaches the 28.2 MT the box is rated to carry.</p>
-        <p class="lead" style="margin-top:14px">A 40′ container flips it. There is twice the volume but a lower payload rating, so the same ash usually weighs out first. Knowing which limit binds tells you which box is cheaper per tonne.</p>
-      </div>
-      <div class="rv d1">
-        <div class="why-note">
-          <p>If your result says <b>volume limited</b>, packing denser or shipping in bulk buys you more tonnes per container. If it says <b>weight limited</b>, you are already paying for air — a smaller box will cost less per tonne.</p>
-          <cite>What to do with the verdict</cite>
+    <div class="sec-head">
+      <p class="kicker rv">Registered Office</p>
+      <h2 class="rv">Where to Find Us</h2>
+      <div class="rule"></div>
+      <p class="lead rv d1" style="margin-top:18px">Inside Odisha&rsquo;s port belt, 82 km by road from Paradip. Visitors are welcome by appointment.</p>
+    </div>
+
+    <div class="visit">
+      <div class="visit-card rv on-navy">
+        <p class="kicker">Head Office</p>
+        <h3>Jay Jagannath Marine Eximss</h3>
+        <address>Ganesh Kutir, Balabhadrapur,<br>Chhatra Bazar, Cuttack,<br>Odisha 753003, India</address>
+        <dl class="visit-meta">
+          <div><dt>Contact</dt><dd>Abinash Rout — Founder &amp; CEO</dd></div>
+          <div><dt>Telephone</dt><dd><a href="tel:+919439155050">+91 94391 55050</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:info@jjmeexporthouse.com">info@jjmeexporthouse.com</a></dd></div>
+          <div><dt>Time Zone</dt><dd>IST — UTC+5:30</dd></div>
+          <div><dt>Nearest Port</dt><dd>Paradip — 82 km</dd></div>
+        </dl>
+        <div class="visit-acts">
+          <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&amp;destination=Ganesh%20Kutir%2C%20Balabhadrapur%2C%20Chhatra%20Bazar%2C%20Cuttack%2C%20Odisha%20753003%2C%20India" target="_blank" rel="noopener noreferrer">Get Directions</a>
+          <a class="btn btn-out" href="https://www.google.com/maps/search/?api=1&amp;query=Ganesh%20Kutir%2C%20Balabhadrapur%2C%20Chhatra%20Bazar%2C%20Cuttack%2C%20Odisha%20753003%2C%20India" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
         </div>
       </div>
+
+      <figure class="visit-map rv d1">
+        <iframe
+          title="Google map showing the location of Jay Jagannath Marine Eximss at Chhatra Bazar, Cuttack, Odisha"
+          src="https://www.google.com/maps?q=Ganesh%20Kutir%2C%20Balabhadrapur%2C%20Chhatra%20Bazar%2C%20Cuttack%2C%20Odisha%20753003%2C%20India&amp;output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <figcaption>
+          <span>Chhatra Bazar, Cuttack · Odisha 753003</span>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Ganesh%20Kutir%2C%20Balabhadrapur%2C%20Chhatra%20Bazar%2C%20Cuttack%2C%20Odisha%20753003%2C%20India" target="_blank" rel="noopener noreferrer">View larger map<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 2h6v6M10 2L2.5 9.5"/></svg></a>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
 <!-- ═══ ENQUIRY ═══ -->
+<!-- Same ids as the forms on the home and calculator pages, because enquiry.js
+     drives all three from one implementation. Changing an id here silently
+     breaks the submission. -->
 <section class="sec navy on-navy" id="enquiry">
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker rv">Enquiry</p>
       <h2 class="rv">Request a Quotation</h2>
       <div class="rule"></div>
-      <p class="lead rv d1" style="margin-top:18px">Your calculator figures are carried into the form below. Add the discharge port and we respond with a firm price, packing detail and available shipment window.</p>
+      <p class="lead rv d1" style="margin-top:18px">Send us the product, tonnage and discharge port. We respond with a firm price, packing detail and the available shipment window. Company and email are the only fields we cannot quote without.</p>
     </div>
     <form id="form" novalidate class="rv d1">
       <div class="enq-grid">
@@ -222,6 +235,7 @@
   </div>
 </section>
 
+
 <!-- ═══ FOOTER ═══ -->
 <footer class="ft">
   <div class="wrap">
@@ -256,7 +270,7 @@
 </footer>
 
 <!-- ═══ WHATSAPP ═══ -->
-<a class="wa" href="https://wa.me/919439155050?text=Hello%20Jay%20Jagannath%20Marine%20Eximss%2C%20I%20would%20like%20a%20quotation."
+<a class="wa" href="https://wa.me/919439155050?text=Hello%20Jay%20Jagannath%20Marine%20Eximss%2C%20I%20would%20like%20to%20enquire%20about%20fly%20ash."
    target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 </a>
@@ -267,7 +281,6 @@
 
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/product.js"></script>
-<script src="assets/js/calculator.js"></script>
 <script src="assets/js/enquiry.js"></script>
 </body>
 </html>

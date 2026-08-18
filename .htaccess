@@ -63,3 +63,12 @@ Options -Indexes
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
+
+# ── classification.html became about.html ───────────────────────────────────
+# The page kept its content and changed its name, so the old URL is not gone,
+# it moved. A 301 hands the search ranking and any external link over to the
+# new one instead of letting either 404. Mirrors the redirects in vercel.json.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule "^classification(\.html)?$" "/about.html" [R=301,L]
+</IfModule>

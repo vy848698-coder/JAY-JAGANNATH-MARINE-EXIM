@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/classification", "destination": "/about", "permanent": true },
+    { "source": "/classification.html", "destination": "/about", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/",

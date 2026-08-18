@@ -54,20 +54,32 @@
     </a>
     <nav class="mainnav">
       <a href="home.html">Home</a>
+      <a href="about.html">About Us</a>
       <a href="product.html">Products</a>
-      <a href="classification.html">Classification</a>
-      <a href="logistics.html" aria-current="page">Logistics</a>
+      <div class="ndd cur">
+        <button type="button" class="ndd-t" aria-expanded="false" aria-controls="dd-cap">Capabilities<svg class="ndd-c" width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1.5L4.5 5 8 1.5"/></svg></button>
+        <div class="ndd-p" id="dd-cap" role="group" aria-label="Capabilities">
+          <a href="logistics.html" aria-current="page"><em>01</em><b>Export Logistics</b><span>Packing formats, ports, Incoterms and the document set</span></a>
+          <a href="network.html"><em>02</em><b>Global Trade Network</b><span>Export markets and the domestic trade book</span></a>
+          <a href="quality.html"><em>03</em><b>Quality &amp; Standards</b><span>ASTM C618, BS EN 450 S and IS 3812 compliance</span></a>
+        </div>
+      </div>
       <a href="calculator.html">Calculator</a>
-      <a href="network.html">Network</a>
-      <a href="quality.html">Quality</a>
+      <a href="contact.html">Contact Us</a>
     </nav>
     <a class="btn btn-gold" href="home.html#enquiry">Request a Quote</a>
     <button id="burger" aria-expanded="false" aria-controls="drawer">Menu</button>
   </div>
   <div id="drawer">
     <a href="home.html">Home</a>
-    <a href="product.html">Products</a><a href="classification.html">Classification</a><a href="logistics.html">Logistics</a>
-    <a href="calculator.html">Calculator</a><a href="network.html">Network</a><a href="quality.html">Quality</a>
+    <a href="about.html">About Us</a>
+    <a href="product.html">Products</a>
+    <span class="dw-grp">Capabilities</span>
+    <a class="dw-sub" href="logistics.html">Export Logistics</a>
+    <a class="dw-sub" href="network.html">Global Trade Network</a>
+    <a class="dw-sub" href="quality.html">Quality &amp; Standards</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="contact.html">Contact Us</a>
     <a href="home.html#enquiry">Request a Quote</a>
   </div></header>
 
@@ -269,8 +281,8 @@
         <p style="font-size:14px;max-width:30ch">Merchant exporter of classified fly ash and zinc ash from Cuttack, Odisha, India.</p>
       </div>
       <div><h3>Company</h3><ul>
-        <li><a href="home.html">Home</a></li><li><a href="product.html">Product Catalog</a></li><li><a href="classification.html">Classification</a></li>
-        <li><a href="logistics.html">Export Logistics</a></li><li><a href="quality.html">Quality</a></li>
+        <li><a href="home.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="product.html">Product Catalog</a></li>
+        <li><a href="logistics.html">Export Logistics</a></li><li><a href="quality.html">Quality</a></li><li><a href="contact.html">Contact Us</a></li>
       </ul></div>
       <div><h3>Products</h3><ul>
         <li><a href="product.html#grades">Fly Ash — Class F</a></li><li><a href="product.html#grades">Fly Ash — Class C</a></li>
@@ -300,6 +312,7 @@
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 15V4M3.5 9.5L9 4l5.5 5.5"/></svg>
 </button>
 
+<script src="assets/js/nav.js"></script>
 <script src="assets/js/product.js"></script>
 <script src="assets/js/logistics.js"></script>
 </body>

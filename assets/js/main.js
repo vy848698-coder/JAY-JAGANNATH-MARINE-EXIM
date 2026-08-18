@@ -67,7 +67,7 @@ const CAT=[
  {n:'Zinc Ash',t:'Export · Byproduct',img:'assets/img/zinc-ash.jpg',
   d:'Powdery byproduct formed on molten zinc during hot-dip galvanisation — metallic zinc particles, zinc oxide and trace impurities.',
   s:{'Feeds':'Zinc Sulphate · Fertiliser','Also':'Zinc Oxide Production','Market':'Export'}},
- {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/ash-heap.jpg',
+ {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/bottom-ash.jpg',pos:'50% 38%',
   d:'The coarse, heavier fraction collected at the bottom of the boiler furnace. Higher in unburnt carbon, with no pozzolanic property — supplied as a separate grade.',
   s:{'Fraction':'Coarse','Pozzolanic':'No','Market':'Domestic'}},
  {n:'Pond Ash',t:'Domestic · Recovered',img:'assets/img/ash-pond-loading.jpg',pos:'66% center',
@@ -265,7 +265,7 @@ sizeCv();read();
 
 /* ══ SCROLL ENGINE: progress, header, parallax, back-to-top ══ */
 const prog=document.getElementById('prog'),hdr=document.querySelector('.hdr'),topBtn=document.getElementById('top-btn');
-const heroArt=document.querySelector('.hero-art'),netImg=document.querySelector('.net-ph img'),aboutImg=document.querySelector('.about-ph img');
+const heroArt=document.querySelector('.hero-art'),netImg=document.querySelector('.net-ph img'),aboutImg=document.querySelector('.about-ph img'),bandImg=document.querySelector('.band-ph img');
 let sTick=false;
 function onScroll(){
   const y=scrollY, max=document.documentElement.scrollHeight-innerHeight;
@@ -275,7 +275,14 @@ function onScroll(){
   if(!RM){
     if(heroArt&&innerWidth>960) heroArt.style.transform=`translateY(${Math.min(y,700)*-0.07}px)`;
     if(netImg){const r=netImg.parentElement.getBoundingClientRect();
-      if(r.bottom>0&&r.top<innerHeight) netImg.style.transform=`translateY(${(r.top-innerHeight/2)*-0.055}px)`;}
+      if(r.bottom>0&&r.top<innerHeight){const d=(r.top-innerHeight/2)*-0.05;
+        netImg.style.transform=`translateY(${Math.max(-38,Math.min(38,d))}px)`;}}
+    /* Clamped: the band only has 12% of its height in slack either side, so the
+       travel is capped well inside that. Unclamped, a long scroll ran the
+       picture off its own top edge. */
+    if(bandImg){const r=bandImg.parentElement.getBoundingClientRect();
+      if(r.bottom>0&&r.top<innerHeight){const d=(r.top-innerHeight/2)*-0.045;
+        bandImg.style.transform=`translateY(${Math.max(-38,Math.min(38,d))}px)`;}}
     if(aboutImg){const r=aboutImg.getBoundingClientRect();
       if(r.bottom>0&&r.top<innerHeight) aboutImg.style.transform=`translateY(${(r.top-innerHeight/2)*-0.035}px)`;}
   }

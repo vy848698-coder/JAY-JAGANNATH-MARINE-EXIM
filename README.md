@@ -13,7 +13,8 @@ Static site. No build step, no dependencies, no framework.
 jai/
 ├── home.html                # home — also served at / (see Routing)
 ├── product.html             # product catalog — grades, other ash, packing
-├── classification.html      # fineness, process, standards comparison
+├── about.html               # the company, the founder, credentials, classification
+├── contact.html             # channels, office map and the quotation form
 ├── logistics.html           # packing, ports, Incoterms, documents
 ├── calculator.html          # shipment calculator + enquiry form
 ├── network.html             # animated trade-lane map, export vs domestic scope
@@ -24,6 +25,7 @@ jai/
 │   ├── js/
 │   │   ├── main.js          # home only; CAT[] product data at the top
 │   │   ├── product.js       # shared engine for the three inner pages
+│   │   ├── nav.js           # the Capabilities dropdown, shared by every page
 │   │   ├── classification.js# + count-up and the process rail
 │   │   ├── logistics.js     # + Incoterm tabs and the route track
 │   │   ├── calculator.js    # + payload maths and the enquiry form
