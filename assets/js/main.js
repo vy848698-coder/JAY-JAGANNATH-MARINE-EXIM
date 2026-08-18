@@ -61,7 +61,7 @@ const CAT=[
  {n:'Fly Ash — Class F',t:'Export · HSN 26219000',img:'assets/img/fly-ash.jpg',
   d:'A fine, grey amorphous powder rich in silica and alumina, spherical in shape. Pozzolanic and effective in sulphate-rich or coastal structural concrete.',
   s:{'Standard':'ASTM C618 / EN 450 S','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
- {n:'Fly Ash — Class C',t:'Export · HSN 26219000',img:'assets/img/fly-ash.jpg',
+ {n:'Fly Ash — Class C',t:'Export · HSN 26219000',img:'assets/img/fly-ash-class-c.jpg',
   d:'Higher calcium ash from lignite or sub-bituminous coal, both pozzolanic and self-cementing. Suited to rapid construction and road base stabilisation.',
   s:{'Standard':'On request','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
  {n:'Zinc Ash',t:'Export · Byproduct',img:'assets/img/zinc-ash.jpg',
