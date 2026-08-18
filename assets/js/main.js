@@ -67,7 +67,7 @@ const CAT=[
  {n:'Zinc Ash',t:'Export · Byproduct',img:'assets/img/zinc-ash.jpg',
   d:'Powdery byproduct formed on molten zinc during hot-dip galvanisation — metallic zinc particles, zinc oxide and trace impurities.',
   s:{'Feeds':'Zinc Sulphate · Fertiliser','Also':'Zinc Oxide Production','Market':'Export'}},
- {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/bottom-pond-ash.jpg',
+ {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/ash-heap.jpg',
   d:'The coarse, heavier fraction collected at the bottom of the boiler furnace. Higher in unburnt carbon, with no pozzolanic property — supplied as a separate grade.',
   s:{'Fraction':'Coarse','Pozzolanic':'No','Market':'Domestic'}},
  {n:'Pond Ash',t:'Domestic · Recovered',img:'assets/img/ash-pond-loading.jpg',pos:'66% center',
