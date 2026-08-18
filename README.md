@@ -11,7 +11,7 @@ Static site. No build step, no dependencies, no framework.
 
 ```
 jai/
-├── index.html               # home
+├── home.html                # home — also served at / (see Routing)
 ├── product.html             # product catalog — grades, other ash, packing
 ├── classification.html      # fineness, process, standards comparison
 ├── logistics.html           # packing, ports, Incoterms, documents
@@ -54,6 +54,18 @@ jai/
 └── README.md
 ```
 
+## Routing
+
+The homepage file is `home.html`, not `index.html`, so the Home nav tab has a real
+page to point at. Both of these must stay in place or a bare `/` 404s:
+
+- **Apache** — `DirectoryIndex home.html index.html` in the root [.htaccess](.htaccess)
+- **Vercel** — the `rewrites` entry in [vercel.json](vercel.json) sending `/` to `/home`
+
+Every link in the pages is relative (`home.html`, `assets/...`), never root-absolute,
+so the site works unchanged whether it sits at a domain root or in a subfolder such as
+`htdocs/Jay Jagannath Marine Exim/`. Keep it that way when adding links.
+
 ## Running it locally
 
 **XAMPP** — the only local option that runs the PHP enquiry endpoint. Put the folder
@@ -77,7 +89,8 @@ node dev-server.mjs   # static site + the Vercel function, on :4200
 
 The form has two back ends and the page uses whichever the host actually runs.
 [assets/js/enquiry.js](assets/js/enquiry.js) tries the first, and falls back to the
-second on a 404:
+second when the host answers 403, 404, 405 or 501 — "not installed here" rather
+than "your enquiry was refused":
 
 | Back end                             | Host                       | What it does                              |
 | ------------------------------------ | -------------------------- | ----------------------------------------- |
@@ -154,7 +167,7 @@ deliberately synchronous: if it fails the form says so, rather than showing a re
 for mail that never left. The acknowledgement then goes out *after* the response is
 flushed, over the same SMTP session, so it costs the visitor nothing.
 
-Every enquiry is appended to `api/storage/enquiries.log` **before** the send is
+Every enquiry is appended to `api/storage/enquiries.log.php` **before** the send is
 attempted, so nothing is lost to an SMTP outage. That directory is created on first
 use, denied by its own `.htaccess`, and gitignored.
 
@@ -203,7 +216,7 @@ tries it first and falls back to `api/enquiry.js` on the 404.
 ## Known TODOs
 
 - [ ] **Set the real domain.** `https://www.jayjagannathmarineexim.com/` is a placeholder in
-      [index.html](index.html) (canonical, Open Graph, JSON-LD), [robots.txt](robots.txt)
+      [home.html](home.html) (canonical, Open Graph, JSON-LD), [robots.txt](robots.txt)
       and [sitemap.xml](sitemap.xml). Find and replace it once the domain is confirmed.
 - [ ] **Put the Gmail app password in `api/mail-config.php`.** Until it is there, the
       form answers "the enquiry desk is not connected yet". See

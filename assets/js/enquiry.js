@@ -18,7 +18,7 @@
   if (!form || !rc) return;
 
   /* Built from this script's own URL rather than location, so the endpoint
-     resolves the same from /index.html, /calculator.html and from a site
+     resolves the same from /home.html, /calculator.html and from a site
      installed in a subfolder (htdocs/Jay Jagannath Marine Exim/…). */
   const ROOT = new URL('../../', document.currentScript.src);
   const ENDPOINTS = [new URL('api/enquiry.php', ROOT).href, new URL('api/enquiry', ROOT).href];

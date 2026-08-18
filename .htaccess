@@ -6,6 +6,12 @@
 # enough for anyone to reconstruct the entire repository. Everything below
 # closes that.
 
+# ── The homepage lives in home.html, not index.html ─────────────────────────
+# The file was renamed so the Home nav tab has a page of its own to point at.
+# Apache still looks for index.html by default, so a bare "/" would 404 without
+# this line. Vercel needs the equivalent rewrite in vercel.json.
+DirectoryIndex home.html index.html
+
 # ── Never serve dotfiles ────────────────────────────────────────────────────
 # .env carries the dashboard intake key; .git carries the whole history.
 # .well-known is the exception — certificate issuance and renewal need it.

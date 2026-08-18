@@ -2,11 +2,11 @@
   "name": "Jay Jagannath Marine Eximss",
   "short_name": "JJME",
   "description": "Merchant exporter of classified fly ash and zinc ash from Cuttack, Odisha, India.",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#112A46",
   "icons": [
-    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" }
+    { "src": "assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" }
   ]
 }

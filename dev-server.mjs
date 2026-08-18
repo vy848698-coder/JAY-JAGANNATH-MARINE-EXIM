@@ -1,7 +1,7 @@
 /* Local development server.
    Serves the static site AND runs api/enquiry.js, which a plain static server
    (VS Code Live Server, python -m http.server) cannot do — and which opening
-   index.html straight from disk cannot do either, because a file:// page
+   home.html straight from disk cannot do either, because a file:// page
    resolves /api/enquiry to file:///api/enquiry and the fetch fails outright.
 
    This is a development convenience only. In production Vercel runs the
@@ -72,7 +72,7 @@ createServer(async (req, res) => {
 
   // mirror vercel.json's cleanUrls: /product serves product.html
   let path = normalize(decodeURIComponent(url.pathname)).replace(/^[/\\]+/, '');
-  if (path === '') path = 'index.html';
+  if (path === '') path = 'home.html';
   if (!extname(path)) path += '.html';
   if (path.includes('..')) { res.writeHead(403); return res.end('forbidden'); }
 
