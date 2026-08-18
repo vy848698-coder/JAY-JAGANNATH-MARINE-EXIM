@@ -310,4 +310,41 @@ document.querySelectorAll('[data-count]').forEach(el=>{
   }),{threshold:.6}).observe(el);
 });
 
+/* credentials marquee — clone the set until it overflows the rail twice, then
+   tell the CSS how far one set is so the loop restarts exactly on the seam.
+   Measured rather than guessed: the card width is a clamp(), so one set is a
+   different number of pixels at every viewport. */
+(function(){
+  const rail=document.querySelector('.creds-marquee'), track=rail&&rail.querySelector('.certs');
+  if(!track||RM) return;                       // reduced motion keeps the static row
+
+  const originals=[...track.children];
+  const setWidth=()=>originals.reduce((w,el)=>{
+    const cs=getComputedStyle(el);
+    return w+el.getBoundingClientRect().width+parseFloat(cs.marginRight||0);
+  },0);
+
+  let clones=[];
+  function build(){
+    clones.forEach(c=>c.remove()); clones=[];
+    const one=setWidth();
+    if(!one) return;                           // images not laid out yet
+    /* two rails' worth guarantees the tail never shows a gap mid-slide */
+    const need=Math.ceil((rail.offsetWidth*2)/one);
+    for(let i=0;i<need;i++) originals.forEach(el=>{
+      const c=el.cloneNode(true);
+      /* decorative repeats: keep them out of the tab order and off the
+         accessibility tree so the five marks are announced once, not six times */
+      c.setAttribute('aria-hidden','true'); c.setAttribute('tabindex','-1'); c.removeAttribute('role');
+      clones.push(c); track.appendChild(c);
+    });
+    track.style.setProperty('--shift',one+'px');
+    track.style.setProperty('--dur',Math.round(one/46)+'s');   // ~46px per second
+  }
+
+  build();
+  addEventListener('load',build);              // re-measure once images have size
+  let t; addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(build,180);});
+})();
+
 /* the enquiry form is wired to the dashboard in assets/js/enquiry.js */

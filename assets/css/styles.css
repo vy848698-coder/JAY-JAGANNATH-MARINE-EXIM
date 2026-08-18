@@ -804,11 +804,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ═══ CREDENTIALS STRIP ═══ */
 /* Sits directly under the navy hero, so it is deliberately light and shallow —
-   a band of proof rather than a full section. The label anchors the left, the
-   marks run beside it, and on the way past they rise in sequence via the
-   shared .rv reveal plus data-stagger. */
+   a band of proof rather than a full section. The label anchors the left; the
+   marks track past it on a loop. */
 .creds{background:var(--mist);border-block:1px solid var(--line);padding-block:clamp(30px,4vw,46px)}
-.creds-in{display:grid;grid-template-columns:minmax(210px,250px) 1fr;gap:clamp(26px,4vw,56px);align-items:center}
+.creds-in{display:grid;grid-template-columns:minmax(210px,250px) minmax(0,1fr);gap:clamp(26px,4vw,56px);align-items:center}
 
 .creds-head h2{font-size:clamp(21px,1rem+1vw,27px);line-height:1.25;letter-spacing:.01em}
 .creds-head .kicker{margin-bottom:10px}
@@ -816,11 +815,23 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .creds-head .rule{margin:14px 0 0}
 .creds-note{margin:14px 0 0;font-size:13.5px;line-height:1.65;color:var(--charcoal-2);max-width:34ch}
 
-/* minmax(0,...) not 1fr: a plain 1fr floors at the track's min-content, and
-   these cards contain images with an intrinsic width, so the row blows past
-   the viewport and takes the heading's wrapping with it. */
-.creds .certs{grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.2vw,16px)}
-.creds .cert{height:clamp(92px,8.6vw,116px);padding:clamp(10px,1.1vw,16px);border-radius:3px;background:var(--white)}
+/* ── marquee ──
+   The track holds the five marks repeated enough times to overflow the rail
+   twice over, and slides left by exactly one set before restarting — so the
+   seam never lands on screen. --shift is measured in main.js rather than
+   guessed, because the set's width depends on the card size at that viewport.
+   Marks carry margin-right instead of a flex gap so one set's width includes
+   its own trailing space; with gap, the seam would jump by one gap each lap. */
+.creds-marquee{position:relative;overflow:hidden}
+/* Fades the marks in and out at the rails instead of clipping them dead. */
+.creds-marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.creds .certs{display:flex;flex-wrap:nowrap;width:max-content;animation:creds-run var(--dur,34s) linear infinite}
+@keyframes creds-run{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(-1 * var(--shift,50%)),0,0)}}
+/* Let a reader stop the row to look at a mark, by pointer or by keyboard. */
+.creds-marquee:hover .certs,.creds-marquee:focus-within .certs{animation-play-state:paused}
+
+.creds .cert{flex:0 0 auto;width:clamp(150px,15vw,196px);margin-right:clamp(10px,1.2vw,16px);
+  height:clamp(92px,8.6vw,116px);padding:clamp(10px,1.1vw,16px);border-radius:3px;background:var(--white)}
 /* Filling the box and letting object-fit letterbox is what actually makes the
    marks large. Left to max-width/max-height the img keeps its intrinsic size
    and floats small in the middle of the card. */
@@ -832,22 +843,21 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .creds .cert:hover img,.creds .cert:focus-visible img{filter:none;opacity:1}
 
 @media(max-width:960px){
-  .creds-in{grid-template-columns:1fr;gap:24px}
+  .creds-in{grid-template-columns:minmax(0,1fr);gap:24px}
   .creds-head{text-align:center}
   .creds-head .rule{margin-inline:auto}
   .creds-note{margin-inline:auto}
   /* The br only earns its keep in the two-column layout. Hidden here, the
      space left before it in the markup keeps the two words apart. */
   .creds-head h2 br{display:none}
-  .creds .certs{grid-template-columns:repeat(3,minmax(0,1fr))}
-  /* Wider cards make a square mark like WTC height-bound, so give height back. */
-  .creds .cert{height:124px}
 }
-@media(max-width:560px){
-  .creds .certs{grid-template-columns:repeat(2,minmax(0,1fr))}
-  /* Five into two leaves one on its own; let it take the full width rather
-     than sit orphaned in a half-empty row. */
-  .creds .cert:last-child{grid-column:1 / -1}
+
+/* A moving row is exactly what this asks us to stop. Falls back to the static
+   wrapped set, which is why the cards keep a sane fixed width above. */
+@media(prefers-reduced-motion:reduce){
+  .creds-marquee{-webkit-mask-image:none;mask-image:none}
+  .creds .certs{animation:none;width:auto;flex-wrap:wrap;justify-content:center}
+  .creds .cert{margin:0 clamp(5px,.6vw,8px) clamp(10px,1.2vw,16px)}
 }
 
 /* ═══ RESPONSIVE ═══ */
