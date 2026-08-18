@@ -64,7 +64,7 @@ const CAT=[
  {n:'Fly Ash — Class C',t:'Export · HSN 26219000',img:'assets/img/fly-ash.jpg',
   d:'Higher calcium ash from lignite or sub-bituminous coal, both pozzolanic and self-cementing. Suited to rapid construction and road base stabilisation.',
   s:{'Standard':'On request','Packing':'50 kg · Jumbo · Bulker','Market':'Export &amp; Domestic'}},
- {n:'Zinc Ash',t:'Export · Byproduct',img:'assets/img/jumbo-bag-loading.jpg',
+ {n:'Zinc Ash',t:'Export · Byproduct',img:'assets/img/zinc-ash.jpg',
   d:'Powdery byproduct formed on molten zinc during hot-dip galvanisation — metallic zinc particles, zinc oxide and trace impurities.',
   s:{'Feeds':'Zinc Sulphate · Fertiliser','Also':'Zinc Oxide Production','Market':'Export'}},
  {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/bottom-pond-ash.jpg',
