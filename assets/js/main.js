@@ -70,7 +70,7 @@ const CAT=[
  {n:'Bottom Ash',t:'Domestic · Coarse Grade',img:'assets/img/bottom-pond-ash.jpg',
   d:'The coarse, heavier fraction collected at the bottom of the boiler furnace. Higher in unburnt carbon, with no pozzolanic property — supplied as a separate grade.',
   s:{'Fraction':'Coarse','Pozzolanic':'No','Market':'Domestic'}},
- {n:'Pond Ash',t:'Domestic · Recovered',img:'assets/img/bottom-pond-ash.jpg',
+ {n:'Pond Ash',t:'Domestic · Recovered',img:'assets/img/ash-pond-loading.jpg',pos:'66% center',
   d:'Fly ash and bottom ash carried as slurry to the ash dyke and recovered for bulk civil use.',
   s:{'Uses':'Landfill · Mine Fill · Roads','Handling':'Bulk','Market':'Domestic'}},
  {n:'Marine, Mineral &amp; Agri',t:'Domestic Trade',img:'assets/img/marine-mineral-agri.jpg',
@@ -79,7 +79,7 @@ const CAT=[
 ];
 document.getElementById('cat').innerHTML=CAT.map((c,i)=>`
  <article class="card rv" data-i="${i}" tabindex="0" role="button" aria-label="View ${c.n} detail">
-   <div class="card-ph"><img src="${c.img}" alt="${c.n}" loading="lazy"></div>
+   <div class="card-ph"><img src="${c.img}" alt="${c.n}" loading="lazy"${c.pos?` style="object-position:${c.pos}"`:''}></div>
    <div class="card-bd">
      <span class="tagline">${c.t}</span>
      <h3>${c.n}</h3>
