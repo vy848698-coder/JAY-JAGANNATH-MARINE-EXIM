@@ -802,6 +802,54 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .rv.in{opacity:1;transform:none}
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
 
+/* ═══ CREDENTIALS STRIP ═══ */
+/* Sits directly under the navy hero, so it is deliberately light and shallow —
+   a band of proof rather than a full section. The label anchors the left, the
+   marks run beside it, and on the way past they rise in sequence via the
+   shared .rv reveal plus data-stagger. */
+.creds{background:var(--mist);border-block:1px solid var(--line);padding-block:clamp(30px,4vw,46px)}
+.creds-in{display:grid;grid-template-columns:minmax(210px,250px) 1fr;gap:clamp(26px,4vw,56px);align-items:center}
+
+.creds-head h2{font-size:clamp(21px,1rem+1vw,27px);line-height:1.25;letter-spacing:.01em}
+.creds-head .kicker{margin-bottom:10px}
+/* The shared .rule is centred; here it belongs on the left with the text. */
+.creds-head .rule{margin:14px 0 0}
+.creds-note{margin:14px 0 0;font-size:13.5px;line-height:1.65;color:var(--charcoal-2);max-width:34ch}
+
+/* minmax(0,...) not 1fr: a plain 1fr floors at the track's min-content, and
+   these cards contain images with an intrinsic width, so the row blows past
+   the viewport and takes the heading's wrapping with it. */
+.creds .certs{grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.2vw,16px)}
+.creds .cert{height:clamp(92px,8.6vw,116px);padding:clamp(10px,1.1vw,16px);border-radius:3px;background:var(--white)}
+/* Filling the box and letting object-fit letterbox is what actually makes the
+   marks large. Left to max-width/max-height the img keeps its intrinsic size
+   and floats small in the middle of the card. */
+.creds .cert img{width:100%;height:100%;object-fit:contain}
+/* Five marks with five unrelated palettes clash at full saturation, but at
+   this size heavy greying makes them unreadable. A light touch settles the row
+   without hiding anything; hover restores true colour. */
+.creds .cert img{filter:grayscale(.3);opacity:.92}
+.creds .cert:hover img,.creds .cert:focus-visible img{filter:none;opacity:1}
+
+@media(max-width:960px){
+  .creds-in{grid-template-columns:1fr;gap:24px}
+  .creds-head{text-align:center}
+  .creds-head .rule{margin-inline:auto}
+  .creds-note{margin-inline:auto}
+  /* The br only earns its keep in the two-column layout. Hidden here, the
+     space left before it in the markup keeps the two words apart. */
+  .creds-head h2 br{display:none}
+  .creds .certs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  /* Wider cards make a square mark like WTC height-bound, so give height back. */
+  .creds .cert{height:124px}
+}
+@media(max-width:560px){
+  .creds .certs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* Five into two leaves one on its own; let it take the full width rather
+     than sit orphaned in a half-empty row. */
+  .creds .cert:last-child{grid-column:1 / -1}
+}
+
 /* ═══ RESPONSIVE ═══ */
 /* The burger only takes over at 900px, so every width from there to full
    desktop has to hold the brand, the six-link nav and the CTA on one line —
