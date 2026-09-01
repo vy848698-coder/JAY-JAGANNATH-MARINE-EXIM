@@ -68,7 +68,14 @@ Options -Indexes
 # The page kept its content and changed its name, so the old URL is not gone,
 # it moved. A 301 hands the search ranking and any external link over to the
 # new one instead of letting either 404. Mirrors the redirects in vercel.json.
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule "^classification(\.html)?$" "/about.html" [R=301,L]
+#
+# RedirectMatch, not RewriteRule, because this file has to work both at a
+# document root and under XAMPP, where the site sits in htdocs/<folder>/.
+# A rewrite target of "/about.html" resolves against the server root, and a
+# relative one makes mod_rewrite prepend the *filesystem* path unless
+# RewriteBase is hardcoded — which cannot be right for both. Capturing the
+# prefix here means the redirect stays inside whatever folder it is served
+# from: $1 is empty at a root, and the subfolder path under XAMPP.
+<IfModule mod_alias.c>
+  RedirectMatch 301 "^(.*)/classification(\.html)?$" "$1/about.html"
 </IfModule>

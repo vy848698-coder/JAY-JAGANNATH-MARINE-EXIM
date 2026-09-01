@@ -98,28 +98,33 @@ p{margin:0}
 /* anchors clear the sticky header */
 section[id],div[id]{scroll-margin-top:84px}
 
-/* ═══ UTILITY STRIP ═══ */
-.util{background:var(--navy-2);color:#B9C8D6;font-size:12px;letter-spacing:.06em}
-.util .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:9px}
-.util a:hover{color:var(--gold)}
-.util span+span{margin-left:22px}
-
 /* ═══ HEADER ═══ */
 .hdr{background:var(--navy);position:sticky;top:0;z-index:90;border-bottom:1px solid var(--navy-3)}
 .hdr{transition:box-shadow .35s}
 .hdr.sm{box-shadow:0 6px 26px rgba(6,18,32,.34)}
-.hdr .wrap{display:flex;align-items:center;gap:20px;padding-block:12px;transition:padding-block .35s var(--ease)}
+/* Three tracks, not a flex row. With auto margins the leftover width pooled
+   into two gaps that grew as the nav shrank — losing the Capabilities tab left
+   the five remaining links marooned between a hole on each side. 1fr auto 1fr
+   centres the nav against the bar itself, so the gaps stay even whatever the
+   nav is carrying, and the brand and the CTA sit hard to their own edges.
+   Explicit column numbers matter: with the nav and the CTA hidden under 900px,
+   the burger would otherwise fall into the middle track. */
+.hdr .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:20px;padding-block:12px;transition:padding-block .35s var(--ease)}
+.brand{grid-column:1;justify-self:start}
+.mainnav{grid-column:2;justify-self:center}
+.hdr .btn,#burger{grid-column:3;justify-self:end}
 .hdr.sm .wrap{padding-block:6px}
 .brand img{transition:width .35s var(--ease),height .35s var(--ease)}
 .hdr.sm .brand img{width:44px;height:44px}
-.brand{display:flex;align-items:center;gap:14px;margin-right:auto}
+.brand{display:flex;align-items:center;gap:14px}
 .brand img{width:56px;height:56px;flex:none}
-.brand-tx{font-family:var(--head);font-weight:600;font-size:14px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
+.brand-tx{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
 .brand-tx small{display:block;font-family:var(--body);font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px;white-space:nowrap}
-.mainnav{display:flex;flex-wrap:nowrap;align-items:center;gap:clamp(10px,1.4vw,18px);margin-right:auto}
-.mainnav a{font-size:clamp(11.5px,.52vw + .35rem,12.5px);font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;color:#D3DEE8;padding-block:6px;border-bottom:2px solid transparent;transition:color .25s,border-color .25s}
+.mainnav{display:flex;flex-wrap:nowrap;align-items:center;gap:clamp(12px,1.6vw,26px)}
+.mainnav a{font-size:clamp(12px,.5vw + .46rem,15px);font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;color:#D3DEE8;padding-block:6px;border-bottom:2px solid transparent;transition:color .25s,border-color .25s}
 .mainnav a:hover{color:var(--gold);border-bottom-color:var(--gold)}
-.hdr .btn{padding:13px 18px;font-size:12px;letter-spacing:.12em;white-space:nowrap}
+.hdr .btn{padding:14px 20px;font-size:13px;letter-spacing:.12em;white-space:nowrap}
 #burger{display:none;background:none;border:1px solid var(--navy-3);color:var(--white);padding:10px 14px;font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 #drawer{display:none;background:var(--navy-2);border-top:1px solid var(--navy-3)}
 #drawer.open{display:block}
@@ -129,71 +134,91 @@ section[id],div[id]{scroll-margin-top:84px}
 #drawer a{display:block;padding:15px var(--gut);color:#D3DEE8;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--navy-3)}
 
 /* ═══ HERO ═══ */
-.hero{position:relative;background:var(--navy);overflow:hidden;min-height:clamp(600px,92vh,860px);display:flex;flex-direction:column;justify-content:center}
-#ash{position:absolute;inset:0;z-index:1;pointer-events:none}
-.hero-veil{position:absolute;inset:0;z-index:0;
-  background:radial-gradient(70% 60% at 12% 30%,rgba(10,107,116,.42),transparent 62%),
-             radial-gradient(50% 50% at 92% 88%,rgba(212,175,55,.13),transparent 65%)}
-.hero-grid{position:absolute;inset:0;z-index:0;opacity:.5;
+/* Full-screen: svh rather than vh so mobile browser chrome does not push the
+   facts strip below the fold on load and then leave a gap when it retracts.
+   The vh line is the fallback for engines without svh. */
+.hero{position:relative;background:var(--navy);overflow:hidden;display:flex;flex-direction:column;
+  min-height:clamp(620px,94vh,940px);
+  min-height:clamp(620px,100svh,940px)}
+#ash{position:absolute;inset:0;z-index:3;pointer-events:none}
+/* The photograph is a pale, cool composite — bright sky, a white flare through
+   the middle — so white type needs help. It is graded down into the navy range
+   rather than dimmed flat, which would have thrown away the gantries and the
+   hull the way the old network wash did. */
+.hero-ph{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero-ph img{width:100%;height:100%;object-fit:cover;object-position:58% center;
+  filter:saturate(.8) contrast(1.08) brightness(.72);
+  animation:kb 26s ease-in-out infinite alternate}
+/* Scale, not translate: a slow push-in never uncovers its own edge, so there is
+   no strip of bare navy to appear at the crown the way the parallax bands had. */
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.11)}}
+
+/* Directional: heavy under the type on the left, clearing across the middle so
+   the vessel and the freighters read, then navy again at the foot so the facts
+   strip and the section beneath it join without a seam. The teal and gold casts
+   from the old veil survive at low strength to keep the palette. */
+.hero-veil{position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(90deg,rgba(7,20,36,.86) 0%,rgba(8,22,39,.62) 30%,rgba(10,26,45,.22) 62%,rgba(12,31,53,.1) 100%),
+    linear-gradient(180deg,rgba(9,24,41,.6) 0%,transparent 24%,transparent 66%,rgba(9,24,41,.8) 100%),
+    radial-gradient(70% 60% at 12% 30%,rgba(10,107,116,.3),transparent 62%),
+    radial-gradient(50% 50% at 92% 88%,rgba(212,175,55,.1),transparent 65%)}
+.hero-grid{position:absolute;inset:0;z-index:2;opacity:.28;
   background-image:linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);
   background-size:64px 64px}
-.hero .wrap{position:relative;z-index:3;padding-block:clamp(48px,7vw,84px)}
-.hero-split{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(30px,5vw,68px);align-items:center}
+/* Wider than the site's 1240 container on purpose. Inside 1240 the copy sat
+   340px in from the edge of a 1920 screen with scrim either side, which is what
+   made a left-aligned block read as floating in the middle of the picture.
+   margin-block:auto centres it in the space above the strip, which the auto
+   margin in turn pushes to the foot — so the photograph gets the whole frame. */
+.hero .wrap{position:relative;z-index:4;max-width:1440px;margin-top:auto;
+  padding-block:clamp(40px,6vw,72px) clamp(44px,6vw,80px)}
+/* A flat ceiling, no percentage. Twice now a percentage cap has resolved below
+   what the tagline needs at some width and folded it — 64% of the container is
+   about 400px on a mid-size window, and that line is 555px. The wrap already
+   limits the measure; this only stops the block running the full 1440. */
+.hero-tx{max-width:900px}
 
 .eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:0 0 20px}
+.hero .eyebrow,.hero-kin{text-shadow:0 1px 18px rgba(5,14,26,.8)}
 .eyebrow i{display:block;width:40px;height:1px;background:var(--gold);flex:none}
-.hero h1{color:var(--white);max-width:12ch;margin:0}
-.hero h1 span{display:block}
+/* Two lines, always — the lockup reads "Jay Jagannath / Marine Eximss" the way
+   it does beside the logo in the header. The spans were already block-level,
+   but max-width:12ch capped the box below the 13 characters each line actually
+   needs (a Cinzel `ch` is the width of a zero, well under its average capital),
+   so both lines wrapped again and the name arrived in four. nowrap settles the
+   structure; the font-size below keeps it inside the column instead of
+   overflowing once nothing can break. */
+/* Set as a lockup, not as a sentence: line-height 1.04 instead of the 1.12 h1
+   carries elsewhere, so the two lines bind into one mark the way they do beside
+   the logo. Tracking eases to .015em because Cinzel needs less of it the larger
+   it gets, and the cap rises to 56px into the room the standards strip left. */
+.hero h1{color:var(--white);max-width:none;margin:0;font-size:clamp(27px,6vw,88px);
+  line-height:1.03;letter-spacing:.015em;text-shadow:0 2px 34px rgba(5,14,26,.72)}
+.hero h1 span{display:block;white-space:nowrap}
 .hero h1 .gold{color:var(--gold)}
-.hero-kin{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:22px 0 0;font-family:var(--body);font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9FB2C4}
+.hero-kin{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:30px 0 0;font-family:var(--body);font-size:15.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9FB2C4}
 .kin{position:relative;display:inline-block;height:1.5em;overflow:hidden;vertical-align:bottom;min-width:14ch}
 .kin b{display:block;height:1.5em;line-height:1.5em;color:var(--gold);font-weight:700;transition:transform .7s var(--ease)}
-.hero .lead{margin:20px 0 0;color:#C7D5E2;max-width:46ch}
-.hero-acts{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
-.hero-trust{display:flex;gap:0;flex-wrap:wrap;margin-top:34px;border-top:1px solid var(--navy-3);padding-top:20px}
-.hero-trust span{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8FA3B6;padding-right:20px;margin-right:20px;border-right:1px solid var(--navy-3)}
-.hero-trust span:last-child{border-right:0;margin-right:0;padding-right:0}
-.hero-trust b{color:var(--white);font-weight:700}
-
-/* layered photo composition */
-.hero-art{position:relative;aspect-ratio:4/4.4;max-height:560px}
-/* One photograph, so it takes the whole box — the old inset existed only to
-   clear the second frame that used to sit bottom-left. */
-.hero-art .fr1{position:absolute;inset:0;overflow:hidden;border:1px solid rgba(212,175,55,.5)}
-/* The frame is portrait and the ship photo is landscape, so cover throws away
-   about 40% of the width. Centred, that lands on the cranes and cuts the
-   vessel's bow off at the edge; biasing left keeps the ship in the frame. */
-.hero-art .fr1 img{width:100%;height:100%;object-fit:cover;object-position:15% center;animation:kb 22s ease-in-out infinite alternate}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
-.hero-art .rule-v{position:absolute;top:-14px;right:-14px;width:96px;height:96px;border-top:2px solid var(--gold);border-right:2px solid var(--gold)}
-.hero-badge{position:absolute;right:-10px;top:34%;background:var(--gold);color:var(--navy);padding:12px 16px;text-align:center;box-shadow:0 12px 30px rgba(4,12,22,.5)}
-.hero-badge b{display:block;font-family:var(--head);font-size:17px;font-weight:700;line-height:1}
-.hero-badge span{display:block;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
 
 /* entrance */
 .up{opacity:0;transform:translateY(28px);animation:up 1s var(--ease) forwards}
 @keyframes up{to{opacity:1;transform:none}}
-.hero-foot{position:relative;z-index:3;border-top:1px solid var(--navy-3);background:rgba(9,24,41,.5)}
+.hero-foot{position:relative;z-index:4;border-top:1px solid var(--navy-3);background:rgba(9,24,41,.5)}
 .hero-foot .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:0}
 .hf{padding:20px 18px;text-align:center;border-left:1px solid var(--navy-3)}
 .hf:first-child{border-left:0}
 .hf b{display:block;font-family:var(--head);font-size:21px;font-weight:600;color:var(--gold);letter-spacing:.02em}
 .hf span{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#9FB2C4;margin-top:6px}
 
-@media(max-width:960px){
-  .hero-split{grid-template-columns:1fr;gap:38px}
-  .hero-art{aspect-ratio:4/3;max-height:340px;order:-1}
-  .hero-badge{display:none}
-  .hero h1{max-width:none}
-}
 
 /* ═══ ABOUT ═══ */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:center}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:stretch}
 /* Two numbered plates rather than one photograph: the ash has a source and a
    recovery stage, and naming them says more about the operation than a single
    establishing shot does. Set as documentary plates — index, title, one line of
    caption on navy — which is the same vocabulary as the .std standard cards. */
-.about-ph{position:relative;overflow:visible;display:grid;gap:clamp(14px,1.6vw,20px);align-content:center}
+.about-ph{position:relative;overflow:visible;display:grid;gap:clamp(14px,1.6vw,20px)}
 .about-ph::after{content:"";position:absolute;left:-14px;bottom:-14px;width:120px;height:120px;border-left:3px solid var(--gold);border-bottom:3px solid var(--gold)}
 
 .plate{margin:0;background:var(--white);border:1px solid var(--line);box-shadow:0 2px 18px rgba(17,42,70,.07);overflow:hidden}
@@ -210,6 +235,19 @@ section[id],div[id]{scroll-margin-top:84px}
 .plate-n{grid-row:1 / 3;align-self:start;font-family:var(--head);font-size:clamp(19px,2vw,23px);font-weight:600;line-height:1;color:var(--gold);letter-spacing:.02em}
 .plate-t{font-family:var(--head);font-size:clamp(15px,1.3vw,17px);font-weight:600;letter-spacing:.05em;line-height:1.2}
 .plate-s{font-size:12.5px;line-height:1.5;color:#A8BACB}
+
+/* One photograph instead of two stacked plates. The figure is a flex column so
+   the picture takes whatever height the copy beside it needs and the caption
+   stays pinned to the foot — which is what makes the image read as filling the
+   column rather than floating at a fixed height in the middle of it. The
+   min-height is the floor for the stacked layout below 900px, where there is
+   no second column to match. */
+.about-plate{display:flex;flex-direction:column;height:100%}
+.about-plate .plate-img{flex:1 1 auto;min-height:clamp(300px,34vw,520px)}
+.about-plate .plate-img img{height:100%}
+/* no index on a single plate, so the caption is one column, not two */
+.about-plate figcaption{grid-template-columns:minmax(0,1fr)}
+.about-plate .plate-t{font-size:clamp(16px,1.4vw,19px)}
 .mv{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:34px}
 .mv-card{background:var(--white);border-top:3px solid var(--gold);padding:26px 24px;box-shadow:0 2px 18px rgba(17,42,70,.07)}
 .mv-card h3{margin-bottom:10px}
@@ -657,7 +695,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .cap-tag.weight{color:var(--gold)}
 .cap-tag.volume{color:#5FD0DC}
 .cap p{font-size:13px;color:#B9C8D6;margin:10px 0 0;line-height:1.6}
-/* named cap-* rather than util-* — .util is already the top contact strip */
 .cap-bar{height:6px;background:var(--navy-3);margin-top:14px;overflow:hidden}
 .cap-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));
   transition:width .5s var(--ease)}
@@ -897,17 +934,15 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 }
 
 /* ═══ RESPONSIVE ═══ */
-/* The burger only takes over at 900px, so every width from there to full
-   desktop has to hold the brand, the six-tab nav and the CTA on one line.
-   Three of the six labels are now two words — About Us, Contact Us and the
-   Capabilities tab — so the bar needs far more room than it did when the
-   labels were single words, and even at the full 1240px container it no
-   longer fits untouched. Hence a tighter base above and three steps here,
-   each measured at its own tight end: 1240px, 1080px and 980px.
+/* The burger only takes over at 900px, so every width from there up has to
+   hold the brand, the five-tab nav and the CTA on one line. With the wide
+   Capabilities tab shelved the bar has room to spare — modelled centred with
+   at least 56px of slack at the tightest point, 901px — so these two steps
+   only ease the tracking and the CTA, and the wordmark stays at every width.
 
-   .mainnav .ndd-t rather than .ndd-t on purpose: the dropdown block sits at
-   the foot of this file, so a bare .ndd-t there would out-order these rules
-   and win. The extra class puts specificity ahead of source order. */
+   .mainnav .ndd-t rather than .ndd-t on purpose: the dropdown rules live at
+   the foot of this file, so a bare .ndd-t there would out-order these on
+   source order. Kept against the day SHELVED.md puts that tab back. */
 @media(max-width:1240px){
   /* .brand-tx is nowrap by design, so it has to give first */
   .brand-tx{font-size:13.5px;letter-spacing:.04em}
@@ -922,12 +957,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .mainnav a,.mainnav .ndd-t{letter-spacing:.02em}
   .ndd-t{gap:5px}
   .hdr .btn{padding:11px 13px;font-size:10.5px;letter-spacing:.06em}
-}
-@media(max-width:1010px){
-  /* the last of the width comes off the brand: the mark alone still
-     identifies the company, and the wordmark returns as soon as there is
-     room for it — which, at 900px, is where the burger takes over anyway */
-  .brand-tx{display:none}
 }
 
 @media(max-width:1080px){
@@ -989,29 +1018,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   #burger{padding:9px 11px;font-size:10px;letter-spacing:.12em}
   #drawer a{padding:14px var(--gut);font-size:12px}
 
-  /* the contact strip reads better centred than pushed to both edges */
-  .util{font-size:11px}
-  .util .wrap{justify-content:center;text-align:center;gap:2px 14px}
-  .util span+span{margin-left:0}
-
   /* one full-width button beats two cramped ones at this width */
   .btn{padding:14px 20px;font-size:12px;letter-spacing:.12em}
-  .hero-acts{gap:10px}
-  .hero-acts .btn,.pcta-acts .btn,.enq-foot .btn{width:100%}
+  .pcta-acts .btn,.enq-foot .btn{width:100%}
 
   .eyebrow{font-size:10px;letter-spacing:.18em;gap:8px;margin-bottom:16px}
   .eyebrow i{width:24px}
-  /* the corner bracket hangs 14px outside the photo — at this gutter that
-     puts its vertical arm on the viewport edge, where it reads as a stray
-     line rather than a corner */
-  .hero-art .rule-v{top:-10px;right:-10px;width:64px;height:64px}
   .hero-kin{font-size:12.5px;letter-spacing:.14em;gap:8px}
-  .hero .lead,.lead{max-width:none}
-
-  /* the right-hand rules only read as dividers on a single line */
-  .hero-trust{display:grid;gap:9px;margin-top:26px}
-  .hero-trust span{border-right:0;padding-right:0;margin-right:0;
-    font-size:10.5px;letter-spacing:.12em}
+  /* no room to clear to the right at this width, so the veil goes vertical:
+     dark top and bottom, and the picture reads through the middle */
+  .hero-veil{background:
+    linear-gradient(180deg,rgba(7,20,36,.9) 0%,rgba(8,22,39,.66) 38%,rgba(9,24,41,.72) 70%,rgba(9,24,41,.92) 100%)}
+  .lead{max-width:none}
 
   .hf{padding:15px 8px}
   .hf b{font-size:18px}
@@ -1355,3 +1373,51 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ccard-v:hover{color:var(--teal);border-color:var(--teal)}
 
 @media(max-width:900px){ .ccards{grid-template-columns:1fr} }
+
+/* ═══════════════════════════════════════════════════
+   PRODUCT CATALOG — one scrolling page
+   Tabs were the wrong instrument: six of seven categories sat behind a click,
+   so a visitor who never pressed anything saw a seventh of the catalogue.
+   Everything is stacked and reachable by scrolling now. The index below is a
+   shortcut, not a gate — every section is on the page whether it is used
+   or not.
+   ═══════════════════════════════════════════════════ */
+.pindex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-top:clamp(26px,3vw,36px)}
+.pindex a{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--navy);border:1px solid var(--line);background:var(--white);padding:10px 16px;
+  transition:background .3s,border-color .3s,color .3s}
+.pindex a:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
+
+/* the standards line, set as a strip so the three codes read as credentials */
+.pstd{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-3);
+  border:1px solid var(--navy-3);margin-top:clamp(30px,4vw,46px)}
+.pstd div{background:var(--navy);color:var(--white);padding:24px 20px;text-align:center}
+.pstd b{display:block;font-family:var(--head);font-size:clamp(16px,1.4vw,19px);font-weight:600;color:var(--gold)}
+.pstd span{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#9FB2C4;margin-top:7px}
+.pstd-note{margin-top:16px;font-size:13px;color:var(--charcoal-2);text-align:center}
+
+/* Categories with no photography yet. A card built round a drawn mark and a
+   spec list rather than an empty picture frame — the absence then reads as a
+   decision instead of a gap, and the row still sits level with the photographed
+   sections above it. */
+.dcards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.dcard{position:relative;background:var(--white);border:1px solid var(--line);
+  border-top:3px solid var(--gold);padding:28px 24px 24px;
+  transition:transform .4s var(--ease),box-shadow .4s,border-color .4s}
+.dcard:hover{transform:translateY(-5px);box-shadow:0 16px 38px rgba(17,42,70,.11)}
+.dcard svg{display:block;margin-bottom:18px}
+.dcard h3{margin-bottom:10px}
+.dcard p{font-size:14.5px;color:var(--charcoal-2)}
+.dcard dl{margin:18px 0 0;border-top:1px solid var(--line);padding-top:14px;display:grid;gap:7px}
+.dcard dl div{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.dcard dt{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#8FA3B6}
+.dcard dd{margin:0;font-family:var(--head);font-size:14px;font-weight:600;color:var(--navy);text-align:right}
+
+@media(max-width:1080px){ .dcards{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:640px){
+  .dcards{grid-template-columns:1fr}
+  .pstd{grid-template-columns:1fr}
+  .pindex a{font-size:10.5px;letter-spacing:.1em;padding:9px 12px}
+}

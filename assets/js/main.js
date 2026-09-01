@@ -265,7 +265,7 @@ sizeCv();read();
 
 /* ══ SCROLL ENGINE: progress, header, parallax, back-to-top ══ */
 const prog=document.getElementById('prog'),hdr=document.querySelector('.hdr'),topBtn=document.getElementById('top-btn');
-const heroArt=document.querySelector('.hero-art'),netImg=document.querySelector('.net-ph img'),aboutImg=document.querySelector('.about-ph img'),bandImg=document.querySelector('.band-ph img');
+const netImg=document.querySelector('.net-ph img'),aboutImg=document.querySelector('.about-ph img'),bandImg=document.querySelector('.band-ph img');
 let sTick=false;
 function onScroll(){
   const y=scrollY, max=document.documentElement.scrollHeight-innerHeight;
@@ -273,7 +273,6 @@ function onScroll(){
   hdr.classList.toggle('sm',y>50);
   topBtn.classList.toggle('on',y>700);
   if(!RM){
-    if(heroArt&&innerWidth>960) heroArt.style.transform=`translateY(${Math.min(y,700)*-0.07}px)`;
     if(netImg){const r=netImg.parentElement.getBoundingClientRect();
       if(r.bottom>0&&r.top<innerHeight){const d=(r.top-innerHeight/2)*-0.05;
         netImg.style.transform=`translateY(${Math.max(-38,Math.min(38,d))}px)`;}}

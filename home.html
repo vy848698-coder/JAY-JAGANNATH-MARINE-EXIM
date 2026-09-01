@@ -61,17 +61,6 @@
 
 <div id="prog"></div>
 
-<!-- ═══ UTILITY ═══ -->
-<div class="util">
-  <div class="wrap">
-    <span>Cuttack, Odisha, India · Established 2017</span>
-    <span>
-      <a href="mailto:info@jjmeexporthouse.com">info@jjmeexporthouse.com</a>
-      <span><a href="tel:+919439155050">+91 94391 55050</a></span>
-    </span>
-  </div>
-</div>
-
 <!-- ═══ HEADER ═══ -->
 <header class="hdr">
   <div class="wrap">
@@ -83,14 +72,6 @@
       <a href="home.html" aria-current="page">Home</a>
       <a href="about.html">About Us</a>
       <a href="product.html">Products</a>
-      <div class="ndd">
-        <button type="button" class="ndd-t" aria-expanded="false" aria-controls="dd-cap">Capabilities<svg class="ndd-c" width="9" height="6" viewBox="0 0 9 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1.5L4.5 5 8 1.5"/></svg></button>
-        <div class="ndd-p" id="dd-cap" role="group" aria-label="Capabilities">
-          <a href="logistics.html"><em>01</em><b>Export Logistics</b><span>Packing formats, ports, Incoterms and the document set</span></a>
-          <a href="network.html"><em>02</em><b>Global Trade Network</b><span>Export markets and the domestic trade book</span></a>
-          <a href="quality.html"><em>03</em><b>Quality &amp; Standards</b><span>ASTM C618, BS EN 450 S and IS 3812 compliance</span></a>
-        </div>
-      </div>
       <a href="calculator.html">Calculator</a>
       <a href="contact.html">Contact Us</a>
     </nav>
@@ -101,10 +82,6 @@
     <a href="home.html">Home</a>
     <a href="about.html">About Us</a>
     <a href="product.html">Products</a>
-    <span class="dw-grp">Capabilities</span>
-    <a class="dw-sub" href="logistics.html">Export Logistics</a>
-    <a class="dw-sub" href="network.html">Global Trade Network</a>
-    <a class="dw-sub" href="quality.html">Quality &amp; Standards</a>
     <a href="calculator.html">Calculator</a>
     <a href="contact.html">Contact Us</a>
     <a href="#enquiry">Request a Quote</a>
@@ -112,35 +89,25 @@
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="top">
+  <!-- Full-bleed photograph now, not a framed plate beside the copy. The veil
+       below does the work that the old layout did with a border: it is heavy
+       on the left where the type sits and clears to the right, so the vessel,
+       the gantries and the freighters stay visible instead of being flattened
+       under a wash. -->
+  <div class="hero-ph">
+    <img src="assets/img/hero-homepage.jpg" alt="" width="612" height="399" fetchpriority="high" decoding="async">
+  </div>
   <div class="hero-veil"></div>
   <div class="hero-grid"></div>
   <canvas id="ash"></canvas>
 
   <div class="wrap">
-    <div class="hero-split">
-      <div>
-        <p class="eyebrow up" style="animation-delay:.05s"><i></i>Merchant Exporter · Cuttack, Odisha · Est. 2017</p>
-        <h1 class="up" style="animation-delay:.16s"><span>Jay Jagannath</span><span class="gold">Marine Eximss</span></h1>
-        <p class="hero-kin up" style="animation-delay:.3s">Specialists in
-          <span class="kin" id="kin"><b>Fly Ash</b><b>Zinc Ash</b><b>Bulk Minerals</b><b>Marine Cargo</b></span>
-        </p>
-        <p class="lead up" style="animation-delay:.42s">Classified fly ash and zinc ash, exported worldwide from Odisha, India — graded to ASTM&nbsp;C618, BS EN 450 S and IS 3812.</p>
-        <div class="hero-acts up" style="animation-delay:.54s">
-          <a class="btn btn-gold" href="#enquiry">Request a Quote</a>
-          <a class="btn btn-out" href="product.html">View Product Catalog</a>
-        </div>
-        <div class="hero-trust up" style="animation-delay:.66s">
-          <span><b>ASTM C618</b> Class F</span>
-          <span><b>BS EN 450</b> Cat. S</span>
-          <span><b>IS 3812</b> Grade</span>
-        </div>
-      </div>
-
-      <div class="hero-art up" style="animation-delay:.34s">
-        <div class="rule-v"></div>
-        <div class="fr1"><img src="assets/img/container-ship.jpg" alt="Container vessel alongside at berth, gantry cranes working" width="612" height="303" fetchpriority="high" decoding="async"></div>
-        <div class="hero-badge"><b>26219000</b><span>HSN Code</span></div>
-      </div>
+    <div class="hero-tx">
+      <p class="eyebrow up" style="animation-delay:.05s"><i></i>Merchant Exporter &middot; Cuttack, Odisha &middot; Est. 2017</p>
+      <h1 class="up" style="animation-delay:.16s"><span>Jay Jagannath</span><span class="gold">Marine Eximss</span></h1>
+      <p class="hero-kin up" style="animation-delay:.3s">Specialists in
+        <span class="kin" id="kin"><b>Fly Ash</b><b>Zinc Ash</b><b>Bulk Minerals</b><b>Marine Cargo</b></span>
+      </p>
     </div>
   </div>
 
@@ -183,22 +150,20 @@
     <div class="about-grid">
       <div class="rv">
         <p class="kicker">About the Company</p>
-        <h2>A Merchant Exporter Built on Bulk Material</h2>
+        <h2>A Merchant Exporter Dealing Fly Ash in Bulk</h2>
         <p class="lead" style="margin-top:16px">Jay Jagannath Marine Eximss was founded in 2017 by Abinash Rout, who brought more than a decade of experience in a family business spanning mining, transport and fuel retail. Today JJME exports fly ash and zinc ash to international markets, and trades minerals, ore, marine products, fruits and vegetables within India.</p>
-        <p class="lead" style="margin-top:14px">We supply both small firms and large cement manufacturers, with timely delivery of material classified to ASTM C618 and EN 450-1 global standards.</p>
         <div class="mv" data-stagger>
           <div class="mv-card rv"><h3>Our Mission</h3><p>To redefine global trade through excellence, innovation and sustainability — connecting the world with seamless and ethical international transactions.</p></div>
           <div class="mv-card rv"><h3>Our Vision</h3><p>A future where international trade is a harmonious blend of innovation, ethical practice and global connectivity.</p></div>
         </div>
       </div>
-      <div class="about-ph" data-stagger>
-        <figure class="plate rv">
-          <div class="plate-img"><img src="assets/img/power-plant.jpg" alt="Thermal power station, the source of the fly ash" width="1100" height="493" loading="lazy" decoding="async"></div>
-          <figcaption><span class="plate-n">01</span><span class="plate-t">Ash Source</span><span class="plate-s">Thermal power station, where the fly ash is generated</span></figcaption>
-        </figure>
-        <figure class="plate rv">
-          <div class="plate-img"><img src="assets/img/ash-pond-loading.jpg" alt="Excavator loading pond ash into a tipper at the ash pond" width="1100" height="331" loading="lazy" decoding="async"></div>
-          <figcaption><span class="plate-n">02</span><span class="plate-t">Pond Ash</span><span class="plate-s">Excavated and loaded at the ash pond for classification</span></figcaption>
+      <div class="about-ph">
+        <figure class="plate about-plate rv">
+          <div class="plate-img"><img src="assets/img/about-company.jpg" alt="A trader looking out over a city skyline beneath a world map of connected trade routes" width="1193" height="746" loading="lazy" decoding="async"></div>
+          <figcaption>
+            <span class="plate-t">Trading Out of Odisha</span>
+            <span class="plate-s">Fly ash and zinc ash to international buyers; minerals, ore, marine products and fresh produce within India.</span>
+          </figcaption>
         </figure>
       </div>
     </div>
@@ -534,7 +499,9 @@
         <li><a href="logistics.html">Export Logistics</a></li><li><a href="quality.html">Quality</a></li><li><a href="contact.html">Contact Us</a></li>
       </ul></div>
       <div><h3>Products</h3><ul>
-        <li>Fly Ash — Class F</li><li>Fly Ash — Class C</li><li>Bottom Ash</li><li>Pond Ash</li><li>Zinc Ash</li>
+        <li><a href="product.html#flyash">Fly Ash</a></li><li><a href="product.html#zincash">Zinc Ash</a></li>
+        <li><a href="product.html#minerals">Minerals &amp; Ore</a></li><li><a href="product.html#marine">Marine Product</a></li>
+        <li><a href="product.html#fruits">Fruits &amp; Vegetables</a></li>
       </ul></div>
       <div><h3>Contact</h3><ul>
         <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Ganesh%20Kutir%2C%20Balabhadrapur%2C%20Chhatra%20Bazar%2C%20Cuttack%2C%20Odisha%20753003%2C%20India" target="_blank" rel="noopener noreferrer">Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India</a></li>
@@ -580,7 +547,6 @@
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 15V4M3.5 9.5L9 4l5.5 5.5"/></svg>
 </button>
 
-<script src="assets/js/nav.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/enquiry.js"></script>
 </body>
