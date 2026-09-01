@@ -24,6 +24,9 @@
 
   --gut:clamp(20px,5vw,64px);
   --max:1240px;
+  /* height of the sticky header at rest. The mobile hero subtracts it so a
+     100svh frame does not push itself a header's worth below the fold. */
+  --hdr-h:81px;
   --ease:cubic-bezier(.22,1,.36,1);
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -975,6 +978,25 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .hero-foot .wrap{grid-template-columns:1fr 1fr}
   .hf:nth-child(3){border-left:0}
   .hf:nth-child(n+3){border-top:1px solid var(--navy-3)}
+
+  /* MOBILE HERO
+     Two things made the phone hero open on a band of empty photograph. The
+     frame counted the sticky header as free height — 100svh below an 81px
+     header is a screen and a bit — and the copy was pinned to the foot with
+     margin-top:auto, so every pixel of the surplus pooled above the eyebrow.
+     The frame now stops at the header, and margin-block:auto splits what is
+     left evenly, which centres the lockup between the header and the facts
+     strip instead of sinking it. The floor keeps a portrait proportion on the
+     short frames a landscape phone reports. */
+  .hero{min-height:max(460px,calc(100vh - var(--hdr-h)));
+        min-height:max(460px,calc(100svh - var(--hdr-h)))}
+  .hero .wrap{margin-block:auto;padding-block:clamp(28px,6vw,52px)}
+  /* the desktop clamp bottoms out at 27px and then stops responding, so the
+     name sat at one fixed size from 640px all the way down to 320px while the
+     column kept narrowing. Scaling with the viewport keeps the two nowrap
+     lines off the gutters on the narrowest phones still in use. */
+  .hero h1{font-size:clamp(24px,7.4vw,40px)}
+  .hero-kin{margin-top:22px}
 }
 @media(max-width:640px){
   /* give the panel a little more of the screen on phones, but keep a margin.
@@ -997,6 +1019,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   /* the wrapper already scrolls — without a floor the three columns just
      crush to a word per line instead of ever reaching it */
   .tbl{min-width:560px}
+
+  /* The facts strip now lands flush with the fold instead of just under it,
+     which puts the bottom-left cell directly beneath the fixed WhatsApp
+     button — it was sitting on the first word of the label. This clears the
+     button (46px tall, 14px up) and the home indicator below it. */
+  .hero-foot .wrap{padding-bottom:calc(48px + env(safe-area-inset-bottom))}
 }
 
 /* ═══ SMALL PHONES ═══
@@ -1013,6 +1041,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .brand{gap:10px}
   .brand img{width:44px;height:44px}
   .hdr.sm .brand img{width:38px;height:38px}
+  /* the mark drops to 44px here, so the bar the hero subtracts does too */
+  :root{--hdr-h:69px}
   .brand-tx{font-size:12.5px;letter-spacing:.03em}
   .brand-tx small{font-size:8.5px;letter-spacing:.14em}
   #burger{padding:9px 11px;font-size:10px;letter-spacing:.12em}
@@ -1024,7 +1054,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
   .eyebrow{font-size:10px;letter-spacing:.18em;gap:8px;margin-bottom:16px}
   .eyebrow i{width:24px}
-  .hero-kin{font-size:12.5px;letter-spacing:.14em;gap:8px}
+  .hero-kin{font-size:12.5px;letter-spacing:.14em;gap:8px;margin-top:18px}
   /* no room to clear to the right at this width, so the veil goes vertical:
      dark top and bottom, and the picture reads through the middle */
   .hero-veil{background:
@@ -1125,7 +1155,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* the narrowest phones still in use — 320px and 360px */
 @media(max-width:360px){
-  :root{--gut:15px}
+  :root{--gut:15px;--hdr-h:65px}
   .brand img{width:40px;height:40px}
   .brand-tx{font-size:11.5px}
   .brand-tx small{letter-spacing:.1em}
