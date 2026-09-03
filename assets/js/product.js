@@ -67,6 +67,8 @@ topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: RM ? 'auto' 
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return;
   const id = a.getAttribute('href'); if (id === '#' || id.length < 2) return;
+  /* a produce panel has to be open before it can be measured or scrolled to */
+  if (window.openTab) openTab(id.slice(1));
   const el = document.querySelector(id); if (!el) return;
   e.preventDefault();
   const top = el.getBoundingClientRect().top + scrollY - (hdr.offsetHeight + 12);

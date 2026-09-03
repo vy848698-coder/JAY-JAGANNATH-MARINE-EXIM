@@ -29,6 +29,7 @@
 
 <!-- ═══ STYLES ═══ -->
 <link rel="stylesheet" href="assets/css/styles.css">
+<noscript><style>.ptabs{display:none}.ppanel[hidden]{display:block!important}.ppanel-label{display:block}</style></noscript>
 </head>
 <body>
 
@@ -91,10 +92,9 @@
         <a href="#flyash">Fly Ash</a>
         <a href="#zincash">Zinc Ash</a>
         <a href="#minerals">Minerals &amp; Ore</a>
-        <a href="#marine">Marine Product</a>
-        <a href="#organic">Organic Product</a>
-        <a href="#fruits">Fruits</a>
         <a href="#vegetables">Vegetables</a>
+        <a href="#fruits">Fruits</a>
+        <a href="#marine">Marine</a>
       </nav>
     </div>
   </div>
@@ -241,76 +241,225 @@
   </div>
 </section>
 
-<!-- ═══ DOMESTIC TRADE BOOK ═══ -->
-<!-- The four categories with no photography yet, kept together rather than
-     spread over four thin sections. Grouped, the drawn marks read as one
-     deliberate set; apart, each would look like a section missing its picture.
-     Each card keeps its own id so the footer links still land on it. -->
-<section class="sec" id="domestic">
+<!-- ═══ FRESH PRODUCE ═══ -->
+<!-- Vegetables, fruit and marine share one grid and differ only in what sits
+     in it, so they share a section too. Three more headings down the page
+     would have made five near-identical card walls in a row; tabbed, the
+     fresh book stays one block and a buyer comparing one against another does
+     it in place instead of by scrolling.
+
+     The panels carry the ids the footers of all seven pages already point at
+     (#vegetables, #fruits, #marine) rather than the section carrying them, so
+     an old link still lands on its own category — product.js opens the right
+     tab before anything is scrolled to. Panels two and three ship hidden so
+     there is no flash of all three on load; the noscript block in the head
+     puts them back and drops the tabs, which is the whole section again for
+     anyone without script. -->
+<section class="sec" id="produce">
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker rv">04 · Domestic</p>
-      <h2 class="rv">The Domestic Trade Book</h2>
+      <h2 class="rv">Fresh Produce</h2>
       <div class="rule"></div>
-      <p class="lead rv d1" style="margin-top:18px">Alongside ash and minerals we trade fresh and marine produce within India. Availability on these follows the season, so variety, pack and quantity are settled against each enquiry.</p>
+      <p class="lead rv d1" style="margin-top:18px">Vegetables, fruit and marine, traded within India on the sourcing and haulage the export book already runs on. All of it follows a season, so variety, pack and quantity are settled against each enquiry.</p>
     </div>
 
-    <div class="dcards" data-stagger>
+    <div class="ptabs rv d1" role="tablist" aria-label="Fresh produce categories">
+      <button class="ptab" type="button" role="tab" id="tab-vegetables" aria-controls="vegetables" aria-selected="true">Vegetables</button>
+      <button class="ptab" type="button" role="tab" id="tab-fruits" aria-controls="fruits" aria-selected="false" tabindex="-1">Fruits</button>
+      <button class="ptab" type="button" role="tab" id="tab-marine" aria-controls="marine" aria-selected="false" tabindex="-1">Marine</button>
+      <span class="ptab-ink" aria-hidden="true"></span>
+    </div>
 
-      <article class="dcard rv" id="marine">
-        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="#D4AF37" stroke-width="1.5" aria-hidden="true">
-          <path d="M3 21c5-8 12-12 20-12 5 0 8 2 10 4-2 2-5 4-10 4-8 0-15-4-20 4z" stroke-linejoin="round"/>
-          <path d="M23 13l6-5v9" stroke-linejoin="round"/><circle cx="12" cy="18" r="1.4" fill="#D4AF37" stroke="none"/>
-          <path d="M4 31c3-2 6-2 9 0s6 2 9 0 6-2 9 0" stroke-linecap="round"/>
-        </svg>
-        <h3>Marine Product</h3>
-        <p>Marine cargo moved on the same haulage and port relationships that carry the export book.</p>
-        <dl>
-          <div><dt>Market</dt><dd>Domestic</dd></div>
-          <div><dt>Availability</dt><dd>Seasonal</dd></div>
-        </dl>
+    <div class="ppanel" id="vegetables" role="tabpanel" aria-labelledby="tab-vegetables" tabindex="0">
+      <h3 class="ppanel-label">Vegetables</h3>
+      <div class="gcards" data-stagger>
+
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/veg-sweet-potato.jpg" alt="Sweet potatoes, rows of red-skinned tubers laid out after lifting" width="500" height="333" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Bulk</span>
+          <h3>Sweet Potato</h3>
+          <p>Odisha grows close to a third of India&rsquo;s crop &mdash; more than any other state. Red-skinned, cured after lifting so it travels without scuffing.</p>
+          <ul>
+            <li>Kharif June to August, rabi October to December</li>
+            <li>Cured four to seven days before packing</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="dcard rv" id="organic">
-        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="#D4AF37" stroke-width="1.5" aria-hidden="true">
-          <path d="M8 32C8 18 18 8 32 8c0 14-10 24-24 24z" stroke-linejoin="round"/>
-          <path d="M8 32C14 26 20 20 30 14" stroke-linecap="round"/>
-        </svg>
-        <h3>Organic Product</h3>
-        <p>Organic produce traded within the domestic market, with documentation supplied to match the buyer&rsquo;s requirement.</p>
-        <dl>
-          <div><dt>Market</dt><dd>Domestic</dd></div>
-          <div><dt>Documents</dt><dd>On request</dd></div>
-        </dl>
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/veg-drumstick.jpg" alt="Fresh drumsticks, long green moringa pods packed upright in a carton" width="500" height="500" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Fresh</span>
+          <h3>Drumstick</h3>
+          <p>Moringa pods cut young, while they still snap rather than bend &mdash; soft flesh, before the fibre sets.</p>
+          <ul>
+            <li>Graded on length, commonly 30&ndash;45 cm</li>
+            <li>Main flush February to June</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="dcard rv" id="fruits">
-        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="#D4AF37" stroke-width="1.5" aria-hidden="true">
-          <path d="M20 13c-3-3-9-3-12 1-4 5-1 14 4 19 3 3 6 3 8 1 2 2 5 2 8-1 5-5 8-14 4-19-3-4-9-4-12-1z" stroke-linejoin="round"/>
-          <path d="M20 13V7M20 7c0-2 2-3 4-3" stroke-linecap="round"/>
-        </svg>
-        <h3>Fruits</h3>
-        <p>Fresh fruit traded within India, with variety following the growing season.</p>
-        <dl>
-          <div><dt>Market</dt><dd>Domestic</dd></div>
-          <div><dt>Availability</dt><dd>Seasonal</dd></div>
-        </dl>
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/veg-green-chilli.jpg" alt="Green chillies, a dense mass of slender fresh pods" width="444" height="489" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Fresh</span>
+          <h3>Green Chilli</h3>
+          <p>Picked green and firm, at full pungency. Chilli loses more to delay than it does to distance, so a lot is despatched, not held.</p>
+          <ul>
+            <li>Slender and short hot types, sorted to one length</li>
+            <li>Year round, heaviest November to March</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="dcard rv" id="vegetables">
-        <svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="#D4AF37" stroke-width="1.5" aria-hidden="true">
-          <path d="M14 35c-6-4-9-11-7-17 6-2 13 1 17 7 4 6 3 13-1 17-4-2-7-4-9-7z" stroke-linejoin="round"/>
-          <path d="M12 20l14 12" stroke-linecap="round"/>
-          <path d="M25 12c2-5 6-8 11-8 0 5-3 10-8 12" stroke-linejoin="round"/>
-        </svg>
-        <h3>Vegetables</h3>
-        <p>Fresh vegetables traded within India, drawn from growers across the state.</p>
-        <dl>
-          <div><dt>Market</dt><dd>Domestic</dd></div>
-          <div><dt>Availability</dt><dd>Seasonal</dd></div>
-        </dl>
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/veg-pumpkin.jpg" alt="Pumpkins, mottled green skins stacked with two cut open to show the orange flesh" width="375" height="500" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Long Keeping</span>
+          <h3>Pumpkin</h3>
+          <p>Hard green skin, deep orange flesh. Cured whole it holds for weeks at ambient temperature &mdash; one of the few that moves without a cold chain.</p>
+          <ul>
+            <li>Four to twelve weeks whole, kept cool and dry</li>
+            <li>Cut with the stalk on, graded by weight</li>
+          </ul>
+        </div>
       </article>
 
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/veg-yam.jpg" alt="Yam, heavy rough-skinned tubers lifted from the field with the roots still on" width="310" height="500" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Bulk</span>
+          <h3>Yam</h3>
+          <p>Elephant foot yam, lifted heavy and rough-skinned. Dense, with little on it to bruise, so it moves in bulk.</p>
+          <ul>
+            <li>Harvested January and February</li>
+            <li>Sized by corm weight, graded whole</li>
+          </ul>
+        </div>
+      </article>
+
+      </div>
+    </div>
+
+    <div class="ppanel" id="fruits" role="tabpanel" aria-labelledby="tab-fruits" tabindex="0" hidden>
+      <h3 class="ppanel-label">Fruits</h3>
+      <div class="gcards" data-stagger>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/fruit-mango.jpg" alt="Mangoes, a heap of ripe yellow fruit" width="500" height="308" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Seasonal</span>
+          <h3>Mango</h3>
+          <p>Grown across all thirty districts of the state &mdash; Amrapali, Dasheri, Langra, Totapuri. Cut at colour break so it ripens on the way, not on the tree.</p>
+          <ul>
+            <li>Flowers in February, ripe May to July</li>
+            <li>Graded by count and weight per box</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/fruit-jackfruit.jpg" alt="Jackfruit, a heap of large green spiked fruit stacked in the sun" width="672" height="900" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Bulk</span>
+          <h3>Jackfruit</h3>
+          <p>The heaviest fruit on the list and the least fragile &mdash; thick rind, and it travels whole.</p>
+          <ul>
+            <li>April to August, overlapping the mango run</li>
+            <li>Sold whole, sized by weight</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/fruit-guava.jpg" alt="Guavas, pale green fruit stacked on leaves with one cut to show pink flesh" width="253" height="198" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Twice Yearly</span>
+          <h3>Guava</h3>
+          <p>Firm, thin-skinned, picked hard before the flesh gives. Two crops a year rather than one.</p>
+          <ul>
+            <li>A rainy crop and a sweeter winter crop</li>
+            <li>Graded by size, packed in single layers</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/fruit-watermelon.jpg" alt="Watermelons, dark green rinds stacked in the field with two cut to show red flesh" width="864" height="576" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Summer</span>
+          <h3>Watermelon</h3>
+          <p>Dark-rind summer melon, cut with the stalk left on. Heavy, cheap to grow, and it moves by the truckload.</p>
+          <ul>
+            <li>February to May, ahead of the monsoon</li>
+            <li>Sized by weight per fruit</li>
+          </ul>
+        </div>
+      </article>
+
+      </div>
+    </div>
+
+    <div class="ppanel" id="marine" role="tabpanel" aria-labelledby="tab-marine" tabindex="0" hidden>
+      <h3 class="ppanel-label">Marine</h3>
+      <div class="gcards" data-stagger>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/sea-tiger-prawn.jpg" alt="Black tiger prawns laid in rows in a white tray" width="450" height="338" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Graded</span>
+          <h3>Black Tiger Prawn</h3>
+          <p><i>Penaeus monodon</i>, the black tiger. Sorted by count per kilo and iced at landing.</p>
+          <ul>
+            <li>Graded on count per kilo</li>
+            <li>Moved chilled, not frozen</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/sea-mud-crab.jpg" alt="Mud crabs with their claws tied, packed live in a tub" width="597" height="341" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Live</span>
+          <h3>Mud Crab</h3>
+          <p><i>Scylla serrata</i> out of the brackish water &mdash; claws tied, sold live and kept that way. Chilika is the crab ground.</p>
+          <ul>
+            <li>Sold live, graded by weight per crab</li>
+            <li>From Chilika and the brackish creeks</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/sea-hilsa.jpg" alt="Two hilsa fish, silver-scaled, on a pale ground" width="300" height="202" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Monsoon</span>
+          <h3>Ilisha</h3>
+          <p>Hilsa, and a season that opens and shuts with the rain &mdash; the fish runs up the Mahanadi to spawn, and the boats follow it.</p>
+          <ul>
+            <li>A short run, through the monsoon</li>
+            <li>Graded by weight per fish</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="gcard rv">
+        <div class="gcard-ph"><img src="assets/img/sea-pomfret.jpg" alt="Silver pomfret, a catch of flat silver fish" width="612" height="407" loading="lazy" decoding="async"></div>
+        <div class="gcard-bd">
+          <span class="tagline">Domestic · Graded</span>
+          <h3>Pomfret</h3>
+          <p>Silver pomfret &mdash; flat, firm-fleshed, and sorted piece by piece rather than by the box.</p>
+          <ul>
+            <li>Weight grades taken per fish</li>
+            <li>Whole, iced and boxed</li>
+          </ul>
+        </div>
+      </article>
+
+      </div>
     </div>
   </div>
 </section>
@@ -401,6 +550,7 @@
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 15V4M3.5 9.5L9 4l5.5 5.5"/></svg>
 </button>
 
+<script src="assets/js/produce-tabs.js"></script>
 <script src="assets/js/product.js"></script>
 </body>
 </html>
