@@ -113,15 +113,15 @@ section[id],div[id]{scroll-margin-top:84px}
    Explicit column numbers matter: with the nav and the CTA hidden under 900px,
    the burger would otherwise fall into the middle track. */
 .hdr .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
-  gap:20px;padding-block:12px;transition:padding-block .35s var(--ease)}
+  gap:20px;padding-block:8px;transition:padding-block .35s var(--ease)}
 .brand{grid-column:1;justify-self:start}
 .mainnav{grid-column:2;justify-self:center}
 .hdr .btn,#burger{grid-column:3;justify-self:end}
 .hdr.sm .wrap{padding-block:6px}
 .brand img{transition:width .35s var(--ease),height .35s var(--ease)}
-.hdr.sm .brand img{width:44px;height:44px}
+.hdr.sm .brand img{width:48px;height:48px}
 .brand{display:flex;align-items:center;gap:14px}
-.brand img{width:56px;height:56px;flex:none}
+.brand img{width:64px;height:64px;flex:none}
 .brand-tx{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
 .brand-tx small{display:block;font-family:var(--body);font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px;white-space:nowrap}
 .mainnav{display:flex;flex-wrap:nowrap;align-items:center;gap:clamp(12px,1.6vw,26px)}
@@ -137,13 +137,14 @@ section[id],div[id]{scroll-margin-top:84px}
 #drawer a{display:block;padding:15px var(--gut);color:#D3DEE8;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--navy-3)}
 
 /* ═══ HERO ═══ */
-/* Full-screen: svh rather than vh so mobile browser chrome does not push the
-   facts strip below the fold on load and then leave a gap when it retracts.
-   The vh line is the fallback for engines without svh. */
+/* One screen, measured from under the header rather than from the top of the
+   document - the bar is in flow above this, so a plain 100svh always ran a
+   header taller than the space it had and pushed its own last line past the
+   fold. svh rather than vh so mobile browser chrome cannot do the same thing
+   again as it retracts; the vh line is the fallback for engines without svh. */
 .hero{position:relative;background:var(--navy);overflow:hidden;display:flex;flex-direction:column;
-  min-height:clamp(620px,94vh,940px);
-  min-height:clamp(620px,100svh,940px)}
-#ash{position:absolute;inset:0;z-index:3;pointer-events:none}
+  min-height:clamp(620px,calc(94vh - var(--hdr-h)),940px);
+  min-height:clamp(620px,calc(100svh - var(--hdr-h)),940px)}
 /* The photograph is a pale, cool composite — bright sky, a white flare through
    the middle — so white type needs help. It is graded down into the navy range
    rather than dimmed flat, which would have thrown away the gantries and the
@@ -172,10 +173,13 @@ section[id],div[id]{scroll-margin-top:84px}
 /* Wider than the site's 1240 container on purpose. Inside 1240 the copy sat
    340px in from the edge of a 1920 screen with scrim either side, which is what
    made a left-aligned block read as floating in the middle of the picture.
-   margin-block:auto centres it in the space above the strip, which the auto
-   margin in turn pushes to the foot — so the photograph gets the whole frame. */
-.hero .wrap{position:relative;z-index:4;max-width:1440px;margin-top:auto;
-  padding-block:clamp(40px,6vw,72px) clamp(44px,6vw,80px)}
+   Centred in the frame, not anchored to its foot. margin-top:auto used to push
+   the copy down against the facts strip, which balanced it; with the strip gone
+   the same rule left the whole surplus standing above the type as one empty
+   band. margin-block:auto splits that surplus evenly instead, and the padding
+   is symmetric so the type itself centres, not just its box. */
+.hero .wrap{position:relative;z-index:4;max-width:1440px;margin-block:auto;
+  padding-block:clamp(40px,6vw,72px)}
 /* A flat ceiling, no percentage. Twice now a percentage cap has resolved below
    what the tagline needs at some width and folded it — 64% of the container is
    about 400px on a mid-size window, and that line is 555px. The wrap already
@@ -185,6 +189,11 @@ section[id],div[id]{scroll-margin-top:84px}
 .eyebrow{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:0 0 20px}
 .hero .eyebrow,.hero-kin{text-shadow:0 1px 18px rgba(5,14,26,.8)}
 .eyebrow i{display:block;width:40px;height:1px;background:var(--gold);flex:none}
+/* On a phone this line is wider than the column and breaks, and left to itself
+   it broke after the second separator - a full line, then "Est. 2017" alone
+   under a dangling middot. Balancing splits it evenly between the two, and
+   browsers without text-wrap fall back to exactly the behaviour above. */
+.hero .eyebrow span{text-wrap:balance}
 /* Two lines, always — the lockup reads "Jay Jagannath / Marine Eximss" the way
    it does beside the logo in the header. The spans were already block-level,
    but max-width:12ch capped the box below the 13 characters each line actually
@@ -199,7 +208,14 @@ section[id],div[id]{scroll-margin-top:84px}
 .hero h1{color:var(--white);max-width:none;margin:0;font-size:clamp(27px,6vw,88px);
   line-height:1.03;letter-spacing:.015em;text-shadow:0 2px 34px rgba(5,14,26,.72)}
 .hero h1 span{display:block;white-space:nowrap}
-.hero h1 .gold{color:var(--gold)}
+/* The second line is the header lockup's, enlarged: same family, same weight,
+   same two-thirds size step and same .24em, so MARINE EXIMSS reads under the
+   name here exactly as it does beside the mark up there. Deliberately shorter
+   than the line above rather than tracked out to meet it - a subtitle that
+   fills the full measure stops reading as subordinate, which is what a plain
+   size drop cannot fix on its own. */
+.hero h1 .gold{color:var(--gold);font-family:var(--body);font-weight:500;
+  font-size:.6667em;letter-spacing:.24em}
 .hero-kin{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:30px 0 0;font-family:var(--body);font-size:15.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#9FB2C4}
 .kin{position:relative;display:inline-block;height:1.5em;overflow:hidden;vertical-align:bottom;min-width:14ch}
 .kin b{display:block;height:1.5em;line-height:1.5em;color:var(--gold);font-weight:700;transition:transform .7s var(--ease)}
@@ -207,12 +223,6 @@ section[id],div[id]{scroll-margin-top:84px}
 /* entrance */
 .up{opacity:0;transform:translateY(28px);animation:up 1s var(--ease) forwards}
 @keyframes up{to{opacity:1;transform:none}}
-.hero-foot{position:relative;z-index:4;border-top:1px solid var(--navy-3);background:rgba(9,24,41,.5)}
-.hero-foot .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:0}
-.hf{padding:20px 18px;text-align:center;border-left:1px solid var(--navy-3)}
-.hf:first-child{border-left:0}
-.hf b{display:block;font-family:var(--head);font-size:21px;font-weight:600;color:var(--gold);letter-spacing:.02em}
-.hf span{display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#9FB2C4;margin-top:6px}
 
 
 /* ═══ ABOUT ═══ */
@@ -327,6 +337,14 @@ section[id],div[id]{scroll-margin-top:84px}
 
 /* ═══ CLASS TABLE ═══ */
 .tbl{width:100%;border-collapse:collapse;font-size:15px;background:var(--white);border:1px solid var(--line)}
+.tbl-hint{display:none;margin:12px 0 0;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+/* On navy the teal hint has too little contrast, so it takes the gold the rest
+   of the section's small type uses. */
+.on-navy .tbl-hint,.navy .tbl-hint{color:var(--gold)}
+/* "45 μm" is set in labels that are uppercased, and uppercasing a Greek small
+   mu gives a capital Mu - which reads as "45 MM". A thousandfold difference in
+   a spec figure, so the unit opts out of the transform. */
+.unit{text-transform:none}
 .tbl th,.tbl td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 .tbl thead th{background:var(--navy);color:var(--white);font-family:var(--head);font-size:var(--h3);font-weight:500;letter-spacing:.02em}
 .tbl thead th:first-child{width:170px}
@@ -335,22 +353,14 @@ section[id],div[id]{scroll-margin-top:84px}
 .tbl td{color:var(--charcoal-2)}
 
 /* ═══ CLASSIFICATION BENCH ═══ */
-.bench{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,4vw,56px);align-items:center}
-.bench-read{display:grid;gap:18px;margin:0 0 26px}
-.bench-read div{display:flex;justify-content:space-between;align-items:baseline;gap:20px;border-bottom:1px solid var(--navy-3);padding-bottom:12px}
-.bench-read dt{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#9FB2C4}
-.bench-read dd{margin:0;font-family:var(--head);font-size:23px;font-weight:600;color:var(--gold)}
-.bench-read dd.small{font-size:15px;font-family:var(--body);font-weight:600;color:var(--white);text-align:right}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--navy-3);outline:none;margin:8px 0 14px}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);border:3px solid var(--navy);cursor:pointer;transition:transform .2s}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:32px;background:transparent;outline:none;margin:-4px 0 2px}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--navy-3)}
+input[type=range]::-moz-range-track{height:3px;background:var(--navy-3)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;margin-top:-9.5px;border-radius:50%;background:var(--gold);border:3px solid var(--navy);cursor:pointer;transition:transform .2s}
 input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--gold);border:3px solid var(--navy);cursor:pointer}
 .ticks{display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9FB2C4}
 .ticks b{color:var(--gold);font-weight:700}
-.cvbox{position:relative;background:var(--navy-2);border:1px solid var(--navy-3);aspect-ratio:16/11}
-.cvbox canvas{width:100%;height:100%;display:block}
-.cvline{position:absolute;left:0;right:0;top:38%;border-top:1px dashed rgba(212,175,55,.75);pointer-events:none}
-.cvline span{position:absolute;right:12px;top:-24px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
 
 /* ═══ LOGISTICS STEPS ═══ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -382,7 +392,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .opt{background:var(--white);border:1px solid var(--line);padding:16px 14px;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--charcoal);cursor:pointer;transition:all .3s var(--ease)}
 .opt:hover{border-color:var(--teal);color:var(--teal)}
 .opt.on{background:var(--navy);border-color:var(--navy);color:var(--white)}
-.calc-in input[type=range]{background:var(--line);margin-top:6px}
+.calc-in input[type=range]{margin-top:6px}
+.calc-in input[type=range]::-webkit-slider-runnable-track{background:var(--line)}
+.calc-in input[type=range]::-moz-range-track{background:var(--line)}
 .calc-in input[type=range]::-webkit-slider-thumb{border-color:var(--white);box-shadow:0 2px 8px rgba(17,42,70,.3)}
 .calc-in .ticks{color:var(--charcoal-2)}
 .calc-rows{display:grid;gap:0}
@@ -421,7 +433,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .net h2{text-shadow:0 2px 28px rgba(6,17,30,.7)}
 .net .kicker{text-shadow:0 1px 14px rgba(6,17,30,.85)}
 .net .lead{text-shadow:0 1px 16px rgba(6,17,30,.8)}
-.net-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--navy-3);border:1px solid var(--navy-3);margin-top:38px}
+.net-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--navy-3);border:1px solid var(--navy-3);margin-top:38px}
 /* Translucent now, not solid: the map reads behind the strip instead of being
    blanked out by it, and the blur keeps the gold figures crisp regardless. */
 .net-cell{background:rgba(11,28,48,.84);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);padding:26px 20px;text-align:center}
@@ -861,8 +873,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ft{background:var(--navy-2);color:#B9C8D6;padding-block:clamp(48px,7vw,76px) 0}
 .ft-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px}
 .ft-brand{display:flex;flex-direction:column;gap:16px}
-.ft-brand img{width:86px;height:86px}
-.ft-lockup{display:flex;align-items:center;gap:16px}
+.ft-brand img{width:150px;height:150px}
+.ft-lockup{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
 .ft-lockup .brand-tx{font-size:17px}
 .ft-lockup .brand-tx small{font-size:11px;margin-top:5px}
 /* h3, not h4 - the footer sits under the page h2, so h4 skipped a level.
@@ -870,6 +882,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    h4 inherited 1.7 from body; without this the labels would shift. */
 .ft h3{font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:0 0 16px;line-height:1.7}
 .ft ul{list-style:none;margin:0;padding:0;display:grid;gap:11px;font-size:14px}
+/* a 14px line is an 18px tap target, which is under half what a thumb needs.
+   Padding rather than gap, so the target grows without the column stretching
+   as much. */
+.ft ul a{display:inline-block;padding-block:5px}
 .ft a:hover{color:var(--gold)}
 .ft-bar{margin-top:clamp(36px,5vw,56px);border-top:1px solid var(--navy-3);padding-block:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:#8FA3B6}
 
@@ -955,7 +971,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .hdr .btn{padding:12px 16px;font-size:11.5px;letter-spacing:.1em}
 }
 @media(max-width:1080px){
-  .brand img{width:48px;height:48px}
+  /* the mark scales at every step, and --hdr-h follows the bar it measures */
+  :root{--hdr-h:71px}
+  .brand img{width:54px;height:54px}
   .hdr .wrap{gap:12px}
   .mainnav a,.mainnav .ndd-t{letter-spacing:.02em}
   .ndd-t{gap:5px}
@@ -967,30 +985,26 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .certs{grid-template-columns:repeat(3,1fr)}
   .enq-grid{grid-template-columns:repeat(2,1fr)}
   .ft-grid{grid-template-columns:1fr 1fr}
-  .net-grid{grid-template-columns:repeat(2,1fr)}
+  .net-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:900px){
   .calc{grid-template-columns:1fr}
   .mainnav,.hdr .btn{display:none}
   #burger{display:block}
-  .about-grid,.bench,.apps{grid-template-columns:1fr}
+  .about-grid,.apps{grid-template-columns:1fr}
   .about-ph{order:-1}
-  .hero-foot .wrap{grid-template-columns:1fr 1fr}
-  .hf:nth-child(3){border-left:0}
-  .hf:nth-child(n+3){border-top:1px solid var(--navy-3)}
 
   /* MOBILE HERO
      Two things made the phone hero open on a band of empty photograph. The
      frame counted the sticky header as free height — 100svh below an 81px
      header is a screen and a bit — and the copy was pinned to the foot with
      margin-top:auto, so every pixel of the surplus pooled above the eyebrow.
-     The frame now stops at the header, and margin-block:auto splits what is
-     left evenly, which centres the lockup between the header and the facts
-     strip instead of sinking it. The floor keeps a portrait proportion on the
-     short frames a landscape phone reports. */
+     The frame now stops at the header; the centring itself is the base rule's
+     margin-block:auto. The floor keeps a portrait proportion on the short
+     frames a landscape phone reports. */
   .hero{min-height:max(460px,calc(100vh - var(--hdr-h)));
         min-height:max(460px,calc(100svh - var(--hdr-h)))}
-  .hero .wrap{margin-block:auto;padding-block:clamp(28px,6vw,52px)}
+  .hero .wrap{padding-block:clamp(28px,6vw,52px)}
   /* the desktop clamp bottoms out at 27px and then stops responding, so the
      name sat at one fixed size from 640px all the way down to 320px while the
      column kept narrowing. Scaling with the viewport keeps the two nowrap
@@ -1009,22 +1023,20 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .wa svg{width:24px;height:24px}
   #top-btn{width:46px;height:46px;right:calc(14px + env(safe-area-inset-right));bottom:calc(14px + env(safe-area-inset-bottom))}
   /* footer lockup is nowrap too - shrink it so it clears narrow phones */
-  .ft-brand img{width:68px;height:68px}
-  .ft-lockup{gap:13px}
+  .ft-brand img{width:120px;height:120px}
+  .ft-lockup{gap:12px}
   .ft-lockup .brand-tx{font-size:15px}
   .cat,.steps,.packs,.mv,.std-row,.enq-grid,.ft-grid{grid-template-columns:1fr}
   .certs{grid-template-columns:repeat(2,1fr)}
   .tbl thead th:first-child,.tbl tbody th{width:120px}
   .tbl th,.tbl td{padding:13px 14px;font-size:14px}
   /* the wrapper already scrolls — without a floor the three columns just
-     crush to a word per line instead of ever reaching it */
+     crush to a word per line instead of ever reaching it. But a table that
+     scrolls sideways inside the page gives no sign it has more to show, and
+     at this width the third column, Class C, is entirely off-screen with
+     nothing to say so. The hint below it says so. */
   .tbl{min-width:560px}
-
-  /* The facts strip now lands flush with the fold instead of just under it,
-     which puts the bottom-left cell directly beneath the fixed WhatsApp
-     button — it was sitting on the first word of the label. This clears the
-     button (46px tall, 14px up) and the home indicator below it. */
-  .hero-foot .wrap{padding-bottom:calc(48px + env(safe-area-inset-bottom))}
+  .tbl-hint{display:block}
 }
 
 /* ═══ SMALL PHONES ═══
@@ -1039,10 +1051,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   /* .brand-tx is nowrap by design, so the mark has to shrink with it */
   .hdr .wrap{gap:12px}
   .brand{gap:10px}
-  .brand img{width:44px;height:44px}
-  .hdr.sm .brand img{width:38px;height:38px}
-  /* the mark drops to 44px here, so the bar the hero subtracts does too */
-  :root{--hdr-h:69px}
+  .brand img{width:50px;height:50px}
+  .hdr.sm .brand img{width:42px;height:42px}
+  /* the mark steps down here, so the bar the hero subtracts does too */
+  :root{--hdr-h:67px}
   .brand-tx{font-size:12.5px;letter-spacing:.03em}
   .brand-tx small{font-size:8.5px;letter-spacing:.14em}
   #burger{padding:9px 11px;font-size:10px;letter-spacing:.12em}
@@ -1061,19 +1073,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
     linear-gradient(180deg,rgba(7,20,36,.9) 0%,rgba(8,22,39,.66) 38%,rgba(9,24,41,.72) 70%,rgba(9,24,41,.92) 100%)}
   .lead{max-width:none}
 
-  .hf{padding:15px 8px}
-  .hf b{font-size:18px}
-  .hf span{font-size:9px;letter-spacing:.1em;margin-top:4px}
-
-  .net-cell{padding:20px 12px}
-  .net-cell b{font-size:23px}
+  .net-cell{padding:20px 10px}
+  .net-cell b{font-size:21px}
   .net-cell span{font-size:9.5px;letter-spacing:.12em}
 
   /* long uppercase term on the left, big number on the right — the pair
      needs the term to give way first */
-  .bench-read dt,.calc-rows dt{font-size:10.5px;letter-spacing:.1em}
-  .bench-read dd{font-size:20px}
-  .bench-read dd.small{font-size:13px}
+  .calc-rows dt{font-size:10.5px;letter-spacing:.1em}
   .calc-rows dd{font-size:20px}
   .ticks{flex-wrap:wrap;gap:4px 10px;font-size:9.5px;letter-spacing:.06em}
 
@@ -1155,12 +1161,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* the narrowest phones still in use — 320px and 360px */
 @media(max-width:360px){
-  :root{--gut:15px;--hdr-h:65px}
-  .brand img{width:40px;height:40px}
+  :root{--gut:15px;--hdr-h:63px}
+  .brand img{width:46px;height:46px}
   .brand-tx{font-size:11.5px}
   .brand-tx small{letter-spacing:.1em}
   .btn{padding:13px 16px;font-size:11px;letter-spacing:.1em}
-  .hf{padding:14px 6px}
   .certs{gap:12px}
 }
 
@@ -1246,7 +1251,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .visit-meta>div{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:14px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--navy-3)}
 .visit-meta dt{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#8FA6BC}
 .visit-meta dd{margin:0;font-size:14.5px;color:var(--white);overflow-wrap:anywhere}
-.visit-meta a{border-bottom:1px solid rgba(212,175,55,.45);transition:color .3s,border-color .3s}
+/* the phone and the email are the two things a visitor on a phone actually
+   taps, and as bare inline links they were 19px tall. inline-block plus a
+   little vertical padding gives them a thumb-sized target without moving the
+   baseline the dt beside them is aligned to. */
+.visit-meta a{display:inline-block;padding-block:5px;border-bottom:1px solid rgba(212,175,55,.45);transition:color .3s,border-color .3s}
 .visit-meta a:hover{color:var(--gold);border-color:var(--gold)}
 .visit-acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:28px}
 .visit-acts .btn{flex:1 1 auto;padding-inline:22px}
@@ -1255,7 +1264,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .visit-map iframe{display:block;width:100%;flex:1 1 auto;border:0;min-height:clamp(330px,36vw,470px)}
 .visit-map figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;
   padding:13px clamp(15px,1.6vw,20px);background:var(--navy);color:#A8BACB;font-size:12.5px}
-.visit-map figcaption a{display:inline-flex;align-items:center;gap:7px;color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:color .3s}
+.visit-map figcaption a{display:inline-flex;align-items:center;gap:7px;padding-block:6px;color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:color .3s}
 .visit-map figcaption a:hover{color:var(--white)}
 
 @media(max-width:960px){
@@ -1396,7 +1405,9 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ccards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .ccards svg{display:block;margin-bottom:16px}
 .ccards h3{margin-bottom:4px}
-.ccard-v{display:inline-block;margin:2px 0 12px;font-family:var(--head);
+/* email, phone and WhatsApp are the whole point of this page, and at 27px they
+   were the last targets on the site under a thumb's worth of height. */
+.ccard-v{display:inline-block;padding-block:4px;margin:2px 0 10px;font-family:var(--head);
   font-size:clamp(15px,.85rem + .35vw,18px);font-weight:600;color:var(--navy);
   border-bottom:1px solid rgba(212,175,55,.55);overflow-wrap:anywhere;
   transition:color .3s,border-color .3s}
