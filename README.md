@@ -32,8 +32,11 @@ jai/
 │   │   ├── network.js       # + builds the trade-lane map from lon/lat data
 │   │   └── quality.js       # + certificate lightbox
 │   └── img/
-│       ├── logo.png                    # brand mark (header + footer)
-│       ├── favicon-32.png              # generated from logo.png
+│       ├── logo.png                    # brand mark, 320px - largest srcset step
+│       ├── logo-176.png                # srcset step - 1x footer, 3x header
+│       ├── logo-88.png                 # srcset step - 1x/2x header
+│       ├── logo-56.png                 # srcset step - 1x header, smallest
+│       ├── favicon-32.png              # generated from images/logo.png
 │       ├── apple-touch-icon.png        #   "
 │       ├── icon-192.png                #   "
 │       ├── og-image.jpg                # 1200×630 social preview
@@ -128,18 +131,32 @@ php api/preview-email.php     # writes preview-*.html into api/storage/
 The crest is embedded in each message as an inline `cid:` part rather than hotlinked,
 so it renders whether or not the site is reachable.
 `assets/img/logo-email.png` is the copy used: flattened onto the navy of the header
-and quantised to 255 colours, 21 KB against the original's 78 KB, which matters
-because base64 inflates it by a third and it travels in every message. Being matted,
-it is only correct on that navy. Regenerate it if the logo changes:
+and quantised to 255 colours, which matters because base64 inflates it by a third
+and it travels in every message. Being matted, it is only correct on that navy.
+
+### Regenerating the crest
+
+`images/logo.png` is the master. Everything the site serves is derived from it by
+`tools/build-logo.py` (Pillow), so change the master and re-run the script rather
+than editing any file under `assets/img/`:
 
 ```bash
-php -r '$s=imagecreatefrompng("assets/img/logo.png");
-$m=imagecreatetruecolor(184,184);
-imagefill($m,0,0,imagecolorallocate($m,0x11,0x2A,0x46));
-imagecopyresampled($m,$s,0,0,0,0,184,184,imagesx($s),imagesy($s));
-imagetruecolortopalette($m,true,255);
-imagepng($m,"assets/img/logo-email.png",9);'
+python tools/build-logo.py
 ```
+
+It does three things that a plain resize does not, and the mark is illegible at
+header size without all three:
+
+- **Grades** the seal for a dark ground. Its interior sits within a few luminance
+  steps of the navy bar behind it, so untouched it reads as a blob with a gold
+  ring. Brightness, contrast and saturation are lifted; no hue moves.
+- **Sharpens** after the resize, against navy rather than against the transparent
+  black outside the disc - sharpening straight RGBA drags that black into the gold
+  rim as a dark halo. The alpha is resized separately and reattached.
+- **Renders every size the CSS asks for**, because sharpening is thrown away if the
+  browser is left to scale one large file down to 56px. The four widths feed an
+  `srcset`; `sizes` on each `<img>` mirrors the CSS breakpoints, so keep the two in
+  step if the header or footer dimensions change.
 
 ### What is protected, and how
 
