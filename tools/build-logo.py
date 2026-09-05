@@ -34,10 +34,11 @@ OUT  = 'assets/img'
 GAMMA = 2.2
 
 src = Image.open('images/logo.png').convert('RGBA')
-w, h = src.size                     # 819 x 849, crest spanning x 1..817, y 1..847
+src = src.crop(src.getchannel('A').getbbox())   # trust the alpha, not the canvas
+w, h = src.size
 S = max(w, h)
 MASTER = Image.new('RGBA', (S, S), (0, 0, 0, 0))
-MASTER.paste(src, ((S - w) // 2 + 1, (S - h) // 2), src)   # square the canvas, not the art
+MASTER.paste(src, ((S - w) // 2, (S - h) // 2), src)       # square the canvas, not the art
 
 def _to_linear(band):
     return ImageMath.lambda_eval(lambda d: (d['x'] / 255.0) ** GAMMA * 255.0, x=band.convert('F'))
@@ -65,15 +66,41 @@ def gold_mask(rgb):
     real = sat.point(lambda v: 255 if v >= 45 else 0)      # keeps greys and the navy out
     return ImageChops.multiply(warm, real).filter(ImageFilter.GaussianBlur(0.8))
 
-def render(size):
+def lift_for(size):
+    """How much gold lift this size can take, and what to spend instead.
+
+    The lift is a flat brightening of everything the gold mask covers. That
+    works while the rim lettering is resolved - the letters are masked, the
+    gaps between them are not, and the lift widens the gap. Below about 88px
+    the letters and their gaps average into one gold band, the mask covers the
+    lot, and the same lift brightens letter and ground together: the ring glows
+    and the lettering goes to mush. Measured on the navy bar, the rim of the
+    56px render came out at 107 against the 176px render's 91 - the small sizes
+    were the brightest thing on the page, which is backwards.
+
+    So the lift is taken off below 176px and the budget spent on edge
+    definition instead, which separates letter from ground rather than raising
+    both. The footer draws from 176 and 320 and the icons are all 180+, so
+    every one of those is untouched; this only moves the header.
+    """
+    t = min(1.0, max(0.0, (size - 88) / (176 - 88)))
+    return 1.0 + 0.30 * t, 1.04 + 0.12 * t, round(160 - 55 * t)   # percent is an int
+
+
+FULL_LIFT = (1.30, 1.16, 105)      # what every size got before the taper
+
+
+def render(size, lift=None):
+    bright, colour, acuity = lift or lift_for(size)
     small = linear_resize(MASTER, size)
     alpha = small.getchannel('A')
     plate = Image.new('RGB', (size, size), NAVY)
     plate.paste(small, (0, 0), small)
     plate = plate.filter(ImageFilter.UnsharpMask(radius=max(1.5, size / 14), percent=55, threshold=0))
-    plate = plate.filter(ImageFilter.UnsharpMask(radius=0.5 + size / 340, percent=105, threshold=0))
-    hot = ImageEnhance.Color(ImageEnhance.Brightness(plate).enhance(1.30)).enhance(1.16)
-    plate = Image.composite(hot, plate, gold_mask(plate))
+    plate = plate.filter(ImageFilter.UnsharpMask(radius=0.5 + size / 340, percent=acuity, threshold=0))
+    if bright > 1.0:
+        hot = ImageEnhance.Color(ImageEnhance.Brightness(plate).enhance(bright)).enhance(colour)
+        plate = Image.composite(hot, plate, gold_mask(plate))
     plate = ImageEnhance.Contrast(plate).enhance(1.10)
     out = plate.convert('RGBA'); out.putalpha(alpha)
     return out
@@ -89,14 +116,25 @@ def save(im, name, quantise=True):
 # Header draws at 64/54/50/46px and the footer at 150/120px, each times a device
 # pixel ratio of 1, 2 or 3. The footer sets the top of the ladder: 150px on a 2x
 # screen wants 300 real pixels.
+#
+# 64 and 128 exist so the header never asks the browser to resample. Without a
+# 64 step the header at 64px on a 1x screen was served the 88 and scaled down
+# in the browser - in gamma space, undoing the linear-light downscale this file
+# is careful about, and costing a quarter of the rim contrast (93.5 -> 70.0
+# measured). 128 is the same step for a 2x screen. Both land 1:1, so the pixels
+# the browser paints are the pixels sharpened here.
 print('srcset ladder')
-for size, name in ((320, 'logo.png'), (176, 'logo-176.png'),
-                   (88, 'logo-88.png'), (56, 'logo-56.png')):
+for size, name in ((320, 'logo.png'), (176, 'logo-176.png'), (128, 'logo-128.png'),
+                   (88, 'logo-88.png'), (64, 'logo-64.png'), (56, 'logo-56.png')):
     save(render(size), name)
 
 print('icons')
 save(render(192), 'icon-192.png')
-save(render(32), 'favicon-32.png')
+# The taper above is a fix for the crest on the navy header bar. A favicon is
+# never drawn there - it sits in a browser tab, at a size where the lettering
+# is unreadable whatever we do and all that matters is that the mark carries.
+# So it keeps the full lift rather than inheriting a correction aimed elsewhere.
+save(render(32, FULL_LIFT), 'favicon-32.png')
 
 print('matted')
 # iOS composites a home screen icon onto black, so this one is not transparent
