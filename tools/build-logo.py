@@ -1,10 +1,12 @@
 """Regenerate the crest at every size the site actually draws it.
 
 A photorealistic seal - embossed metal, a globe, rim lettering - has to survive
-being drawn at 64px on a bar that is very nearly its own colour. The first pass
-at this simply brightened the whole mark, which is the wrong instrument: it
-lifts the navy field along with the gold, so the seal loses its depth and reads
-as a faded sticker. Nothing here raises overall brightness. Instead:
+being drawn small on a bar that is very nearly its own colour. Nothing here
+brightens it. An earlier pass lifted the gold to make it carry, and that is the
+wrong instrument at every size: where the rim lettering is not fully resolved
+the lift raises the letters and the gaps between them together, so the ring
+glows and the text goes to mush, and where it is resolved it simply reads hot.
+It is gone. What is left only sharpens and deepens:
 
   linear light   Downscaling is done in linear light, not sRGB. Averaging a
                  bright gold stroke against dark navy in gamma space returns a
@@ -15,18 +17,16 @@ as a faded sticker. Nothing here raises overall brightness. Instead:
                  the embossing reads as relief rather than as texture. This is
                  what gives the mark presence, and it costs no brightness.
   acuity         A small-radius unsharp for edge definition, because any
-                 downscale of this much detail softens it.
-  gold only      The lift is masked to the warm hues - ring, rim text,
-                 monogram, compass, sextant. The navy field is left alone, so
-                 contrast against it goes up rather than down.
-  deeper field   A slight contrast increase settles the navy back down, which
-                 is what makes the gold read as gold instead of as yellow.
+                 downscale of this much detail softens it. Wound up as the mark
+                 gets smaller, where there is less of every stroke to keep.
+  deeper field   A slight contrast increase settles the navy down, which is
+                 what makes the gold read as gold instead of as yellow.
 
 Alpha is resized separately and premultiplied, and the sharpening is done
 against navy rather than against the transparent black outside the disc -
 sharpening straight RGBA drags that black into the gold rim as a dark halo.
 """
-from PIL import Image, ImageMath, ImageFilter, ImageEnhance, ImageChops
+from PIL import Image, ImageMath, ImageFilter, ImageEnhance
 import os
 
 NAVY = (0x11, 0x2A, 0x46)          # header ground; the footer's is a shade deeper
@@ -59,48 +59,27 @@ def linear_resize(im, size):
         bands.append(_to_srgb(un).convert('L'))
     return Image.merge('RGBA', (*bands, ar.convert('L')))
 
-def gold_mask(rgb):
-    """Warm, saturated pixels only - the metal. Feathered so the lift has no edge."""
-    hue, sat, _ = rgb.convert('HSV').split()
-    warm = hue.point(lambda v: 255 if 12 <= v <= 54 else 0)
-    real = sat.point(lambda v: 255 if v >= 45 else 0)      # keeps greys and the navy out
-    return ImageChops.multiply(warm, real).filter(ImageFilter.GaussianBlur(0.8))
+def acuity_for(size):
+    """Edge definition, wound up as the mark gets smaller.
 
-def lift_for(size):
-    """How much gold lift this size can take, and what to spend instead.
-
-    The lift is a flat brightening of everything the gold mask covers. That
-    works while the rim lettering is resolved - the letters are masked, the
-    gaps between them are not, and the lift widens the gap. Below about 88px
-    the letters and their gaps average into one gold band, the mask covers the
-    lot, and the same lift brightens letter and ground together: the ring glows
-    and the lettering goes to mush. Measured on the navy bar, the rim of the
-    56px render came out at 107 against the 176px render's 91 - the small sizes
-    were the brightest thing on the page, which is backwards.
-
-    So the lift is taken off below 176px and the budget spent on edge
-    definition instead, which separates letter from ground rather than raising
-    both. The footer draws from 176 and 320 and the icons are all 180+, so
-    every one of those is untouched; this only moves the header.
+    A downscale of this much detail softens every stroke, and the smaller the
+    render the less of each stroke survives to be softened. This is the whole
+    budget now that the gold lift is gone: it separates a letter from the ground
+    behind it rather than raising both, which is the only thing that makes the
+    rim readable rather than merely bright.
     """
     t = min(1.0, max(0.0, (size - 88) / (176 - 88)))
-    return 1.0 + 0.30 * t, 1.04 + 0.12 * t, round(160 - 55 * t)   # percent is an int
+    return round(160 - 55 * t)                      # percent is an int
 
 
-FULL_LIFT = (1.30, 1.16, 105)      # what every size got before the taper
-
-
-def render(size, lift=None):
-    bright, colour, acuity = lift or lift_for(size)
+def render(size):
+    acuity = acuity_for(size)
     small = linear_resize(MASTER, size)
     alpha = small.getchannel('A')
     plate = Image.new('RGB', (size, size), NAVY)
     plate.paste(small, (0, 0), small)
     plate = plate.filter(ImageFilter.UnsharpMask(radius=max(1.5, size / 14), percent=55, threshold=0))
     plate = plate.filter(ImageFilter.UnsharpMask(radius=0.5 + size / 340, percent=acuity, threshold=0))
-    if bright > 1.0:
-        hot = ImageEnhance.Color(ImageEnhance.Brightness(plate).enhance(bright)).enhance(colour)
-        plate = Image.composite(hot, plate, gold_mask(plate))
     plate = ImageEnhance.Contrast(plate).enhance(1.10)
     out = plate.convert('RGBA'); out.putalpha(alpha)
     return out
@@ -130,11 +109,7 @@ for size, name in ((320, 'logo.png'), (176, 'logo-176.png'), (128, 'logo-128.png
 
 print('icons')
 save(render(192), 'icon-192.png')
-# The taper above is a fix for the crest on the navy header bar. A favicon is
-# never drawn there - it sits in a browser tab, at a size where the lettering
-# is unreadable whatever we do and all that matters is that the mark carries.
-# So it keeps the full lift rather than inheriting a correction aimed elsewhere.
-save(render(32, FULL_LIFT), 'favicon-32.png')
+save(render(32), 'favicon-32.png')
 
 print('matted')
 # iOS composites a home screen icon onto black, so this one is not transparent

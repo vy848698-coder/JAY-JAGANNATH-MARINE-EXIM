@@ -208,7 +208,6 @@ let sTick=false;
 function onScroll(){
   const y=scrollY, max=document.documentElement.scrollHeight-innerHeight;
   prog.style.width=(max>0?(y/max)*100:0)+'%';
-  hdr.classList.toggle('sm',y>50);
   topBtn.classList.toggle('on',y>700);
   if(!RM){
     if(netImg){const r=netImg.parentElement.getBoundingClientRect();

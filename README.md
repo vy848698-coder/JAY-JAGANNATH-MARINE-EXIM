@@ -15,22 +15,16 @@ jai/
 ├── product.html             # product catalog — grades, other ash, packing
 ├── about.html               # the company, the founder, credentials, classification
 ├── contact.html             # channels, office map and the quotation form
-├── logistics.html           # packing, ports, Incoterms, documents
 ├── calculator.html          # shipment calculator + enquiry form
-├── network.html             # animated trade-lane map, export vs domestic scope
-├── quality.html             # analysis parameters, certification flow, registrations
 ├── assets/
 │   ├── css/
 │   │   └── styles.css       # all styles; brand tokens at the top
 │   ├── js/
 │   │   ├── main.js          # home only; CAT[] product data at the top
-│   │   ├── product.js       # shared engine for the three inner pages
-│   │   ├── nav.js           # the Capabilities dropdown, shared by every page
+│   │   ├── product.js       # shared engine for the inner pages
 │   │   ├── classification.js# + count-up and the process rail
-│   │   ├── logistics.js     # + Incoterm tabs and the route track
-│   │   ├── calculator.js    # + payload maths and the enquiry form
-│   │   ├── network.js       # + builds the trade-lane map from lon/lat data
-│   │   └── quality.js       # + certificate lightbox
+│   │   ├── produce-tabs.js  # the Fresh Produce tabs, on home and product
+│   │   └── calculator.js    # + payload maths and the enquiry form
 │   └── img/
 │       ├── logo.png                    # brand mark, 320px - largest srcset step
 │       ├── logo-176.png                # srcset step - 1x footer, 3x header
@@ -218,7 +212,6 @@ tries it first and falls back to `api/enquiry.js` on the 404.
 | Change brand colours or fonts     | `:root` block at the top of [assets/css/styles.css](assets/css/styles.css) |
 | Add/edit a product card           | the `CAT` array in [assets/js/main.js](assets/js/main.js)    |
 | Change container specs or stowage | `BOX` and `STOW` at the top of [assets/js/calculator.js](assets/js/calculator.js) |
-| Add an export market to the map   | one entry in `MARKETS` in [assets/js/network.js](assets/js/network.js) |
 | Edit copy, contacts, address      | the relevant `.html` — nav and footer are duplicated per page |
 | Swap a photo                      | drop the master in `images/`, then resize it into `assets/img/` under the existing filename |
 | Add another page                  | copy `product.html`, load `product.js` plus a page script; `vercel.json` `cleanUrls` drops the `.html` |

@@ -26,7 +26,7 @@
   --max:1240px;
   /* height of the sticky header at rest. The mobile hero subtracts it so a
      100svh frame does not push itself a header's worth below the fold. */
-  --hdr-h:81px;
+  --hdr-h:113px;
   --ease:cubic-bezier(.22,1,.36,1);
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -99,12 +99,10 @@ p{margin:0}
 .wa:hover{background:#1DA851;transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.34)}
 
 /* anchors clear the sticky header */
-section[id],div[id]{scroll-margin-top:84px}
+section[id],div[id]{scroll-margin-top:calc(var(--hdr-h) + 3px)}
 
 /* ═══ HEADER ═══ */
 .hdr{background:var(--navy);position:sticky;top:0;z-index:90;border-bottom:1px solid var(--navy-3)}
-.hdr{transition:box-shadow .35s}
-.hdr.sm{box-shadow:0 6px 26px rgba(6,18,32,.34)}
 /* Three tracks, not a flex row. With auto margins the leftover width pooled
    into two gaps that grew as the nav shrank — losing the Capabilities tab left
    the five remaining links marooned between a hole on each side. 1fr auto 1fr
@@ -113,17 +111,14 @@ section[id],div[id]{scroll-margin-top:84px}
    Explicit column numbers matter: with the nav and the CTA hidden under 900px,
    the burger would otherwise fall into the middle track. */
 .hdr .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
-  gap:20px;padding-block:8px;transition:padding-block .35s var(--ease)}
+  gap:20px;padding-block:12px}
 .brand{grid-column:1;justify-self:start}
 .mainnav{grid-column:2;justify-self:center}
 .hdr .btn,#burger{grid-column:3;justify-self:end}
-.hdr.sm .wrap{padding-block:6px}
-.brand img{transition:width .35s var(--ease),height .35s var(--ease)}
-.hdr.sm .brand img{width:48px;height:48px}
 .brand{display:flex;align-items:center;gap:14px}
-.brand img{width:64px;height:64px;flex:none}
-.brand-tx{font-family:var(--head);font-weight:600;font-size:15px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
-.brand-tx small{display:block;font-family:var(--body);font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px;white-space:nowrap}
+.brand img{width:88px;height:88px;flex:none}
+.brand-tx{font-family:var(--head);font-weight:600;font-size:17px;letter-spacing:.06em;color:var(--white);line-height:1.25;text-transform:uppercase;white-space:nowrap}
+.brand-tx small{display:block;font-family:var(--body);font-size:11px;font-weight:500;letter-spacing:.24em;color:var(--gold);margin-top:3px;white-space:nowrap}
 .mainnav{display:flex;flex-wrap:nowrap;align-items:center;gap:clamp(12px,1.6vw,26px)}
 .mainnav a{font-size:clamp(12px,.5vw + .46rem,15px);font-weight:600;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;color:#D3DEE8;padding-block:6px;border-bottom:2px solid transparent;transition:color .25s,border-color .25s}
 .mainnav a:hover{color:var(--gold);border-bottom-color:var(--gold)}
@@ -364,15 +359,15 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ═══ LOGISTICS STEPS ═══ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.step{background:var(--white);border:1px solid var(--line);padding:28px 24px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,transform .35s var(--ease)}
-.step::after{content:var(--n,"");position:absolute;right:-14px;bottom:-22px;font-family:var(--head);font-size:74px;font-weight:700;color:var(--mist);line-height:1;z-index:0}
-.step:hover{transform:translateY(-5px)}
-.step>*{position:relative;z-index:1}
-.step:hover{border-color:var(--gold);box-shadow:0 12px 32px rgba(17,42,70,.1)}
-.step b{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--navy);color:var(--gold);font-family:var(--head);font-size:17px;font-weight:600;margin-bottom:16px;transition:background .35s}
-.step:hover b{background:var(--teal);color:var(--white)}
-.step h3{margin-bottom:8px}
-.step p{font-size:15px;color:var(--charcoal-2)}
+
+
+
+
+
+
+
+
+
 
 /* ═══ PACKING ═══ */
 .packs{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
@@ -482,20 +477,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pfacts span{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;color:var(--charcoal-2);margin-top:5px}
 
-/* Class F / Class C, side by side */
-.grades{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.grade{position:relative;background:var(--white);border:1px solid var(--line);
-  padding:32px 30px;overflow:hidden;
-  transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
-.grade::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);
-  transform:scaleY(0);transform-origin:top;transition:transform .55s var(--ease)}
-.grade:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 18px 42px rgba(17,42,70,.13)}
-.grade:hover::before{transform:scaleY(1)}
-.grade h3{font-size:23px;margin:10px 0 4px}
-.grade dl{margin:22px 0 0;display:grid;gap:0}
-.grade dl>div{padding:15px 0;border-top:1px solid var(--line)}
-.grade dt{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
-.grade dd{margin:7px 0 0;font-size:15px;color:var(--charcoal-2)}
 
 /* bottom / pond / zinc */
 .gcards{display:grid;grid-template-columns:repeat(6,1fr);gap:26px}
@@ -540,7 +521,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .pcta-acts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
 
 @media(max-width:900px){
-  .pintro,.grades,.puse{grid-template-columns:1fr}
+  .pintro,.puse{grid-template-columns:1fr}
   /* Back to whole columns below the three-across breakpoint: two per row, and
      the centring rule undone at matching specificity so it cannot outrank this. */
   .gcards{grid-template-columns:repeat(2,1fr)}
@@ -550,7 +531,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 }
 @media(max-width:640px){
   .gcards,.pfacts{grid-template-columns:1fr}
-  .grade{padding:26px 22px}
   .puse li{flex-wrap:wrap}
   .puse li span{margin-left:0;width:100%}
 }
@@ -623,87 +603,51 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    ═══════════════════════════════════════════════════ */
 
 /* packing formats */
-.pks{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.pk{position:relative;background:var(--white);border:1px solid var(--line);padding:30px 26px 28px;
-  overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
-.pk::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold);
-  transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
-.pk:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 18px 42px rgba(17,42,70,.12)}
-.pk:hover::after{transform:scaleX(1)}
-.pk-w{display:block;font-family:var(--head);font-size:30px;font-weight:700;color:var(--navy);line-height:1}
-.pk-w i{font-style:normal;font-size:.45em;color:var(--teal);margin-left:3px}
-.pk h3{margin:12px 0 10px;font-size:18px}
-.pk p{font-size:14.5px;color:var(--charcoal-2);margin:0}
-.pk dl{margin:18px 0 0;display:grid;gap:0}
-.pk dl>div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;
-  border-top:1px solid var(--line);font-size:13px}
-.pk dt{color:var(--charcoal-2)}
-.pk dd{margin:0;font-weight:600;color:var(--navy);text-align:right}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* route to the vessel - a horizontal track that draws as you scroll */
-.route{position:relative;display:grid;grid-template-columns:repeat(4,1fr)}
-.route-track{position:absolute;left:12.5%;right:12.5%;top:13px;height:1px;background:var(--navy-3)}
-.route-track span{display:block;height:100%;width:var(--fill,0%);
-  background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .3s linear}
-.rt{position:relative;text-align:center;padding:0 14px}
-.rt i{display:block;width:15px;height:15px;margin:6px auto 22px;background:var(--navy);
-  border:2px solid var(--navy-3);border-radius:50%;position:relative;z-index:2;
-  transition:border-color .45s,background .45s,transform .45s var(--ease)}
-.rt.in i{border-color:var(--gold);background:var(--gold);transform:scale(1.2)}
-.rt em{display:block;font-style:normal;font-size:11px;font-weight:700;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--gold);margin-bottom:8px}
-.rt h3{color:var(--white);font-size:17px;margin-bottom:7px}
-.rt p{font-size:13.5px;color:#B9C8D6;margin:0}
+
+
+
+
+
+
+
+
+
 
 /* incoterm selector */
-.inco{border:1px solid var(--line);background:var(--white)}
-.inco-tabs{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
-.inco-tabs button{appearance:none;border:0;border-right:1px solid var(--line);background:var(--mist);
-  font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:.06em;color:var(--charcoal-2);
-  padding:18px 10px;cursor:pointer;position:relative;transition:background .3s,color .3s}
-.inco-tabs button:last-child{border-right:0}
-.inco-tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;
-  background:var(--gold);transform:scaleX(0);transition:transform .4s var(--ease)}
-.inco-tabs button:hover{color:var(--navy)}
-.inco-tabs button[aria-selected="true"]{background:var(--white);color:var(--navy)}
-.inco-tabs button[aria-selected="true"]::after{transform:scaleX(1)}
-.inco-panel{display:none;padding:30px 28px}
-.inco-panel.on{display:block;animation:incoIn .45s var(--ease)}
-@keyframes incoIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.inco-panel>p{font-size:15.5px;color:var(--charcoal-2);margin:0 0 22px;max-width:64ch}
-.inco-split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.inco-col h4{font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.2em;
-  text-transform:uppercase;margin:0 0 12px}
-.inco-col:first-child h4{color:var(--teal)}
-.inco-col:last-child h4{color:var(--charcoal-2)}
-.inco-col ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.inco-col li{font-size:14px;color:var(--charcoal-2);padding-left:18px;position:relative}
-.inco-col li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:1px;background:var(--gold)}
-.inco-risk{margin:24px 0 0;padding:14px 18px;background:var(--mist);border-left:3px solid var(--teal);
-  font-size:13.5px;color:var(--charcoal-2)}
+
+
+
+
+
+
+
+
+
 
 /* export document set */
-.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.doc{border:1px solid var(--line);background:var(--white);padding:22px 20px;
-  transition:border-color .35s,transform .35s var(--ease),box-shadow .35s}
-.doc:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 30px rgba(17,42,70,.1)}
-.doc b{display:block;font-family:var(--head);font-size:16px;font-weight:600;color:var(--navy);margin-bottom:7px}
-.doc span{display:block;font-size:13.5px;color:var(--charcoal-2)}
 
-@media(max-width:900px){
-  .pks,.docs{grid-template-columns:repeat(2,1fr)}
-  .route{grid-template-columns:1fr;gap:26px}
-  .route-track{display:none}
-  .rt{text-align:left;padding:0 0 0 30px}
-  .rt i{position:absolute;left:0;top:2px;margin:0}
-  .inco-tabs{grid-template-columns:repeat(2,1fr)}
-  .inco-tabs button:nth-child(2){border-right:0}
-  .inco-tabs button:nth-child(-n+2){border-bottom:1px solid var(--line)}
-}
-@media(max-width:640px){
-  .pks,.docs,.inco-split{grid-template-columns:1fr}
-  .inco-panel{padding:24px 20px}
-}
+
+
+
+
+
+
+
 
 /* ═══════════════════════════════════════════════════
    CALCULATOR PAGE
@@ -755,83 +699,66 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    NETWORK PAGE
    ═══════════════════════════════════════════════════ */
 
-.nmap{position:relative;background:var(--navy-2);border:1px solid var(--navy-3);overflow:hidden}
-.nmap::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(60% 70% at 50% 45%,rgba(10,107,116,.28),transparent 70%)}
-.nmap svg{display:block;width:100%;height:auto;position:relative}
+
+
+
 
 /* graticule */
-.nm-grid{stroke:#1B3A5C;stroke-width:1;fill:none;opacity:.55}
+
 
 /* trade lanes */
-.nm-arc{fill:none;stroke:var(--gold);stroke-width:1.4;opacity:.5;
-  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
-  transition:stroke-dashoffset 1.5s var(--ease),opacity .35s,stroke-width .35s}
-.nmap.in .nm-arc{stroke-dashoffset:0}
-.nm-arc.hot{opacity:1;stroke-width:2.6}
-.nm-pulse{fill:var(--gold)}
+
+
+
+
 
 /* destination markers */
-.nm-node{fill:var(--navy-2);stroke:var(--gold);stroke-width:2;
-  opacity:0;transform:scale(.2);transform-origin:center;transform-box:fill-box;
-  transition:opacity .5s var(--ease),transform .5s var(--ease),fill .3s}
-.nmap.in .nm-node{opacity:1;transform:scale(1)}
-.nm-node.hot{fill:var(--gold)}
-.nm-lab{fill:#C9D6E2;font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:.04em;
-  opacity:0;transition:opacity .6s var(--ease) .3s,fill .3s}
-.nmap.in .nm-lab{opacity:1}
-.nm-lab.hot{fill:var(--gold)}
-.nm-share{fill:#7E93A8;font-family:var(--body);font-size:11px;font-weight:700;letter-spacing:.12em}
+
+
+
+
+
+
+
 
 /* the origin */
-.nm-home{fill:var(--gold)}
-.nm-ring{fill:none;stroke:var(--gold);stroke-width:1.5;transform-origin:center;transform-box:fill-box}
-.nm-home-lab{fill:var(--white);font-family:var(--head);font-size:15px;font-weight:600;letter-spacing:.06em}
-.nm-home-sub{fill:var(--gold);font-family:var(--body);font-size:10.5px;font-weight:700;letter-spacing:.2em}
-@keyframes nmRing{0%{transform:scale(.6);opacity:.85}100%{transform:scale(2.6);opacity:0}}
+
+
+
 
 /* legend beside the map */
-.nm-wrap{display:grid;grid-template-columns:1.55fr .95fr;gap:clamp(24px,3vw,40px);align-items:start}
-.nm-leg{list-style:none;margin:0;padding:0;display:grid;gap:0}
-.nm-leg li{display:flex;align-items:center;gap:14px;padding:13px 12px;cursor:default;
-  border-bottom:1px solid var(--navy-3);transition:background .3s,padding-left .3s}
-.nm-leg li:hover{background:rgba(10,107,116,.2);padding-left:18px}
-.nm-leg b{font-size:14.5px;color:var(--white);font-weight:600}
-.nm-leg em{font-style:normal;font-size:11.5px;color:#8FA3B6;margin-left:auto;letter-spacing:.1em;
-  text-transform:uppercase;white-space:nowrap}
-.nm-dot{width:9px;height:9px;background:var(--gold);flex:none;transform:rotate(45deg)}
-.nm-cap{font-size:12.5px;color:#8FA3B6;margin:18px 0 0;line-height:1.6}
+
+
+
+
+
+
+
+
 
 /* share of Indian fly ash exports */
-.share{display:grid;gap:18px;margin-top:6px}
-.share-row b{display:flex;justify-content:space-between;font-size:14px;color:var(--white);font-weight:600}
-.share-row b span{color:var(--gold);font-family:var(--head);font-size:17px}
-.share-bar{height:5px;background:var(--navy-3);margin-top:9px;overflow:hidden}
-.share-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));
-  transition:width 1.3s var(--ease)}
-.share.in .share-bar i{width:var(--w)}
+
+
+
+
+
+
 
 /* what we trade */
-.scope{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
-.scope-card{border:1px solid var(--line);background:var(--white);padding:28px 26px;
-  transition:transform .4s var(--ease),box-shadow .4s,border-color .4s}
-.scope-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 16px 38px rgba(17,42,70,.12)}
-.scope-card h3{margin:10px 0 14px}
-.scope-card ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.scope-card li{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--navy);border:1px solid var(--line);padding:8px 12px}
 
-@media(max-width:900px){
-  .nm-wrap,.scope{grid-template-columns:1fr}
-  .nm-lab{font-size:16px}
-  .nm-share{font-size:13px}
-}
+
+
+
+
+
+
+
 
 /* ═══════════════════════════════════════════════════
    QUALITY PAGE
    ═══════════════════════════════════════════════════ */
 
-.qcerts{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
 .qcert{background:var(--white);border:1px solid var(--line);display:flex;flex-direction:column;
   cursor:zoom-in;overflow:hidden;
   transition:transform .45s var(--ease),box-shadow .45s,border-color .45s}
@@ -854,12 +781,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .qcert:hover .qcert-bd i::after{width:30px}
 
 /* the analysis table reuses .spec from the classification page */
-.qa-note{display:flex;gap:14px;align-items:flex-start;margin-top:22px;padding:16px 20px;
-  background:var(--mist);border-left:3px solid var(--gold)}
-.qa-note p{margin:0;font-size:13.5px;color:var(--charcoal-2)}
 
-@media(max-width:900px){ .qcerts{grid-template-columns:repeat(2,1fr)} }
-@media(max-width:640px){ .qcerts{grid-template-columns:1fr} }
+
+
+
+
 
 /* ═══ ENQUIRY ═══ */
 .enq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -974,25 +900,21 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    Capabilities tab shelved the bar has room to spare — modelled centred with
    at least 56px of slack at the tightest point, 901px — so these two steps
    only ease the tracking and the CTA, and the wordmark stays at every width.
-
-   .mainnav .ndd-t rather than .ndd-t on purpose: the dropdown rules live at
-   the foot of this file, so a bare .ndd-t there would out-order these on
-   source order. Kept against the day SHELVED.md puts that tab back. */
+ */
 @media(max-width:1240px){
   /* .brand-tx is nowrap by design, so it has to give first */
   .brand-tx{font-size:13.5px;letter-spacing:.04em}
   .brand-tx small{font-size:9px;letter-spacing:.16em}
   .hdr .wrap{gap:16px}
-  .mainnav a,.mainnav .ndd-t{letter-spacing:.06em}
+  .mainnav a{letter-spacing:.06em}
   .hdr .btn{padding:12px 16px;font-size:11.5px;letter-spacing:.1em}
 }
 @media(max-width:1080px){
   /* the mark scales at every step, and --hdr-h follows the bar it measures */
-  :root{--hdr-h:71px}
-  .brand img{width:54px;height:54px}
+  :root{--hdr-h:89px}
+  .brand img{width:64px;height:64px}
   .hdr .wrap{gap:12px}
-  .mainnav a,.mainnav .ndd-t{letter-spacing:.02em}
-  .ndd-t{gap:5px}
+  .mainnav a{letter-spacing:.02em}
   .hdr .btn{padding:11px 13px;font-size:10.5px;letter-spacing:.06em}
 }
 
@@ -1062,15 +984,14 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    stacks. Nothing here changes the layout above 480px. */
 @media(max-width:480px){
   :root{--h1:clamp(26px,7.4vw,32px);--h2:22px;--gut:18px}
-  section[id],div[id]{scroll-margin-top:70px}
 
   /* .brand-tx is nowrap by design, so the mark has to shrink with it */
   .hdr .wrap{gap:12px}
   .brand{gap:10px}
-  .brand img{width:50px;height:50px}
-  .hdr.sm .brand img{width:42px;height:42px}
+  .brand img{width:56px;height:56px}
+  .hdr .wrap{padding-block:10px}
   /* the mark steps down here, so the bar the hero subtracts does too */
-  :root{--hdr-h:67px}
+  :root{--hdr-h:77px}
   .brand-tx{font-size:12.5px;letter-spacing:.03em}
   .brand-tx small{font-size:8.5px;letter-spacing:.14em}
   #burger{padding:9px 11px;font-size:10px;letter-spacing:.12em}
@@ -1103,7 +1024,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .cert{height:96px;padding:14px}
   .mv-card{padding:22px 20px}
   .card-bd{padding:20px 18px}
-  .step{padding:24px 20px}
+  
   .pack{padding:26px 20px}
 
   .enq-foot{margin-top:22px;gap:16px}
@@ -1120,7 +1041,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .pintro-ph::after{right:-10px;top:-10px;width:64px;height:64px}
 
   /* ── product ── */
-  .grade h3{font-size:20px}
   .gcard-bd{padding:20px 18px 22px}
   .pfacts b,.assum b{font-size:17px}
   .pfacts span,.assum span{font-size:10.5px;letter-spacing:.1em}
@@ -1134,12 +1054,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .why-note p{font-size:15px}
 
   /* ── logistics ── */
-  .pk{padding:26px 20px 24px}
-  .pk-w{font-size:26px}
-  .inco-tabs button{font-size:14px;padding:15px 6px}
-  .inco-panel{padding:22px 18px}
-  .inco-panel>p{font-size:14.5px}
-  .doc{padding:20px 18px}
+  
+  
+  
+  
+  
+  
 
   /* ── calculator ── */
   .calc-step{font-size:10px;letter-spacing:.14em;gap:8px}
@@ -1150,14 +1070,14 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .cap-lb{font-size:10px;letter-spacing:.06em}
 
   /* ── network ── */
-  .nm-leg li{padding:12px 8px;gap:10px}
-  .nm-leg b{font-size:13.5px}
-  .nm-leg em{font-size:10.5px;letter-spacing:.06em}
-  .scope-card{padding:24px 20px}
+  
+  
+  
+  
 
   /* ── quality ── */
   .qcert-ph{height:112px;padding:18px}
-  .qa-note{padding:14px 16px;gap:10px}
+  
 }
 
 /* The map is a fixed 1000×560 viewBox scaled to the column, so its labels
@@ -1167,18 +1087,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
    drops to lanes and nodes and the list does the labelling. Tapping a legend
    row still lights its lane. */
 @media(max-width:640px){
-  .nm-lab,.nm-share{display:none}
+  
   /* the origin sits alone in the middle, so it can take the size it needs
      to stay legible once the destination labels are gone */
-  .nm-home-lab{font-size:34px}
-  .nm-home-sub{display:none}
-  .nm-leg li{cursor:pointer}
+  
+  
+  
 }
 
 /* the narrowest phones still in use — 320px and 360px */
 @media(max-width:360px){
-  :root{--gut:15px;--hdr-h:63px}
-  .brand img{width:46px;height:46px}
+  :root{--gut:15px;--hdr-h:71px}
+  .brand img{width:50px;height:50px}
   .brand-tx{font-size:11.5px}
   .brand-tx small{letter-spacing:.1em}
   .btn{padding:13px 16px;font-size:11px;letter-spacing:.1em}
@@ -1214,7 +1134,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .log-facts>div{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:baseline;padding:13px 2px;border-bottom:1px solid var(--line)}
 .log-facts dt{font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--charcoal-2)}
 .log-facts dd{margin:0;font-family:var(--head);font-size:clamp(15px,1.1vw,17px);font-weight:600;color:var(--navy)}
-.log-cta{margin-top:2px}
+
 
 /* ═══════════════════════════════════════════════════
    MULTIMODAL BAND — the berth the six steps walk towards
@@ -1290,7 +1210,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 }
 @media(max-width:640px){
   .log-facts>div,.visit-meta>div{grid-template-columns:1fr;gap:4px}
-  .log-cta,.visit-acts .btn{width:100%;flex:1 1 100%}
+  
   .band-ports span{padding:9px 14px;font-size:10.5px;letter-spacing:.14em}
   .visit-map figcaption{justify-content:center;text-align:center}
 }
@@ -1344,142 +1264,4 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media(max-width:560px){
   .cwall{grid-template-columns:1fr}
   .cw-foot{letter-spacing:.14em;font-size:10px}
-}
-
-/* ═══════════════════════════════════════════════════
-   HEADER DROPDOWN — "Capabilities"
-   Seven flat tabs was one more than the bar could carry without crowding.
-   Logistics, Network and Quality answer the same question from three sides —
-   how we move it, where it reaches, what it is guaranteed against — so they
-   fold into one tab and get room for a line of explanation each, which a flat
-   nav label never had space for.
-
-   Note the specificity: these links sit inside .mainnav, so every .mainnav a
-   rule applies to them. The overrides below match on equal specificity and win
-   only by coming later in the file — keep this block last.
-   ═══════════════════════════════════════════════════ */
-.ndd{position:relative;display:flex;align-items:center}
-.ndd-t{display:inline-flex;align-items:center;gap:7px;background:none;border:0;border-bottom:2px solid transparent;
-  padding:6px 0;cursor:pointer;font-family:var(--body);font-size:clamp(11.5px,.52vw + .35rem,12.5px);font-weight:600;letter-spacing:.09em;white-space:nowrap;
-  text-transform:uppercase;color:#D3DEE8;transition:color .25s,border-color .25s}
-.ndd-t:hover,.ndd.on .ndd-t{color:var(--gold);border-bottom-color:var(--gold)}
-/* the tab stays lit while you are on one of the three pages inside it */
-.ndd.cur .ndd-t{color:var(--gold)}
-.ndd-c{flex:none;transition:transform .3s var(--ease)}
-.ndd.on .ndd-c{transform:rotate(180deg)}
-
-.ndd-p{position:absolute;top:calc(100% + 15px);left:-20px;width:344px;z-index:95;
-  background:var(--navy-2);border:1px solid var(--navy-3);border-top:3px solid var(--gold);
-  box-shadow:0 26px 54px rgba(4,12,22,.55);
-  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);
-  transition:opacity .28s var(--ease),transform .28s var(--ease),visibility .28s}
-.ndd.on .ndd-p{opacity:1;visibility:visible;pointer-events:auto;transform:none}
-/* notch, tying the panel back to the tab that opened it */
-.ndd-p::before{content:"";position:absolute;top:-8px;left:26px;width:12px;height:12px;background:var(--gold);
-  transform:rotate(45deg)}
-/* the gap the pointer crosses between tab and panel, kept hoverable so the
-   menu does not shut halfway down */
-.ndd-p::after{content:"";position:absolute;top:-18px;left:0;right:0;height:18px}
-
-.ndd-p a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 14px;align-items:start;position:relative;
-  padding:15px 20px;border-bottom:1px solid var(--navy-3);
-  font-size:13px;letter-spacing:normal;text-transform:none;color:#D3DEE8;transition:background .25s}
-.ndd-p a:last-child{border-bottom:0}
-.ndd-p a em{grid-row:1 / 3;font-style:normal;font-family:var(--head);font-size:12px;font-weight:600;
-  letter-spacing:.1em;color:var(--gold);padding-top:3px}
-.ndd-p a b{font-family:var(--head);font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--white);
-  transition:color .25s}
-.ndd-p a span{font-size:11.5px;line-height:1.5;color:#8FA6BC}
-/* gold bar grows down the edge of the row rather than a flat highlight */
-.ndd-p a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);
-  transition:width .3s var(--ease)}
-.ndd-p a:hover,.ndd-p a:focus-visible{background:rgba(10,107,116,.24);color:#D3DEE8;border-bottom-color:var(--navy-3)}
-.ndd-p a:hover::before,.ndd-p a:focus-visible::before{width:3px}
-.ndd-p a:hover b,.ndd-p a:focus-visible b{color:var(--gold)}
-.ndd-p a[aria-current]{background:rgba(10,107,116,.16)}
-.ndd-p a[aria-current]::before{width:3px}
-
-/* ── the same grouping in the mobile drawer, where a hover panel is no use ── */
-.dw-grp{display:block;padding:16px var(--gut) 9px;background:var(--navy-2);
-  font-size:10.5px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
-#drawer a.dw-sub{position:relative;padding-left:calc(var(--gut) + 24px);font-size:12px;color:#B9C8D6}
-#drawer a.dw-sub::before{content:"";position:absolute;left:var(--gut);top:calc(50% - 3px);
-  width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
-
-@media(max-width:1100px){
-  .ndd-p{width:300px}
-  .ndd-p a{padding:13px 17px}
-  .ndd-p a span{font-size:11px}
-}
-
-/* ═══════════════════════════════════════════════════
-   CONTACT CHANNELS — contact page
-   Three routes to the same desk, given equal weight. Reuses the .mv-card
-   plate from the mission and vision pair; only the grid and the value link
-   are new, so the cards stay in step with that pattern automatically.
-   ═══════════════════════════════════════════════════ */
-.ccards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.ccards svg{display:block;margin-bottom:16px}
-.ccards h3{margin-bottom:4px}
-/* email, phone and WhatsApp are the whole point of this page, and at 27px they
-   were the last targets on the site under a thumb's worth of height. */
-.ccard-v{display:inline-block;padding-block:4px;margin:2px 0 10px;font-family:var(--head);
-  font-size:clamp(15px,.85rem + .35vw,18px);font-weight:600;color:var(--navy);
-  border-bottom:1px solid rgba(212,175,55,.55);overflow-wrap:anywhere;
-  transition:color .3s,border-color .3s}
-.ccard-v:hover{color:var(--teal);border-color:var(--teal)}
-
-@media(max-width:900px){ .ccards{grid-template-columns:1fr} }
-
-/* ═══════════════════════════════════════════════════
-   PRODUCT CATALOG — one scrolling page
-   Tabs were the wrong instrument: six of seven categories sat behind a click,
-   so a visitor who never pressed anything saw a seventh of the catalogue.
-   Everything is stacked and reachable by scrolling now. The index below is a
-   shortcut, not a gate — every section is on the page whether it is used
-   or not.
-   ═══════════════════════════════════════════════════ */
-.pindex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
-  margin-top:clamp(26px,3vw,36px)}
-.pindex a{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--navy);border:1px solid var(--line);background:var(--white);padding:10px 16px;
-  transition:background .3s,border-color .3s,color .3s}
-.pindex a:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
-
-/* the standards line, set as a strip so the three codes read as credentials */
-.pstd{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-3);
-  border:1px solid var(--navy-3);margin-top:clamp(30px,4vw,46px)}
-.pstd div{background:var(--navy);color:var(--white);padding:24px 20px;text-align:center}
-.pstd b{display:block;font-family:var(--head);font-size:clamp(16px,1.4vw,19px);font-weight:600;color:var(--gold)}
-.pstd span{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
-  color:#9FB2C4;margin-top:7px}
-.pstd-note{margin-top:16px;font-size:13px;color:var(--charcoal-2);text-align:center}
-
-/* Three categories that share a grid and differ only in what sits in it, so
-   they share a section and a control instead of taking three headings down
-   the page. One ink bar slides between the labels rather than a border per
-   tab blinking on and off; JS sets its width and x from the selected button,
-   so it tracks whatever the labels measure at the current size. The strip
-   never wraps — a wrapped row would put the ink on the wrong line — which is
-   why the labels shrink rather than fold on a narrow screen. */
-.ptabs{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;
-  width:max-content;margin:0 auto clamp(30px,4vw,44px);border-bottom:1px solid var(--line)}
-.ptab{flex:none;appearance:none;background:none;border:0;cursor:pointer;
-  font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--charcoal-2);padding:14px 26px 16px;transition:color .35s}
-.ptab:hover{color:var(--navy)}
-.ptab[aria-selected="true"]{color:var(--navy)}
-.ptab-ink{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--gold);
-  transition:transform .55s var(--ease),width .55s var(--ease);pointer-events:none}
-.ppanel{outline:none}
-/* the outgoing set lifts and fades; the incoming one staggers in behind it */
-.ppanel.is-out{opacity:0;transform:translateY(10px);
-  transition:opacity .2s var(--ease),transform .2s var(--ease)}
-/* only ever seen with script off, where the panels are stacked and need naming */
-.ppanel-label{display:none;text-align:center;margin-bottom:22px}
-
-@media(max-width:640px){
-  .ptab{font-size:10.5px;letter-spacing:.1em;padding:12px 13px 14px}
-  .pstd{grid-template-columns:1fr}
-  .pindex a{font-size:10.5px;letter-spacing:.1em;padding:9px 12px}
 }
