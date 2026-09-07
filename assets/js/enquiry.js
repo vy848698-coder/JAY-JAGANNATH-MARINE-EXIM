@@ -47,7 +47,7 @@
      on two empty segments and a stray separator. */
   const summary = () =>
     `${val('e') || 'product to advise'} · ${val('f2') || 'packing to advise'} · ` +
-    `${val('g') || '—'} MT · ${val('h') || 'port to advise'} · ${val('i')}`;
+    `${val('g') || '—'} MT · ${val('h') || 'port to advise'} · ${val('i') || 'incoterm to advise'}`;
 
   /* Used only when the back end sends no timestamp of its own. Pinned to
      Asia/Kolkata so a buyer in Rotterdam still reads the desk's own clock,
