@@ -50,14 +50,22 @@ $sample = [
     'notes'         => "Please quote CIF Rotterdam.\nLoose bulk, monthly lifting from October.",
 ];
 
-$reference  = 'JJME-260817-DLDD';
+$reference  = 'JME-260817-DLDD';
 $receivedAt = '17 Aug 2026, 17:19 IST';
 
 $dir = __DIR__ . '/storage';
 if (!is_dir($dir)) mkdir($dir, 0700, true);
 
+/* The same file logoPart() in enquiry.php attaches, and for the same reason:
+   logo-email.png is matted onto the header navy, logo.png is transparent. A
+   preview built from logo.png showed a crest no recipient ever receives, which
+   is the one thing a preview must not do. */
+$logoFile = dirname(__DIR__) . '/assets/img/logo-email.png';
+if (!is_file($logoFile)) {
+    $logoFile = dirname(__DIR__) . '/assets/img/logo.png';
+}
 $logo = 'data:image/png;base64,' . base64_encode(
-    (string) file_get_contents(dirname(__DIR__) . '/assets/img/logo.png')
+    (string) file_get_contents($logoFile)
 );
 
 foreach ([

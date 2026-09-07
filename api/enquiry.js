@@ -4,7 +4,13 @@
    website. Set DASHBOARD_URL and INTAKE_KEY as environment variables in the
    Vercel project — see .env.example. */
 
+import { check as checkEmail, domainAcceptsMail } from './_email-check.js';
+
 const TIMEOUT_MS = 10000;
+
+/* How long to give DNS before waving the enquiry through. The lookup is
+   normally ~30ms; this only bounds the bad case, and it fails open. */
+const DNS_TIMEOUT_MS = 3000;
 
 /* Long enough for a real enquiry, short enough that a paste-bomb is refused
    before it reaches the dashboard. The dashboard caps each field again. */
@@ -34,6 +40,28 @@ export default async function handler(req, res) {
   const body = typeof req.body === 'string' ? safeParse(req.body) : req.body;
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return res.status(400).json({ error: 'That enquiry could not be read.' });
+  }
+
+  /* The email is re-checked here, not just in the browser. The page's copy of
+     these rules is a courtesy that saves a round trip; this one is the check
+     that holds, because a script-disabled browser or a direct POST never runs
+     the other. 422 rather than 400 — the request was understood and refused. */
+  const verdict = checkEmail(body.email);
+  if (!verdict.ok) {
+    return res.status(422).json({ error: verdict.message, field: 'email', reason: verdict.code });
+  }
+  body.email = verdict.email;
+
+  /* Then ask DNS whether that domain takes mail at all. Catches invented
+     domains and made-up endings without a list of valid TLDs to keep current.
+     Fails open on any resolver trouble — see _email-check.js. */
+  const mail = await domainAcceptsMail(verdict.email.split('@')[1], DNS_TIMEOUT_MS);
+  if (!mail.ok) {
+    return res.status(422).json({
+      error: 'That domain does not receive email. Please check the part after the @.',
+      field: 'email',
+      reason: 'no-mx',
+    });
   }
 
   // Forward only the fields the intake route knows, so nothing else rides along.

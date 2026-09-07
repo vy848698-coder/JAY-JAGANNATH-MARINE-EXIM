@@ -96,6 +96,44 @@ than "your enquiry was refused":
 | [api/enquiry.php](api/enquiry.php)   | Apache/PHP — XAMPP, cPanel | emails the enquiry over Gmail SMTP        |
 | [api/enquiry.js](api/enquiry.js)     | Vercel                     | relays it to the dashboard's intake route |
 
+### Checking the email address
+
+The form is answered with a quotation, so a wrong address is a lost order
+rather than a cosmetic problem. Three copies of one rule set check it:
+
+| File                                                   | Runs in | Why it exists                            |
+| ------------------------------------------------------ | ------- | ---------------------------------------- |
+| [assets/js/email-check.js](assets/js/email-check.js)   | browser | answers without a round trip             |
+| [api/_email-check.js](api/_email-check.js)             | Vercel  | the copy that decides                    |
+| [api/email-check.php](api/email-check.php)             | Apache  | so PHP hosting refuses the same things   |
+
+What is caught: syntax the RFC does not allow; endings that are not letters;
+usernames the big providers will not issue (`a@gmail.com` is not anyone's —
+Gmail's minimum is six); throwaway inboxes; and domains that do not resolve,
+which is a DNS lookup rather than a checked-in list of valid endings, so a TLD
+registered last week is not turned away. Known mistypings — `gmail.con`,
+`gmial.com` — are offered back as a correction rather than a refusal.
+
+The DNS check **fails open**: a resolver timeout or outage lets the enquiry
+through. Losing a real buyer costs more than one junk row.
+
+What is *not* caught, and cannot be: whether anyone reads the mailbox.
+`xkjhsdf@gmail.com` is well-formed, on a real domain, and indistinguishable
+from a live address without sending mail to it and waiting for a click. That
+would need a confirmation step on the form — see Known TODOs.
+
+The browser copy is a courtesy; the server copies are the ones that hold,
+because a direct POST or a script-disabled browser never runs the first. The
+three sets of rules have no build step generating them from one source, so
+they are checked instead:
+
+```
+node tools/email-rules-sync.mjs   # tables identical + every case agrees
+```
+
+It exits non-zero on drift. Add a domain to one file and it names the two
+files you forgot.
+
 ### Setting up the PHP mail path
 
 1. Turn on 2-Step Verification for the sending Gmail account, then generate an
@@ -227,6 +265,11 @@ tries it first and falls back to `api/enquiry.js` on the 404.
 
 ## Known TODOs
 
+
+- **Confirmed email addresses.** The form refuses what is provably wrong but
+  cannot tell a live mailbox from a well-formed one. A one-time code or a
+  confirm link would settle it, at the cost of a step between a buyer and an
+  enquiry — a trade worth making only if junk enquiries become a real problem.
 - [ ] **Set the real domain.** `https://www.jayjagannathmarineexim.com/` is a placeholder in
       [home.html](home.html) (canonical, Open Graph, JSON-LD), [robots.txt](robots.txt)
       and [sitemap.xml](sitemap.xml). Find and replace it once the domain is confirmed.
@@ -237,5 +280,5 @@ tries it first and falls back to `api/enquiry.js` on the 404.
 
 ## Contact
 
-Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India
+Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753012, India
 info@jjmeexporthouse.com · +91 94391 55050

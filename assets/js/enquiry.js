@@ -42,8 +42,12 @@
     rc.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' });
   }
 
+  /* Product and Packing can now be left on "Select", so both need the same
+     fallback the discharge port already had — without one the receipt opened
+     on two empty segments and a stray separator. */
   const summary = () =>
-    `${val('e')} · ${val('f2')} · ${val('g') || '—'} MT · ${val('h') || 'port to advise'} · ${val('i')}`;
+    `${val('e') || 'product to advise'} · ${val('f2') || 'packing to advise'} · ` +
+    `${val('g') || '—'} MT · ${val('h') || 'port to advise'} · ${val('i')}`;
 
   /* Used only when the back end sends no timestamp of its own. Pinned to
      Asia/Kolkata so a buyer in Rotterdam still reads the desk's own clock,
@@ -102,11 +106,32 @@
       return;
     }
     /* The form carries novalidate, so the browser's own email check never
-       runs — without this a typo is only caught after a round trip. */
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('c'))) {
-      receipt('Action Required', '', 'Check Email',
-        'That email address does not look right. The quotation is sent to it, so please check it.');
+       runs. email-check.js applies the real rules — syntax, the endings and
+       usernames the big providers will not issue, throwaway inboxes — and
+       offers a correction when the domain is a known mistyping. The same
+       rules run again in api/enquiry.js, which is the copy that decides.
+
+       If the script is missing for any reason, fall back to the shape check
+       rather than letting everything through. */
+    const verdict = window.EmailCheck
+      ? window.EmailCheck.check(val('c'))
+      : (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('c'))
+          ? { ok: true, email: val('c') }
+          : { ok: false, message: 'That email address does not look right. Please check it.' });
+
+    if (!verdict.ok) {
+      /* A known typo is a correction, not a refusal: put the fix in the field
+         so the visitor confirms it with the same button rather than hunting
+         for the character that is wrong. */
+      if (verdict.suggestion && el('c')) {
+        el('c').value = verdict.suggestion;
+        receipt('Action Required', '', 'Check Email',
+          verdict.message + ' We have put that in the field — send again to confirm, or edit it.');
+      } else {
+        receipt('Action Required', '', 'Check Email', verdict.message);
+      }
       el('c')?.focus();
+      el('c')?.select?.();
       return;
     }
 
@@ -115,7 +140,7 @@
       const res = await post({
         company: val('a'),
         contactPerson: val('b'),
-        email: val('c'),
+        email: verdict.email,
         country: val('d'),
         product: val('e'),
         packing: val('f2'),

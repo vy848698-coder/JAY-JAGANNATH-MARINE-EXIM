@@ -75,8 +75,19 @@ function main(): void
     if ($data['company'] === '' || $data['email'] === '') {
         fail(422, 'Please add your company and email so the quotation can be issued.');
     }
-    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-        fail(422, 'That email address does not look right. Please check it and send again.');
+    /* FILTER_VALIDATE_EMAIL alone accepts anything RFC-shaped, so a made-up
+       ending or a username Gmail would never issue walked straight through.
+       checkEmail() applies the same rules as assets/js/email-check.js and
+       api/_email-check.js, so the PHP host and Vercel refuse the same things.
+       See email-check.php for what it can and cannot tell you. */
+    require_once __DIR__ . '/email-check.php';
+    $verdict = checkEmail($data['email']);
+    if (!$verdict['ok']) {
+        fail(422, $verdict['message']);
+    }
+    $data['email'] = $verdict['email'];
+    if (!domainAcceptsMail(substr(strrchr($data['email'], '@'), 1))) {
+        fail(422, 'That domain does not receive email. Please check the part after the @.');
     }
 
     $ip = clientIp();
@@ -333,7 +344,7 @@ function reference(): string
     $alphabet = 'ACDEFGHJKLMNPQRTUVWXY3456789';   // no look-alike characters
     $tail = '';
     for ($i = 0; $i < 4; $i++) $tail .= $alphabet[random_int(0, strlen($alphabet) - 1)];
-    return 'JJME-' . gmdate('ymd', time() + 19800) . '-' . $tail;
+    return 'JME-' . gmdate('ymd', time() + 19800) . '-' . $tail;
 }
 
 /** Indian Standard Time, stated as such — the desk reads these in Cuttack. */

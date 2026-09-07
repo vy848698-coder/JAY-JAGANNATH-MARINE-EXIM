@@ -105,8 +105,13 @@
           <path d="M11 4H6a2 2 0 00-2 2v3c0 11.6 9.4 21 21 21h3a2 2 0 002-2v-5l-6-3-3.5 3.5A24 24 0 0110.5 13.5L14 10z" stroke-linejoin="round"/>
         </svg>
         <h3>Telephone</h3>
-        <a class="ccard-v" href="tel:+919439155050">+91 94391 55050</a>
-        <p>The founder&rsquo;s line. Best for a shipment already in motion, or a question that is faster spoken than written.</p>
+        <!-- two lines, so each gets its own gold rule rather than the pair
+             running together on one wrapped line -->
+        <div class="ccard-nums">
+          <a class="ccard-v" href="tel:+919156153650">+91 91561 53650</a>
+          <a class="ccard-v" href="tel:+919439155050">+91 94391 55050</a>
+        </div>
+        <p>The founder&rsquo;s lines. Best for a shipment already in motion, or a question that is faster spoken than written.</p>
       </div>
 
       <div class="mv-card rv">
@@ -137,13 +142,13 @@
       <div class="visit-card rv on-navy">
         <p class="kicker">Head Office</p>
         <h3>Jay Jagannath Marine Eximss</h3>
-        <address>Ganesh Kutir, Balabhadrapur,<br>Chhatra Bazar, Cuttack,<br>Odisha 753003, India</address>
+        <address>Ganesh Kutir, Balabhadrapur,<br>Chhatra Bazar, Cuttack,<br>Odisha 753012, India</address>
         <dl class="visit-meta">
           <div><dt>Contact</dt><dd>Abinash Rout — Founder &amp; CEO</dd></div>
           <div><dt>Telephone</dt><dd><a href="tel:+919439155050">+91 94391 55050</a></dd></div>
           <div><dt>Email</dt><dd><a href="mailto:info@jjmeexporthouse.com">info@jjmeexporthouse.com</a></dd></div>
           <div><dt>Time Zone</dt><dd>IST — UTC+5:30</dd></div>
-          <div><dt>Nearest Port</dt><dd>Paradip — 82 km</dd></div>
+          <div><dt>Nearest Working Ports</dt><dd>Paradip, Dhamra, Gopalpur, Vizag</dd></div>
         </dl>
         <div class="visit-acts">
           <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&amp;destination=20.458048%2C85.891081" target="_blank" rel="noopener noreferrer">Get Directions</a>
@@ -162,7 +167,7 @@
           src="https://www.google.com/maps?q=20.458048%2C85.891081&amp;z=17&amp;hl=en&amp;output=embed"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         <figcaption>
-          <span>Chhatra Bazar, Cuttack · Odisha 753003</span>
+          <span>Chhatra Bazar, Cuttack · Odisha 753012</span>
           <a href="https://www.google.com/maps/search/?api=1&amp;query=20.458048%2C85.891081" target="_blank" rel="noopener noreferrer">View larger map<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 2h6v6M10 2L2.5 9.5"/></svg></a>
         </figcaption>
       </figure>
@@ -189,9 +194,11 @@
         <div class="fld"><label for="c">Email</label><input id="c" name="email" type="email" autocomplete="email"></div>
         <div class="fld"><label for="d">Country</label><input id="d" name="country" type="text" autocomplete="country-name"></div>
         <div class="fld"><label for="e">Product</label><select id="e" name="product">
+          <option value="" disabled selected>Select</option>
           <option>Fly Ash — Class F</option><option>Fly Ash — Class C</option><option>Bottom Ash</option>
           <option>Pond Ash</option><option>Zinc Ash</option><option>Other</option></select></div>
         <div class="fld"><label for="f2">Packing</label><select id="f2" name="packing">
+          <option value="" disabled selected>Select</option>
           <option>50 kg Bag</option><option>1000 kg Jumbo Bag</option><option>1500 kg Jumbo Bag</option>
           <option>Bulker</option><option>Please Advise</option></select></div>
         <div class="fld"><label for="g">Quantity (MT)</label><input id="g" name="quantityMt" type="number" min="1" inputmode="numeric"></div>
@@ -239,7 +246,7 @@
         <li><a href="product.html#fruits">Fruits &amp; Vegetables</a></li>
       </ul></div>
       <div><h3>Contact</h3><ul>
-        <li>Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India</li>
+        <li>Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753012, India</li>
         <li><a href="mailto:info@jjmeexporthouse.com">info@jjmeexporthouse.com</a></li>
         <li><a href="tel:+919439155050">+91 94391 55050</a></li>
         <li>Abinash Rout — Founder &amp; CEO</li>
@@ -263,6 +270,7 @@
 </button>
 
 <script src="assets/js/product.js"></script>
+<script src="assets/js/email-check.js"></script>
 <script src="assets/js/enquiry.js"></script>
 </body>
 </html>

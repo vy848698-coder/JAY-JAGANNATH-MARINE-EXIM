@@ -32,8 +32,8 @@ const BODY_FONT = "'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 const LABEL_CSS = 'color:#4A5A66;font-size:11px;letter-spacing:.14em;text-transform:uppercase';
 
 const SIGN_OFF     = 'Jay Jagannath Marine Exim';
-const ADDRESS      = 'Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753003, India';
-const CONTACT_LINE = 'info@jjmeexporthouse.com · +91 94391 55050';
+const ADDRESS      = 'Ganesh Kutir, Balabhadrapur, Chhatra Bazar, Cuttack, Odisha 753012, India';
+const CONTACT_LINE = 'info@jjmeexporthouse.com · +91 91561 53650 · +91 94391 55050';
 
 /* FIELDS, defined in enquiry.php, drives the row order of the desk notification. */
 
@@ -108,9 +108,12 @@ function ackText(string $reference, string $receivedAt, array $data): string
     return implode("\n", [
         'Dear ' . ($data['contactPerson'] ?: $data['company']) . ',',
         '',
-        'Thank you for your enquiry. It has reached our export desk, and we will',
-        'respond with a firm price, packing detail and the available shipment',
-        'window. Enquiries are answered within one working day.',
+        'Thank you for your enquiry. It has reached our export desk and is with',
+        'the team now. You will have a firm price, packing detail and the',
+        'available shipment window within one working day.',
+        '',
+        'If anything is urgent, or easier said than written, please call. Both',
+        'lines below reach the desk directly.',
         '',
         'YOUR ENQUIRY',
         'Reference: ' . $reference,
@@ -122,6 +125,11 @@ function ackText(string $reference, string $receivedAt, array $data): string
             . ($data['incoterm'] !== '' ? ' (' . $data['incoterm'] . ')' : ''),
         '',
         'Please quote the reference above in any further correspondence.',
+        '',
+        'TALK TO US',
+        'Telephone: +91 91561 53650  ·  +91 94391 55050',
+        'WhatsApp:  +91 94391 55050',
+        'Email:     info@jjmeexporthouse.com',
         '',
         SIGN_OFF, ADDRESS, CONTACT_LINE,
         '',
@@ -145,9 +153,9 @@ function ackHtml(string $reference, string $receivedAt, array $data): string
     $inner = refBar($reference, $receivedAt)
         . '<tr><td style="padding:28px 34px 0;color:' . CHARCOAL . ';font-size:15px;line-height:1.75">'
         . '<p style="margin:0 0 16px">Dear ' . e($data['contactPerson'] ?: $data['company']) . ',</p>'
-        . '<p style="margin:0 0 16px">Thank you for your enquiry. It has reached our export desk, and we will '
-        . 'respond with a firm price, packing detail and the available shipment window. '
-        . 'Enquiries are answered within one working day.</p>'
+        . '<p style="margin:0 0 16px">Thank you for your enquiry. It has reached our export desk and is with '
+        . 'the team now. You will have a firm price, packing detail and the available shipment window '
+        . 'within one working day.</p>'
         . '<p style="margin:0">Please quote the reference above in any further correspondence.</p>'
         . '</td></tr>'
         . '<tr><td style="padding:26px 34px 0">'
@@ -156,6 +164,24 @@ function ackHtml(string $reference, string $receivedAt, array $data): string
         . $rows . '</table></td></tr>'
         /* No rule of its own — the detail table above already closes with one,
            and two hairlines a few pixels apart read as a mistake. */
+        /* A buyer reading this has a live enquiry and may want an answer before
+           the quotation lands. The footer carries the same details, but it is
+           small grey type at the very bottom; this is the one the eye lands on
+           while the message is still being read. Tel and WhatsApp links, so a
+           phone dials rather than making anyone copy digits out. */
+        . '<tr><td style="padding:26px 34px 0">'
+        . '<div style="' . LABEL_CSS . ';margin-bottom:10px">Talk to us</div>'
+        . '<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" '
+        . 'style="width:100%;border-collapse:collapse;background:' . MIST . ';border:1px solid ' . LINE . '">'
+        . '<tr><td style="padding:18px 20px;color:' . CHARCOAL . ';font-size:15px;line-height:1.9">'
+        . '<a href="tel:+919156153650" style="color:' . NAVY . ';text-decoration:none;font-weight:bold">+91 91561 53650</a>'
+        . ' &nbsp;·&nbsp; '
+        . '<a href="tel:+919439155050" style="color:' . NAVY . ';text-decoration:none;font-weight:bold">+91 94391 55050</a>'
+        . '<br><a href="https://wa.me/919439155050" style="color:' . TEAL . ';text-decoration:none">WhatsApp</a>'
+        . ' &nbsp;·&nbsp; '
+        . '<a href="mailto:info@jjmeexporthouse.com" style="color:' . TEAL . ';text-decoration:none">info@jjmeexporthouse.com</a>'
+        . '</td></tr></table></td></tr>'
+
         . '<tr><td style="padding:26px 34px 0">'
         . '<div style="font-family:' . HEAD_FONT . ';font-size:16px;color:' . NAVY . ';letter-spacing:.03em">Jay Jagannath Marine Exim</div>'
         . '<div style="color:' . CHARCOAL_2 . ';font-size:13px;margin-top:5px;line-height:1.6">Merchant exporter of classified fly ash and zinc ash</div>'
@@ -219,6 +245,7 @@ function shell(string $title, string $standfirst, string $inner, string $prehead
         . '<tr><td style="padding:18px 34px 30px;color:' . CHARCOAL_2 . ';font-size:12px;line-height:1.7">'
         . e(ADDRESS) . '<br>'
         . '<a href="mailto:info@jjmeexporthouse.com" style="color:' . TEAL . ';text-decoration:none">info@jjmeexporthouse.com</a>'
+        . '<br><a href="tel:+919156153650" style="color:' . TEAL . ';text-decoration:none">+91 91561 53650</a>'
         . ' &nbsp;·&nbsp; <a href="tel:+919439155050" style="color:' . TEAL . ';text-decoration:none">+91 94391 55050</a>'
         . '</td></tr>'
 
