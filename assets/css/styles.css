@@ -359,6 +359,15 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ═══ LOGISTICS STEPS ═══ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.step{background:var(--white);border:1px solid var(--line);padding:28px 24px;position:relative;overflow:hidden;transition:border-color .35s,box-shadow .35s,transform .35s var(--ease)}
+.step::after{content:var(--n,"");position:absolute;right:-14px;bottom:-22px;font-family:var(--head);font-size:74px;font-weight:700;color:var(--mist);line-height:1;z-index:0}
+.step:hover{transform:translateY(-5px)}
+.step>*{position:relative;z-index:1}
+.step:hover{border-color:var(--gold);box-shadow:0 12px 32px rgba(17,42,70,.1)}
+.step b{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--navy);color:var(--gold);font-family:var(--head);font-size:17px;font-weight:600;margin-bottom:16px;transition:background .35s}
+.step:hover b{background:var(--teal);color:var(--white)}
+.step h3{margin-bottom:8px}
+.step p{font-size:15px;color:var(--charcoal-2)}
 
 
 
@@ -1024,6 +1033,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
   .cert{height:96px;padding:14px}
   .mv-card{padding:22px 20px}
   .card-bd{padding:20px 18px}
+  .step{padding:24px 20px}
   
   .pack{padding:26px 20px}
 
@@ -1264,4 +1274,76 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media(max-width:560px){
   .cwall{grid-template-columns:1fr}
   .cw-foot{letter-spacing:.14em;font-size:10px}
+}
+
+/* ═══════════════════════════════════════════════════
+   CONTACT CHANNELS — contact page
+   Three routes to the same desk, given equal weight. Reuses the .mv-card
+   plate from the mission and vision pair; only the grid and the value link
+   are new, so the cards stay in step with that pattern automatically.
+   ═══════════════════════════════════════════════════ */
+.ccards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ccards svg{display:block;margin-bottom:16px}
+.ccards h3{margin-bottom:4px}
+/* email, phone and WhatsApp are the whole point of this page, and at 27px they
+   were the last targets on the site under a thumb's worth of height. */
+.ccard-v{display:inline-block;padding-block:4px;margin:2px 0 10px;font-family:var(--head);
+  font-size:clamp(15px,.85rem + .35vw,18px);font-weight:600;color:var(--navy);
+  border-bottom:1px solid rgba(212,175,55,.55);overflow-wrap:anywhere;
+  transition:color .3s,border-color .3s}
+.ccard-v:hover{color:var(--teal);border-color:var(--teal)}
+
+@media(max-width:900px){ .ccards{grid-template-columns:1fr} }
+
+/* ═══════════════════════════════════════════════════
+   PRODUCT CATALOG — one scrolling page
+   Tabs were the wrong instrument: six of seven categories sat behind a click,
+   so a visitor who never pressed anything saw a seventh of the catalogue.
+   Everything is stacked and reachable by scrolling now. The index below is a
+   shortcut, not a gate — every section is on the page whether it is used
+   or not.
+   ═══════════════════════════════════════════════════ */
+.pindex{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-top:clamp(26px,3vw,36px)}
+.pindex a{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--navy);border:1px solid var(--line);background:var(--white);padding:10px 16px;
+  transition:background .3s,border-color .3s,color .3s}
+.pindex a:hover{background:var(--navy);border-color:var(--navy);color:var(--white)}
+
+/* the standards line, set as a strip so the three codes read as credentials */
+.pstd{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--navy-3);
+  border:1px solid var(--navy-3);margin-top:clamp(30px,4vw,46px)}
+.pstd div{background:var(--navy);color:var(--white);padding:24px 20px;text-align:center}
+.pstd b{display:block;font-family:var(--head);font-size:clamp(16px,1.4vw,19px);font-weight:600;color:var(--gold)}
+.pstd span{display:block;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:#9FB2C4;margin-top:7px}
+.pstd-note{margin-top:16px;font-size:13px;color:var(--charcoal-2);text-align:center}
+
+/* Three categories that share a grid and differ only in what sits in it, so
+   they share a section and a control instead of taking three headings down
+   the page. One ink bar slides between the labels rather than a border per
+   tab blinking on and off; JS sets its width and x from the selected button,
+   so it tracks whatever the labels measure at the current size. The strip
+   never wraps — a wrapped row would put the ink on the wrong line — which is
+   why the labels shrink rather than fold on a narrow screen. */
+.ptabs{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;
+  width:max-content;margin:0 auto clamp(30px,4vw,44px);border-bottom:1px solid var(--line)}
+.ptab{flex:none;appearance:none;background:none;border:0;cursor:pointer;
+  font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--charcoal-2);padding:14px 26px 16px;transition:color .35s}
+.ptab:hover{color:var(--navy)}
+.ptab[aria-selected="true"]{color:var(--navy)}
+.ptab-ink{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--gold);
+  transition:transform .55s var(--ease),width .55s var(--ease);pointer-events:none}
+.ppanel{outline:none}
+/* the outgoing set lifts and fades; the incoming one staggers in behind it */
+.ppanel.is-out{opacity:0;transform:translateY(10px);
+  transition:opacity .2s var(--ease),transform .2s var(--ease)}
+/* only ever seen with script off, where the panels are stacked and need naming */
+.ppanel-label{display:none;text-align:center;margin-bottom:22px}
+
+@media(max-width:640px){
+  .ptab{font-size:10.5px;letter-spacing:.1em;padding:12px 13px 14px}
+  .pstd{grid-template-columns:1fr}
+  .pindex a{font-size:10.5px;letter-spacing:.1em;padding:9px 12px}
 }
